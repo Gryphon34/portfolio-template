@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25",
+  "generatedAt": "2026-11-17",
   "profile": {
     "name": "홍길동",
     "nameEn": "Gildong Hong",
@@ -35,7 +35,7 @@
       "evidence": [
         { "text": "싱글톤 매니저 5개의 중복 코드를 `MonoSingleton<T>`로 축소", "project": "0-Tidy-Mommy" },
         { "text": "중재자(`CombatManager`)로 피격 처리 순서를 한 곳에 모음", "project": "1-action-platformer" },
-        { "text": "Strategy + Factory로 칸 효과 7종을 효과 클래스로 분리", "project": "2-Yggdrasil" }
+        { "text": "`ITileEffect`와 `TileEffectFactory`로 칸 효과 7종을 효과 클래스로 분리", "project": "2-Yggdrasil" }
       ]
     }
   ],
