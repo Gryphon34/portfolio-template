@@ -1,5 +1,5 @@
 // 포트폴리오 렌더러 공통 유틸 — index.html(포트폴리오 문서) · project.html(발표 덱) · doc.html(상세 문서)가 함께 씁니다.
-// 데이터: data/portfolio.json, data/projects/<폴더 이름>.json(/portfolio-build가 생성), src/<폴더>/<기술 문서>.md
+// 데이터: data/portfolio.json, data/projects/<폴더 이름>.json(/portfolio-build가 생성), src/<폴더>/<프로젝트 문서>.md
 // 이 파일은 글을 만들지 않습니다. 화면에 나오는 내용은 모두 위 데이터에서 오고, UI 문구(절 이름·버튼·라벨)는 assets/strings.js의 문구 표(PF.t)에서 옵니다.
 // 주석의 설계 근거(docs/design/…의 portfolio-structure·deck-vs-scroll·01 §, R0, 결정 F·Q·# 번호)와 원본 시안(spikes/…)은 템플릿 유지관리용 maintainer 브랜치에 있습니다. 이 레포에 없어도 정상입니다.
 const PF = (() => {
@@ -70,12 +70,42 @@ const PF = (() => {
     const hid = find(p.deck.base || []);
     return hid && keyOk(hid.chapter) && p.deck.slides.some((x) => x.chapter === hid.chapter) ? `ch-${hid.chapter}` : '';
   }
+  // md → HTML. marked(gfm)를 부르는 곳은 이 함수 하나입니다(프로젝트 상세 문서·발표 덱·제목 목록이 같은 결과를 쓰도록).
+  //   한국어 굵은 글씨 보완: CommonMark 규칙은 **"인용"**입니다 · **이름(설명)**와 처럼 닫는 ** 앞이 문장부호이고 바로 뒤에
+  //   글자(조사)가 붙으면 굵은 글씨로 보지 않아 별표가 그대로 보입니다. 여는 쪽도 같습니다(글자**"인용"**). 그 두 경우만
+  //   굵은 글씨로 받아 주고, 나머지는 marked의 기본 규칙에 맡깁니다(조건에 안 맞으면 아무것도 돌려주지 않음).
+  const PUNCT = /[\p{P}\p{S}]/u, WORD = /[^\s\p{P}\p{S}]/u;
+  let mdReady = false;
+  function mdHtml(md) {
+    if (!mdReady) {
+      mdReady = true;
+      marked.use({ extensions: [{
+        name: 'strongKo', level: 'inline',
+        start(src) { const i = src.indexOf('**'); return i < 0 ? undefined : i; },
+        tokenizer(src, tokens) {
+          // ** + 안쪽(줄 안, 코드 조각은 통째로, 양 끝은 공백 아님) + **  — 안쪽에 **가 또 있으면 가장 가까운 곳에서 닫음
+          const m = /^\*\*(?!\s)((?:`[^`\n]+`|[^`\n])+?)(?<!\s)\*\*(?!\*)/.exec(src);
+          if (!m) return undefined;
+          const inner = m[1], after = src[m[0].length] || '';
+          const last = tokens && tokens[tokens.length - 1];
+          const before = last && last.raw ? last.raw.slice(-1) : '';
+          const closeFails = PUNCT.test(inner.slice(-1)) && WORD.test(after);    // 닫는 ** : 앞이 문장부호, 뒤가 글자
+          const openFails = PUNCT.test(inner[0]) && WORD.test(before);            // 여는 ** : 앞이 글자, 뒤가 문장부호
+          if (!closeFails && !openFails) return undefined;
+          return { type: 'strongKo', raw: m[0], text: inner, tokens: this.lexer.inlineTokens(inner) };
+        },
+        renderer(token) { return `<strong>${this.parser.parseInline(token.tokens)}</strong>`; },
+      }] });
+    }
+    return marked.parse(md, { gfm: true });
+  }
+
   // md → 제목 목록(상세 문서와 같은 파이프라인: marked gfm → 제목 textContent → slugger). 제목 목록이 필요한 곳용(원문 블록까지 필요하면 md-blocks.js의 PF.md.parse)
   //   <template>에 넣는 이유: 그 안의 내용은 비활성이라 문서 속 이미지(GIF 수십 MB)를 받지 않음. div에 넣으면 DOM에 붙이지 않아도 이미지를 받기 시작함
   function headingsOf(md) {
     if (!window.marked) return [];
     const box = document.createElement('template');
-    box.innerHTML = marked.parse(md, { gfm: true });
+    box.innerHTML = mdHtml(md);
     const slug = slugger();
     return [...box.content.querySelectorAll('h1, h2, h3, h4, h5, h6')].map((h) => ({ level: +h.tagName[1], text: h.textContent.trim(), id: slug(h.textContent.trim()) }));
   }
@@ -150,14 +180,14 @@ const PF = (() => {
   }
 
   // ── 안내 문구(옛 렌더러와 같은 글) ──
-  const FILE_HELP = `<p>이 페이지는 <code>data/</code>와 기술 문서를 불러와 그리기 때문에, 파일을 더블클릭해서는 열리지 않습니다.</p>
+  const FILE_HELP = `<p>이 페이지는 <code>data/</code>와 프로젝트 문서를 불러와 그리기 때문에, 파일을 더블클릭해서는 열리지 않습니다.</p>
       <ol>
         <li>레포 폴더에서 터미널을 열고 아래 명령을 실행한 뒤 <b>http://localhost:4600</b> 접속
           <pre>python -m http.server 4600</pre>(Windows에서 안 되면 <code>py -m http.server 4600</code>)</li>
         <li>또는 JetBrains IDE(Rider·WebStorm)에서 <code>index.html</code> 우클릭 → <b>Open in → Browser</b></li>
         <li>또는 Claude Code에게 "미리보기 띄워줘"라고 요청</li>
       </ol>`;
-  const noDataHtml = (err) => `<p>Claude Code에서 아래 명령을 실행하면 <code>src/</code>의 기술 문서·스크린샷을 읽어 데이터를 만듭니다.</p>
+  const noDataHtml = (err) => `<p>Claude Code에서 아래 명령을 실행하면 <code>src/</code>의 프로젝트 문서·스크린샷을 읽어 데이터를 만듭니다.</p>
       <pre>/portfolio-build</pre>
       <p class="pf-note-err">${esc(err?.message || '')}</p>`;
   const isFile = () => location.protocol === 'file:';
@@ -176,6 +206,6 @@ const PF = (() => {
   const { t, tab, label, load: loadStrings, report: stringsReport } = PFStr;
 
   return { esc, inline, isUrl, shortUrl, loadJSON, loadText, encodePath, srcPath, projectUrl, docUrl, siteBase, visibleUrl, metaValue, teamLabel,
-           slugger, normTitle, resolveHeading, keyOk, deckSceneFor, headingsOf, ICON, NEWTAB, link, markNewTab, themeTokens, applyTheme, contrast, hexRgb,
+           slugger, normTitle, resolveHeading, keyOk, deckSceneFor, mdHtml, headingsOf, ICON, NEWTAB, link, markNewTab, themeTokens, applyTheme, contrast, hexRgb,
            FILE_HELP, noDataHtml, isFile, notice, guardFileProtocol, noData, t, tab, label, loadStrings, stringsReport };
 })();
