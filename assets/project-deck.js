@@ -1,9 +1,9 @@
-// 발표 덱(project.html?p=<폴더 이름>) — 기술 문서를 바탕으로 한 16:9 발표 슬라이드(결정 G1·G2·G6·G11)
+// 발표 덱(project.html?p=<폴더 이름>) — 프로젝트 문서를 바탕으로 한 16:9 발표 슬라이드(결정 G1·G2·G6·G11)
 //   장면 순서: 표지(cover) → 목차(toc) → [장 표지(ch-<장 key>) → 장면(d-<key>, 나뉘면 d-<key>-2…)] × 장 → 결과와 회고(retro) → 맺음(end)
 //   장면 목록은 data/projects/<id>.json의 deck(/portfolio-build가 원문을 읽고 고름). 그림·코드·표·이미지는 원문 md 블록을 가리키기만 하고
 //   여기서 원문을 찾아 **그대로** 그립니다(PF.md, 규칙은 .claude/skills/portfolio-build/schema.md 「발표 덱」). 장면 글은 deck의 글 조각뿐입니다.
 //   deck이 없는 예전 데이터는 highlights·troubleshooting·screenshots·retro로 자동 구성하고 장면마다 띠로 알립니다.
-//   옛 주소(#s=hl-n·ts-n·shots·more, #pf-*)는 가까운 장면으로 넘기고, 옛 기술 문서 제목 앵커는 상세 문서로 보냅니다(결정 G3).
+//   옛 주소(#s=hl-n·ts-n·shots·more, #pf-*)는 가까운 장면으로 넘기고, 옛 프로젝트 문서 제목 앵커는 상세 문서로 보냅니다(결정 G3).
 //   상세 문서 링크는 표지와 맺음 장면에만 둡니다(결정 G1). 새 문장·수치를 만들지 않습니다(장면 이름·라벨은 UI 글자 — 문구 표 PF.t).
 //   data의 탭·카드 라벨은 PF.tab()·PF.label()로 보여 주기만 바꾸고, 칩 색(FLOW)은 data 값 그대로 판정합니다.
 //   주석의 설계 근거(docs/design/…, 결정 F·G·Q 번호)는 템플릿 유지관리용 maintainer 브랜치에 있습니다. 이 레포에 없어도 정상입니다.
@@ -18,7 +18,7 @@
 
   // ── 옛 주소(결정 G3) ──
   //   #s=… · #<숫자> · #s-n · 새 장면 id → 덱이 받음(옛 장면 id는 그린 뒤 remapHash가 바꿈) / #pf-doc → 상세 문서 /
-  //   #pf-highlights 등 → 옛 장면 id로 바꾼 뒤 같은 처리 / 그 밖(옛 기술 문서 제목 앵커) → 상세 문서의 같은 조각
+  //   #pf-highlights 등 → 옛 장면 id로 바꾼 뒤 같은 처리 / 그 밖(옛 프로젝트 문서 제목 앵커) → 상세 문서의 같은 조각
   const SCENE = /^(cover|toc|ch-[a-z][a-z0-9-]*|d-[a-z0-9-]+|retro(-\d+)?|end|notice|hl-\d+(-\d+)?|ts-\d+(-\d+)?|shots(-\d+)?|more)$/;
   const LEGACY = { 'pf-highlights': 'hl-1', 'pf-troubleshooting': 'ts-1', 'pf-screenshots': 'shots', 'pf-retro': 'retro' };
   const redirected = (() => {
@@ -59,8 +59,8 @@
     try { md = await PF.loadText(PF.srcPath(p.id, p.doc)); }
     catch (e) {
       info.errors.push('doc: ' + e.message);
-      deck.replaceChildren(PF.msgScene({ title: '기술 문서 파일을 찾지 못했습니다', eyebrow: 'PROJECT',
-        html: `<p>데이터에 적힌 기술 문서(<code>src/${esc(p.id)}/${esc(p.doc || '')}</code>)를 열 수 없습니다. <code>src/</code> 폴더를 확인한 뒤 <code>/portfolio-build</code>를 다시 실행해 주세요.</p><p class="pf-note-err">${esc(e.message)}</p>${back}` }));
+      deck.replaceChildren(PF.msgScene({ title: '프로젝트 문서 파일을 찾지 못했습니다', eyebrow: 'PROJECT',
+        html: `<p>데이터에 적힌 프로젝트 문서(<code>src/${esc(p.id)}/${esc(p.doc || '')}</code>)를 열 수 없습니다. <code>src/</code> 폴더를 확인한 뒤 <code>/portfolio-build</code>를 다시 실행해 주세요.</p><p class="pf-note-err">${esc(e.message)}</p>${back}` }));
       return;
     }
     const P = PF.md.parse(md, p.id);
@@ -426,7 +426,7 @@
     return two.map((x) => (PF.fitsM(x) ? x : PF.shrinkOrClip(x, PFScene.refUrl(x.id), info.overflow)));
   }
 
-  // 맺음: 상세 기술문서(전문) · 바깥 링크 · 포트폴리오. 덱 → 상세 문서 링크는 표지와 여기에만(G1)
+  // 맺음: 프로젝트 상세 문서(전문) · 바깥 링크 · 포트폴리오. 덱 → 상세 문서 링크는 표지와 여기에만(G1)
   function endScene(p, foot, ext, auto) {
     const card = (k, label, href, kind, visible, primary) => `<div class="lcard${primary ? ' primary' : ''}">${link({ href, kind, label: `<span class="lc-k">${esc(k)}</span><span class="lc-t">${esc(label)}</span><span class="url">${esc(visible)}</span>` })}</div>`;
     const make = () => {

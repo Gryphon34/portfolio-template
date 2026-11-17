@@ -362,7 +362,7 @@
 
   // ── 프로젝트 소개 장면(발표 덱 표지, 결정 G4): 큰 대표 이미지 · 메타 격자 · 개발 의도 · 링크 카드 · 태그 ──
   //   글: title · tagline · meta · team.role · intent · tags(data 그대로). 링크: [{ k, label, href, kind, visible }]
-  //   메타 이름(data의 meta[].label, 기술 문서의 말) → 영문 라벨 키
+  //   메타 이름(data의 meta[].label, 프로젝트 문서의 말) → 영문 라벨 키
   const META_EN = { '장르': 'en.meta-genre', '기간': 'en.meta-duration', '개발 기간': 'en.meta-duration', '인원': 'en.meta-team', '팀': 'en.meta-team', '팀 구성': 'en.meta-team',
                     '환경': 'en.meta-env', '개발 환경': 'en.meta-env', '엔진': 'en.meta-engine', '플랫폼': 'en.meta-platform' };
   const metaEn = (label) => { const k = META_EN[String(label || '').replace(/\s+/g, ' ').trim()]; return k ? PF.t(k) : ''; };

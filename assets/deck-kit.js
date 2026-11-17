@@ -392,7 +392,7 @@
   const HELP_PPTX = `<p><b>PPTX로 저장하기 — PowerPoint에서 고쳐 쓰는 파일</b></p>
     <p>글·카드·표·코드는 PowerPoint에서 바로 고칠 수 있는 글상자·도형·표로, 그림은 원본 그림으로 들어갑니다. 다이어그램은 SVG 그림이라 PowerPoint 365에서 오른쪽 클릭 → <b>[도형으로 변환]</b>하면 상자와 글자를 하나씩 고칠 수 있습니다.</p>
     <p>글꼴은 화면과 같은 이름(Pretendard 등)으로 들어갑니다. PC에 그 글꼴이 없으면 PowerPoint가 다른 글꼴로 보여 줘 줄바꿈이 달라질 수 있습니다. 글꼴을 설치하거나 <b>[홈 → 바꾸기 → 글꼴 바꾸기]</b>로 한 번에 바꾸세요.</p>
-    <p>PPTX에서 고친 내용은 발표 덱(웹)에 돌아오지 않습니다. 내용이 틀렸으면 기술 문서를 고치고 다시 빌드하세요.</p>`;
+    <p>PPTX에서 고친 내용은 발표 덱(웹)에 돌아오지 않습니다. 내용이 틀렸으면 프로젝트 문서를 고치고 다시 빌드하세요.</p>`;
   const HELP_LOCAL = (pptx) => (isLocal ? `<p class="warn">지금은 미리보기(로컬 서버)입니다. 여기서 저장한 PDF${pptx ? '·PPTX' : ''}의 링크는 이 컴퓨터 주소를 가리키므로, 제출용은 배포된 주소에서 저장하세요.</p>` : '');
   const helpOpen = () => !!hud && !hud.querySelector('.pf-hud-help').hidden;
   function toggleHelp(on) {
@@ -421,7 +421,7 @@
       <button type="button" data-a="help" aria-expanded="false" aria-controls="pf-hud-help" aria-label="저장 안내" title="저장 안내(PDF${opts.pptx ? '·PPTX' : ''})">?</button>
       <button type="button" data-a="view"><span class="l"></span><span class="s"></span></button>
       <button type="button" data-a="anyway" hidden>${LH('ui.print-anyway')}</button>
-      ${isLocal ? '<span class="pf-hud-badge" role="img" hidden title="미리보기에서만 보이는 장면 배치 점검 결과(찾은 항목 수). 배포된 페이지·PDF에는 나오지 않습니다. 슬라이드에 &quot;내용이 잘렸습니다&quot; 띠가 있으면 그 장면의 글이 나온 파일(src/의 기술 문서)을 줄이거나 /portfolio-edit로 장면을 나누고 /portfolio-build를 다시 실행하세요."></span>' : ''}
+      ${isLocal ? '<span class="pf-hud-badge" role="img" hidden title="미리보기에서만 보이는 장면 배치 점검 결과(찾은 항목 수). 배포된 페이지·PDF에는 나오지 않습니다. 슬라이드에 &quot;내용이 잘렸습니다&quot; 띠가 있으면 그 장면의 글이 나온 파일(src/의 프로젝트 문서)을 줄이거나 /portfolio-edit로 장면을 나누고 /portfolio-build를 다시 실행하세요."></span>' : ''}
       <span class="pf-hud-msg" role="status" aria-live="polite"></span>
       <div class="pf-hud-help" id="pf-hud-help" hidden>${HELP}${opts.pptx ? HELP_PPTX : ''}${HELP_LOCAL(!!opts.pptx)}</div>
       <span class="pf-sr" aria-live="polite" aria-atomic="true"></span>`;

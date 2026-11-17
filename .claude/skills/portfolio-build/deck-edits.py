@@ -75,7 +75,7 @@ def norm_src(s):                                                  # md-blocks.js
     return s[2:] if s.startswith('./') else s
 
 
-# ── 기술 문서 md: 제목·절 범위·원문 블록(marked 12 + md-blocks.js와 같은 판정을 목표로 한 근사) ──
+# ── 프로젝트 문서 md: 제목·절 범위·원문 블록(marked 12 + md-blocks.js와 같은 판정을 목표로 한 근사) ──
 FENCE_OPEN = re.compile(r'^ {0,3}(`{3,}|~{3,})(.*)$')
 ATX = re.compile(r'^ {0,3}(#{1,6})(?:[ \t]+(.*?))?(?:[ \t]+#+)?[ \t]*$')
 SETEXT = re.compile(r'^ {0,3}(=+|-+)[ \t]*$')
@@ -622,11 +622,11 @@ def apply_edits(data, edits, doc, rep):
         frm = frm_of(p, '고친 장면')
         t, how = find_target(k, frm, p.get('sectionPath'))
         if how == 'conflict':
-            rep.add('권장', '고친 장면 "%s": 빌드 장면 "%s"는 지금 §%s를 다룹니다(원래 §%s). 기술 문서의 절 제목을 바꿨거나 빌드가 key를 다른 절에 썼습니다 → 고친 내용을 반영하지 않았습니다. /portfolio-edit로 다시 고치거나 되돌리세요'
+            rep.add('권장', '고친 장면 "%s": 빌드 장면 "%s"는 지금 §%s를 다룹니다(원래 §%s). 프로젝트 문서의 절 제목을 바꿨거나 빌드가 key를 다른 절에 썼습니다 → 고친 내용을 반영하지 않았습니다. /portfolio-edit로 다시 고치거나 되돌리세요'
                     % (k, k, (t.get('sectionPath') or [''])[-1], ((frm or {}).get('sectionPath') or p.get('sectionPath') or [''])[-1]))
             continue
         if t is None and frm:
-            rep.add('권장', '고친 장면 "%s"가 원래 장면(§%s)을 잃었습니다(기술 문서의 절 제목을 바꾸거나 절을 없앴나요?) → 고친 내용을 반영하지 않았습니다. /portfolio-edit로 다시 고치거나 되돌리세요'
+            rep.add('권장', '고친 장면 "%s"가 원래 장면(§%s)을 잃었습니다(프로젝트 문서의 절 제목을 바꾸거나 절을 없앴나요?) → 고친 내용을 반영하지 않았습니다. /portfolio-edit로 다시 고치거나 되돌리세요'
                     % (k, ' › '.join(frm.get('sectionPath') or [])))
             continue
         errs, warns, pieces, cross = validate(p, chapters, doc)
@@ -775,7 +775,7 @@ def _run_apply(pid, write, rep):
     if data.get('doc') and md.is_file():
         doc = Doc(md.read_bytes().decode('utf-8-sig', errors='replace'))
     elif edits and (edits.get('pin') or edits.get('hide')):
-        rep.add('필수', '기술 문서 src/%s/%s를 찾지 못해 고친 장면을 검사할 수 없습니다 → 반영하지 않았습니다(문서 이름을 바꿨다면 먼저 /portfolio-build)' % (pid, data.get('doc') or '?'))
+        rep.add('필수', '프로젝트 문서 src/%s/%s를 찾지 못해 고친 장면을 검사할 수 없습니다 → 반영하지 않았습니다(문서 이름을 바꿨다면 먼저 /portfolio-build)' % (pid, data.get('doc') or '?'))
         return
     slides, base = apply_edits(data, edits, doc, rep)
     new_deck = dict(deck)

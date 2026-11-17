@@ -1,6 +1,6 @@
 {
   "id": "0-Tidy-Mommy",
-  "doc": "기술문서.md",
+  "doc": "프로젝트문서.md",
   "schemaVersion": 2,
   "title": "엄마의 삼단정리 (Tidy Mommy)",
   "tagline": "3줄에 쌓이는 블록의 맨 앞 블록을 옮겨 같은 색 3개를 맞추는 2D 액션 퍼즐",
