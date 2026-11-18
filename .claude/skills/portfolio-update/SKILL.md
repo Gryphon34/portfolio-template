@@ -23,7 +23,7 @@ Fork로 만든 레포든, 파일을 복사해 만든 레포든 똑같이 동작�
 
 | 분류 | 경로 | 처리 |
 |---|---|---|
-| 교체 | `index.html`, `project.html`, `doc.html`, `assets/`, `format/`, `CLAUDE.md`, `.nojekyll`, 템플릿에 있는 `.claude/skills/portfolio-*/` 전부(이 명령 자신 포함) | 템플릿 내용으로 바꿈. 템플릿에서 지워진 파일은 §4 규칙대로 |
+| 교체 | `index.html`, `project.html`, `doc.html`, `assets/`, `format/`, `CLAUDE.md`, `GUIDE.md`(전체 흐름 가이드), `.nojekyll`, 템플릿에 있는 `.claude/skills/portfolio-*/` 전부(이 명령 자신 포함) | 템플릿 내용으로 바꿈. 템플릿에서 지워진 파일은 §4 규칙대로 |
 | 물어봄 | `README.md` | 수강생이 고치지 않았으면 교체. 고쳤으면 묻고, 기본은 **수강생 것을 유지** |
 | 추가만 | `.gitignore` | 템플릿에만 있는 줄을 끝에 더함(지우거나 바꾸지 않음, 순서는 템플릿과 달라도 됨) |
 | 추가만 | `.claude/launch.json` | 이름(`name`)이 없는 구성만 더함 |

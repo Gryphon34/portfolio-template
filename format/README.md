@@ -12,6 +12,7 @@ Claude는 `/portfolio-build`·`/portfolio-check`를 실행할 때 이 파일들�
 | [04-layout-patterns.md](04-layout-patterns.md) | 발표 덱 장면 틀 · 포트폴리오 문서 절 · 문서 패턴 13종 → 세 페이지 매핑, 레이아웃 원칙 | Part 3 · 레이아웃 카탈로그 |
 | [05-custom-page-prompts.md](05-custom-page-prompts.md) | 직접 생성 모드 규칙·프롬프트 | Part 6 트랙 B · 만능 틀 ③④ |
 | [06-deploy.md](06-deploy.md) | GitHub Pages 브랜치 배포·문제 해결 | Part 7 배포 |
+| [07-materials.md](07-materials.md) | 뼈대 칸마다 필요한 자료, 자료가 없을 때 대신할 방법, 재료 점검표 형식 | (이 템플릿에서 정함) |
 
 ## 가이드에서 가져오지 않은 것
 
