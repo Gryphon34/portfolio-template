@@ -323,4 +323,4 @@ argument-hint: "[프로젝트 폴더 이름 (생략하면 전체)]"
    - 다시 빌드해서 없어진 장면 주소(§5)가 있으면 알림
    - 고친 장면(`src/<id>/deck-edits.json`)이 있으면 반영한 수와, 원래 장면을 잃은 고친 장면(고아)이 있으면 그 장면 key
    - 발표 덱의 장면 배치(틀·그림 고르기·나누기·합치기·숨기기·순서)는 `/portfolio-edit`로 장면마다 고칠 수 있고 다시 빌드해도 남는다는 안내(한 줄)
-   - 다음 단계: 소스 수정 → `/portfolio-build` 다시 → 만족하면 commit·push (배포는 `format/06-deploy.md`). 전체 흐름은 `GUIDE.md`
+   - 다음 단계: 소스 수정 → `/portfolio-build` 다시 → 만족하면 commit·push (배포는 `format/06-deploy.md`). 전체 흐름은 `docs/2-workflow.md`

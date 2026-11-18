@@ -18,6 +18,7 @@
 │   ├── code/                #    (선택) 핵심 소스코드 .cs
 │   ├── deck-edits.json      #    (/portfolio-edit) 발표 덱 장면 고치기 — 요청을 받아 Claude가 씀, 커밋함, 프로젝트 문서가 아님, build는 읽기만
 │   └── _intake/             #    (/portfolio-intake) 재료집·촬영목록·발표자료(.pptx에서 꺼낸 글 + pptx/ 그림) + 수강생이 넣은 자료/(기획서·회의록·AI 대화 기록 등) — 프로젝트 문서가 아님, git 제외, build가 읽지 않음(check는 재료 점검표를 위해 파일 목록과 체크박스 수만 셈)
+├── docs/                    # 📘 사람이 읽는 문서 — 전체 흐름(2-workflow) · 문서 쓰는 법(3-writing) · 도구 설명(tools/) · 문제 해결 · 참고. README가 입구
 ├── format/                  # 📏 가이드 판정 기준 (읽기 전용)
 ├── data/                    # 🤖 /portfolio-build가 생성 (portfolio.json, projects/*.json)
 ├── index.html               # 🖥 고정 렌더러 — 포트폴리오 문서 (아래로 읽는 한 페이지, A4 인쇄 = 제출 PDF)
@@ -106,7 +107,7 @@ flowchart LR
 | `format/06-deploy.md` | 배포 안내·문제 해결 |
 | `format/07-materials.md` | 뼈대 칸마다 필요한 자료 — `/portfolio-check`의 재료 점검표, 문서가 없는 프로젝트 안내 |
 
-수강생이 전체 흐름(무엇을 어떤 순서로 하는지, 지금 어느 단계인지)을 물으면 `GUIDE.md`를 따라 안내합니다.
+수강생이 전체 흐름(무엇을 어떤 순서로 하는지, 지금 어느 단계인지)을 물으면 `docs/2-workflow.md`를 따라 안내합니다. 명령마다의 자세한 사용법은 `docs/tools/`에 있습니다.
 
 ## 미리보기
 

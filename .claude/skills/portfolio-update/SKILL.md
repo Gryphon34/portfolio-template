@@ -23,7 +23,7 @@ Fork로 만든 레포든, 파일을 복사해 만든 레포든 똑같이 동작�
 
 | 분류 | 경로 | 처리 |
 |---|---|---|
-| 교체 | `index.html`, `project.html`, `doc.html`, `assets/`, `format/`, `CLAUDE.md`, `GUIDE.md`(전체 흐름 가이드), `.nojekyll`, 템플릿에 있는 `.claude/skills/portfolio-*/` 전부(이 명령 자신 포함) | 템플릿 내용으로 바꿈. 템플릿에서 지워진 파일은 §4 규칙대로 |
+| 교체 | `index.html`, `project.html`, `doc.html`, `assets/`, `format/`, `CLAUDE.md`, `docs/`(사람이 읽는 문서 — 전체 흐름·쓰는 법·도구 설명), `.nojekyll`, 템플릿에 있는 `.claude/skills/portfolio-*/` 전부(이 명령 자신 포함) | 템플릿 내용으로 바꿈. 템플릿에서 지워진 파일은 §4 규칙대로 |
 | 물어봄 | `README.md` | 수강생이 고치지 않았으면 교체. 고쳤으면 묻고, 기본은 **수강생 것을 유지** |
 | 추가만 | `.gitignore` | 템플릿에만 있는 줄을 끝에 더함(지우거나 바꾸지 않음, 순서는 템플릿과 달라도 됨) |
 | 추가만 | `.claude/launch.json` | 이름(`name`)이 없는 구성만 더함 |
@@ -43,7 +43,7 @@ git -C "$R" status --porcelain --untracked-files=all
 
 - 병합·리베이스 중이면(`$R/.git/MERGE_HEAD`·`rebase-merge/` 등) 멈추고 먼저 끝내라고 안내합니다.
 - 커밋하지 않은 변경이 있으면 목록을 보여 주고 "먼저 커밋하거나 정리한 뒤 다시 실행해 주세요"라고 멈춥니다.
-  **예외**: 부트스트랩(README의 두 줄 명령)으로 받은 `.claude/skills/portfolio-update/` 하나만 새로 있거나 바뀐 것은 괜찮습니다(스테이징된 `A` 상태여도 됩니다). 이것을 "부트스트랩 파일"이라 부릅니다.
+  **예외**: 부트스트랩(`docs/tools/update.md`의 두 줄 명령)으로 받은 `.claude/skills/portfolio-update/` 하나만 새로 있거나 바뀐 것은 괜찮습니다(스테이징된 `A` 상태여도 됩니다). 이것을 "부트스트랩 파일"이라 부릅니다.
 
 ## 2. 받기 (동의 받은 뒤)
 
