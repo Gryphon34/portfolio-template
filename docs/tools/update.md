@@ -1,6 +1,11 @@
 # 템플릿 업데이트 받기
 
-`/portfolio-update [되돌리기]` · ✋ **직접 입력할 때만**
+| | |
+|---|---|
+| **명령** | `/portfolio-update [되돌리기]` · ✋ **직접 입력할 때만** |
+| **언제 쓰나** | 템플릿에 새 기능이 생겼을 때 |
+| **바뀌는 것** | 렌더러 · 명령 · 판정 기준 · 문서, 그리고 업데이트 커밋 1개 (아래 표) |
+| **되돌리기** | `/portfolio-update 되돌리기` |
 
 템플릿에 새 기능이 생기면 `/portfolio-update`로 받습니다. Fork로 만든 레포든 파일을 복사해 만든 레포든 똑같이 동작합니다.
 
@@ -16,17 +21,13 @@
 - 업데이트는 커밋 1개로 남고 **push는 하지 않습니다**. **되돌리기**: `/portfolio-update 되돌리기`.
 - 끝나면 `/portfolio-build`를 다시 실행하고, 미리보기로 확인한 뒤 push하세요. 다시 빌드하기 전에는 발표 덱이 노란 **예전 데이터로 자동 구성** 띠와 함께 보입니다.
 
-<details>
-<summary><b>더 알아 둘 것</b> — 커밋 안 한 변경 · README · 문구 표와 profile.md</summary>
+## 더 알아 둘 것
 
 - 커밋하지 않은 변경이 있으면 먼저 커밋하라고 하고 멈춥니다.
 - README는 직접 고치지 않았으면 새 것으로 바꾸고, 고쳤으면 유지할지 묻습니다(기본은 유지). 렌더러나 명령 파일을 직접 고친 흔적이 있으면 파일마다 바꿀지 남길지 묻습니다.
 - 문구 표에 새 문구 자리가 생겼거나 `profile.md` 안내가 바뀌었으면 알려만 줍니다(내 파일은 고치지 않음).
 
-</details>
-
-<details>
-<summary><b>내 레포에 <code>/portfolio-update</code> 명령이 없다면</b> (옛 템플릿으로 만든 레포)</summary>
+## 내 레포에 `/portfolio-update` 명령이 없다면
 
 레포 폴더의 터미널에서 아래 두 줄을 **한 번만** 실행해 명령부터 받습니다.
 
@@ -39,7 +40,5 @@ git checkout FETCH_HEAD -- .claude/skills/portfolio-update
 ```
 
 그다음 Claude Code에서 `/portfolio-update`를 입력합니다(명령 목록에 안 보이면 Claude Code를 새로 시작하세요).
-
-</details>
 
 Fork한 레포를 GitHub의 **Sync fork**로 받다가 `data/`에서 충돌이 나면 **내 것을 유지**하면 됩니다. 템플릿의 샘플 빌드 결과와 내 빌드 결과가 같은 파일이라서 생기는 충돌이고, `data/`는 `/portfolio-build`가 다시 만듭니다.
