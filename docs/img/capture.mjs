@@ -18,7 +18,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..', '..');
 const P = '1-action-platformer';                       // 스크린샷에 쓰는 샘플 프로젝트
 
-// 포트폴리오 문서에서 절 하나를 화면 맨 위로 올리고, 그 절의 그림을 다 받을 때까지 기다림
+// 포트폴리오 페이지에서 절 하나를 화면 맨 위로 올리고, 그 절의 그림을 다 받을 때까지 기다림
 const section = (id) => `
   document.querySelectorAll('img[loading="lazy"]').forEach((i) => { i.loading = 'eager'; });
   const el = document.getElementById(${JSON.stringify(id)});

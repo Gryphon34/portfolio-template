@@ -42,7 +42,7 @@
 /portfolio-intake "C:\Users\나\Downloads\내 게임 발표.pptx"
 ```
 
-수업·기획·팀 발표 때 만든 PowerPoint 파일(.pptx)을 재료로 가져옵니다. 발표 덱의 [\[PPTX로 저장\]](export.md#발표-덱을-pptx로-저장하기)과는 반대 방향입니다(내 발표 자료 → 프로젝트 문서 재료).
+수업·기획·팀 발표 때 만든 PowerPoint 파일(.pptx)을 재료로 가져옵니다. 슬라이드의 [\[PPTX로 저장\]](export.md#슬라이드를-pptx로-저장하기)과는 반대 방향입니다(내 발표 자료 → 프로젝트 문서 재료).
 
 - 슬라이드마다 **글·표·차트 값·SmartArt·발표자 노트·링크**를 그대로 `src/<번호-이름>/_intake/발표자료.md`에 옮기고, **그림**은 `_intake/pptx/`에 꺼냅니다. 끝에 프로젝트 문서 5단 구조의 질문이 붙습니다.
 - PowerPoint가 설치되어 있지 않아도 되고, Python만 있으면 됩니다. `.ppt`(옛 형식)·Keynote·Google 프레젠테이션은 먼저 `.pptx`로 저장해 주세요.

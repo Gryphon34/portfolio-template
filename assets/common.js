@@ -1,4 +1,4 @@
-// 포트폴리오 렌더러 공통 유틸 — index.html(포트폴리오 문서) · project.html(발표 덱) · doc.html(상세 문서)가 함께 씁니다.
+// 포트폴리오 렌더러 공통 유틸 — index.html(포트폴리오 페이지) · project.html(슬라이드) · doc.html(상세 문서)가 함께 씁니다.
 // 데이터: data/portfolio.json, data/projects/<폴더 이름>.json(/portfolio-build가 생성), src/<폴더>/<프로젝트 문서>.md
 // 이 파일은 글을 만들지 않습니다. 화면에 나오는 내용은 모두 위 데이터에서 오고, UI 문구(절 이름·버튼·라벨)는 assets/strings.js의 문구 표(PF.t)에서 옵니다.
 // 주석의 설계 근거(docs/design/…의 portfolio-structure·deck-vs-scroll·01 §, R0, 결정 F·Q·# 번호)와 원본 시안(spikes/…)은 템플릿 유지관리용 maintainer 브랜치에 있습니다. 이 레포에 없어도 정상입니다.
@@ -56,7 +56,7 @@ const PF = (() => {
     const norm = list.map((h) => [normTitle(h.text), h]);
     return (norm.find(([t]) => t === want) || norm.find(([t]) => t && (t.startsWith(want) || want.startsWith(t))))?.[1] || null;
   }
-  // 발표 덱에서 원문 절(section 글자)에 해당하는 장면 id(포트폴리오 문서의 [발표 덱에서 보기]·발표 덱 옛 주소 hl-n 넘기기)
+  // 슬라이드에서 원문 절(section 글자)에 해당하는 장면 id(포트폴리오 페이지의 [슬라이드 열기]·슬라이드 옛 주소 hl-n 넘기기)
   const KEY_RE = /^[a-z][a-z0-9-]{1,31}$/;
   const keyOk = (k) => KEY_RE.test(k || '') && !/^s-\d+$/.test(k);
   function deckSceneFor(p, section) {
@@ -70,7 +70,7 @@ const PF = (() => {
     const hid = find(p.deck.base || []);
     return hid && keyOk(hid.chapter) && p.deck.slides.some((x) => x.chapter === hid.chapter) ? `ch-${hid.chapter}` : '';
   }
-  // md → HTML. marked(gfm)를 부르는 곳은 이 함수 하나입니다(프로젝트 상세 문서·발표 덱·제목 목록이 같은 결과를 쓰도록).
+  // md → HTML. marked(gfm)를 부르는 곳은 이 함수 하나입니다(프로젝트 상세 문서·슬라이드·제목 목록이 같은 결과를 쓰도록).
   //   한국어 굵은 글씨 보완: CommonMark 규칙은 **"인용"**입니다 · **이름(설명)**와 처럼 닫는 ** 앞이 문장부호이고 바로 뒤에
   //   글자(조사)가 붙으면 굵은 글씨로 보지 않아 별표가 그대로 보입니다. 여는 쪽도 같습니다(글자**"인용"**). 그 두 경우만
   //   굵은 글씨로 받아 주고, 나머지는 marked의 기본 규칙에 맡깁니다(조건에 안 맞으면 아무것도 돌려주지 않음).
@@ -111,7 +111,7 @@ const PF = (() => {
   }
 
   // ── 링크 규칙(F10, portfolio-structure §5): 문서 사이·외부·원문 파일 = 새 탭 + ↗(aria-hidden) + 숨김 "(새 탭)".
-  //    같은 문서 안 이동(앵커·목차·건너뛰기·같은 덱 장면)·mailto:·덱 조작 버튼·라이트박스 = 같은 탭(target 없음)
+  //    같은 문서 안 이동(앵커·목차·건너뛰기·같은 슬라이드 장면)·mailto:·슬라이드 조작 버튼·라이트박스 = 같은 탭(target 없음)
   const ICON = '<svg class="pf-newtab-icon" aria-hidden="true" focusable="false" viewBox="0 0 12 12" width="12" height="12"><path d="M4.5 2.5h5v5M9.5 2.5 3 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const NEWTAB = `${ICON}<span class="pf-sr-only pf-newtab-sr">(새 탭)</span>`;
   const NEW_TAB_KINDS = new Set(['external', 'page', 'file']);
@@ -128,7 +128,7 @@ const PF = (() => {
   //   글자에 쓰는 강조색은 화면 바탕(--t-bg, 없으면 어두운 기본 바탕) 대비 7:1 이상이 되게 바탕 반대쪽(어두운 바탕이면 밝게, 밝은 바탕이면 어둡게)으로,
   //   흰 글자를 올리는 칠은 4.5:1 이상이 되게 어둡게 맞춤. --accent-2 = 강조색의 색상을 보라(285°) 쪽으로 50° 돌린 짝(파랑 → 보라, 주황 → 분홍),
   //   --accent-3 = 같은 쪽으로 95°(광채). theme.css에 --t-accent-2·--t-accent-3이 있으면 그 색
-  //   흰 종이에 찍는 A4 인쇄(포트폴리오 문서·상세 문서)는 '-p'가 붙은 값을 씀(portfolio.css·doc.css의 @media print). 발표 덱은 인쇄도 화면 장면 그대로
+  //   흰 종이에 찍는 A4 인쇄(포트폴리오 페이지·상세 문서)는 '-p'가 붙은 값을 씀(portfolio.css·doc.css의 @media print). 슬라이드는 인쇄도 화면 장면 그대로
   const hexRgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
   const rgbHex = (c) => '#' + c.map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, '0')).join('').toUpperCase();
   const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);           // t = b 쪽 비율
@@ -194,7 +194,7 @@ const PF = (() => {
   function notice(root, title, bodyHtml) {
     root.innerHTML = `<div class="notice"><h1>${title}</h1>${bodyHtml}</div>`;
   }
-  // file:// 로 열면 fetch가 막힌다 → 로컬 서버 안내(흐르는 페이지용. 덱은 안내 장면으로 보여 줌)
+  // file:// 로 열면 fetch가 막힌다 → 로컬 서버 안내(흐르는 페이지용. 슬라이드는 안내 장면으로 보여 줌)
   function guardFileProtocol(root) {
     if (!isFile()) return false;
     notice(root, '로컬 서버로 열어 주세요', FILE_HELP);
