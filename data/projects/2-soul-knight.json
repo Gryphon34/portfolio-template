@@ -106,8 +106,7 @@
       { "key": "boss", "title": "보스 — 상태와 패턴", "sectionPath": ["2. 보스 — 상태와 패턴"] },
       { "key": "combat", "title": "전투 판정 — 때리고 맞기", "sectionPath": ["3. 전투 판정 — 때리고 맞기"] },
       { "key": "data", "title": "데이터 — 정해진 수치와 바뀌는 값", "sectionPath": ["4. 데이터 — 정해진 수치와 바뀌는 값"] },
-      { "key": "gear", "title": "장비와 요리", "sectionPath": ["5. 장비와 요리"] },
-      { "key": "review", "title": "돌아보며", "sectionPath": ["6. 돌아보며"] }
+      { "key": "gear", "title": "장비와 요리", "sectionPath": ["5. 장비와 요리"] }
     ],
     "slides": [
       {
@@ -129,6 +128,14 @@
           { "label": "", "text": "투기장 안의 싸움은 1~3장, 사냥이 끝날 때 보상을 더하고 진행 상황을 남기는 것은 4장, 마을의 대장간과 냄비는 5장에서 다룹니다.", "verbatim": true }
         ],
         "visuals": [{ "kind": "mermaid", "n": 1, "fp": "flowchart TD" }]
+      },
+      {
+        "key": "ai-collab", "chapter": "intro", "layout": "full", "tab": "",
+        "title": { "text": "AI와 함께 개발한 방식", "verbatim": true },
+        "lead": { "text": "무엇을 만들지, 무엇이 맞는지는 내가 정하고, 그 사이의 구현이나 설명은 맡긴다.", "verbatim": true },
+        "sectionPath": ["0. 이 문서에 대해", "AI와 함께 개발한 방식"],
+        "points": [],
+        "visuals": [{ "kind": "table", "n": 1, "fp": "경우|맡긴 것|내가 한 것|본문" }]
       },
       {
         "key": "anim-state", "chapter": "player", "layout": "code", "tab": "구현",
@@ -306,18 +313,6 @@
           { "label": "구현", "text": "안에서 부르는 함수는 모두 더하기가 아니라 값을 덮어쓰는 `Set…`이므로, 몇 번을 불러도 결과는 지금 끼고 먹은 것으로만 정해집니다.", "verbatim": true }
         ],
         "visuals": [{ "kind": "table", "n": 2, "fp": "읽는 것|넣는 곳|없을 때" }]
-      },
-      {
-        "key": "teleport", "chapter": "review", "layout": "problem", "tab": "문제 해결",
-        "title": { "text": "물리가 맡은 몸을 코드가 순간이동시켰다", "verbatim": true },
-        "lead": null,
-        "sectionPath": ["6. 돌아보며", "물리가 맡은 몸을 코드가 순간이동시켰다"],
-        "points": [
-          { "label": "문제", "text": "계단을 내려갈 때 몸이 바로 떨어지지 않고 공중에 떠 있다가 한 박자씩 늦게 내려오며 떨렸습니다.", "verbatim": true },
-          { "label": "원인", "text": "Rigidbody는 중력으로 몸을 떨어뜨리려 하는데, 코드는 매 프레임 몸을 앞으로 순간이동시키고 있었기 때문입니다.", "verbatim": true },
-          { "label": "", "text": "다시 만든다면 XZ 이동도 Rigidbody에 맡기겠습니다.", "verbatim": true }
-        ],
-        "visuals": [{ "kind": "code", "n": 1, "fp": "// ThirdPersonController.cs" }]
       }
     ]
   }

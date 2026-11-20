@@ -15,32 +15,12 @@
     "role": ""
   },
   "meta": [
-    {
-      "label": "장르",
-      "value": "2D 전략 디펜스"
-    },
-    {
-      "label": "기간",
-      "value": "2026.06.24 ~ 2026.07.07 (약 2주)"
-    },
-    {
-      "label": "인원",
-      "value": "1인 기획 및 개발"
-    },
-    {
-      "label": "환경",
-      "value": "Unity 6000.3.15f1, New Input System"
-    }
+    { "label": "장르", "value": "2D 전략 디펜스" },
+    { "label": "기간", "value": "2026.06.24 ~ 2026.07.07 (약 2주)" },
+    { "label": "인원", "value": "1인 기획 및 개발" },
+    { "label": "환경", "value": "Unity 6000.3.15f1, New Input System" }
   ],
-  "tags": [
-    "Unity 6.3",
-    "C#",
-    "FSM",
-    "코루틴",
-    "다형성",
-    "싱글톤",
-    "Physics2D"
-  ],
+  "tags": ["Unity 6.3", "C#", "FSM", "코루틴", "다형성", "싱글톤", "Physics2D"],
   "links": {
     "github": "https://github.com/KooHoo-Dev/3rd-2D-Project-Gryphon34",
     "video": "https://youtu.be/6Be4_zasaZc",
@@ -115,55 +95,12 @@
   },
   "deck": {
     "chapters": [
-      {
-        "key": "overview",
-        "title": "프로젝트 개요",
-        "sectionPath": [
-          "프로젝트 개요"
-        ]
-      },
-      {
-        "key": "plan",
-        "title": "기획",
-        "sectionPath": [
-          "0. 기획"
-        ]
-      },
-      {
-        "key": "command",
-        "title": "커맨드 시스템",
-        "sectionPath": [
-          "1. 커맨드 시스템"
-        ]
-      },
-      {
-        "key": "combat",
-        "title": "기호 상성 기반 자동 전투 시스템",
-        "sectionPath": [
-          "2. 기호 상성 기반 자동 전투 시스템"
-        ]
-      },
-      {
-        "key": "resource",
-        "title": "자원, 인구수 쿨타임 시스템",
-        "sectionPath": [
-          "3. 자원, 인구수 쿨타임 시스템"
-        ]
-      },
-      {
-        "key": "ai",
-        "title": "AI 활용 방식",
-        "sectionPath": [
-          "4. AI 활용 방식"
-        ]
-      },
-      {
-        "key": "result",
-        "title": "결과 및 배운 점 (프로젝트 회고)",
-        "sectionPath": [
-          "5. 결과 및 배운 점 (프로젝트 회고)"
-        ]
-      }
+      { "key": "overview", "title": "프로젝트 개요", "sectionPath": ["프로젝트 개요"] },
+      { "key": "plan", "title": "기획", "sectionPath": ["0. 기획"] },
+      { "key": "command", "title": "커맨드 시스템", "sectionPath": ["1. 커맨드 시스템"] },
+      { "key": "combat", "title": "기호 상성 기반 자동 전투 시스템", "sectionPath": ["2. 기호 상성 기반 자동 전투 시스템"] },
+      { "key": "resource", "title": "자원, 인구수 쿨타임 시스템", "sectionPath": ["3. 자원, 인구수 쿨타임 시스템"] },
+      { "key": "ai", "title": "AI 활용 방식", "sectionPath": ["4. AI 활용 방식"] }
     ],
     "slides": [
       {
@@ -171,34 +108,13 @@
         "chapter": "overview",
         "layout": "overview",
         "tab": "개요",
-        "title": {
-          "text": "왜 만들었나",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "노린 재미는 두 가지입니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "프로젝트 개요",
-          "왜 만들었나"
-        ],
+        "title": { "text": "왜 만들었나", "verbatim": true },
+        "lead": { "text": "노린 재미는 두 가지입니다.", "verbatim": true },
+        "sectionPath": ["프로젝트 개요", "왜 만들었나"],
         "points": [
-          {
-            "label": "",
-            "text": "헬다이버즈 2의 스트라타젬(방향키 커맨드) 시스템을 인상 깊게 플레이했고, 워해머 스타일의 끝없이 밀려오는 외계인 앞에서 느끼는 막막함을 표현해 보고 싶어 기획했습니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "급박한 전황 속에서 정확한 방향키를 입력하는 피지컬의 재미",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "상성을 고려해 병력을 배치하는 전략의 재미",
-            "verbatim": true
-          }
+          { "label": "", "text": "헬다이버즈 2의 스트라타젬(방향키 커맨드) 시스템을 인상 깊게 플레이했고, 워해머 스타일의 끝없이 밀려오는 외계인 앞에서 느끼는 막막함을 표현해 보고 싶어 기획했습니다.", "verbatim": true },
+          { "label": "", "text": "급박한 전황 속에서 정확한 방향키를 입력하는 피지컬의 재미", "verbatim": true },
+          { "label": "", "text": "상성을 고려해 병력을 배치하는 전략의 재미", "verbatim": true }
         ],
         "visuals": []
       },
@@ -207,33 +123,15 @@
         "chapter": "overview",
         "layout": "visual",
         "tab": "흐름",
-        "title": {
-          "text": "핵심 루프",
-          "verbatim": true
-        },
+        "title": { "text": "핵심 루프", "verbatim": true },
         "lead": null,
-        "sectionPath": [
-          "프로젝트 개요",
-          "핵심 루프"
-        ],
+        "sectionPath": ["프로젝트 개요", "핵심 루프"],
         "points": [
-          {
-            "label": "",
-            "text": "제한 시간(180초) 동안 베이스(체력 400)가 무너지지 않으면 승리, 그 전에 베이스 체력이 0이 되면 패배입니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "적은 12초마다 3마리씩, 기호(세모·네모·동그라미)가 무작위로 정해져 몰려옵니다.",
-            "verbatim": true
-          }
+          { "label": "", "text": "제한 시간(180초) 동안 베이스(체력 400)가 무너지지 않으면 승리, 그 전에 베이스 체력이 0이 되면 패배입니다.", "verbatim": true },
+          { "label": "", "text": "적은 12초마다 3마리씩, 기호(세모·네모·동그라미)가 무작위로 정해져 몰려옵니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "mermaid",
-            "n": 1,
-            "fp": "flowchart LR"
-          }
+          { "kind": "mermaid", "n": 1, "fp": "flowchart LR" }
         ]
       },
       {
@@ -241,36 +139,14 @@
         "chapter": "overview",
         "layout": "overview",
         "tab": "개요",
-        "title": {
-          "text": "원작(헬다이버즈 2 스트라타젬)과 다른 점",
-          "verbatim": true
-        },
+        "title": { "text": "원작(헬다이버즈 2 스트라타젬)과 다른 점", "verbatim": true },
         "lead": null,
-        "sectionPath": [
-          "프로젝트 개요",
-          "원작(헬다이버즈 2 스트라타젬)과 다른 점"
-        ],
+        "sectionPath": ["프로젝트 개요", "원작(헬다이버즈 2 스트라타젬)과 다른 점"],
         "points": [
-          {
-            "label": "",
-            "text": "커맨드가 유일한 조작입니다. 캐릭터를 직접 움직이지 않고 커맨드 입력과 투하 위치 지정만으로 전투를 이끕니다.",
-            "verbatim": false
-          },
-          {
-            "label": "",
-            "text": "커맨드 길이가 유닛의 강함에 비례합니다. 급할 때는 약하지만 빨리 부를 수 있는 유닛을 고르는 판단이 생깁니다.",
-            "verbatim": false
-          },
-          {
-            "label": "",
-            "text": "고정 커맨드가 아닌 무작위 커맨드입니다. 소환할 때마다 새 조합이 나오기 때문에 외워서 치는 것이 아니라 매번 화면을 읽고 입력해야 합니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "기호 상성과 사기 시스템을 더했습니다. 적의 기호에 맞는 유닛을 고르는 판단과, 아군이 죽으면 주변 사기가 떨어지는 배치 판단이 추가됩니다.",
-            "verbatim": true
-          }
+          { "label": "", "text": "커맨드가 유일한 조작입니다. 캐릭터를 직접 움직이지 않고 커맨드 입력과 투하 위치 지정만으로 전투를 이끕니다.", "verbatim": false },
+          { "label": "", "text": "커맨드 길이가 유닛의 강함에 비례합니다. 급할 때는 약하지만 빨리 부를 수 있는 유닛을 고르는 판단이 생깁니다.", "verbatim": false },
+          { "label": "", "text": "고정 커맨드가 아닌 무작위 커맨드입니다. 소환할 때마다 새 조합이 나오기 때문에 외워서 치는 것이 아니라 매번 화면을 읽고 입력해야 합니다.", "verbatim": true },
+          { "label": "", "text": "기호 상성과 사기 시스템을 더했습니다. 적의 기호에 맞는 유닛을 고르는 판단과, 아군이 죽으면 주변 사기가 떨어지는 배치 판단이 추가됩니다.", "verbatim": true }
         ],
         "visuals": []
       },
@@ -279,36 +155,15 @@
         "chapter": "plan",
         "layout": "visual",
         "tab": "흐름",
-        "title": {
-          "text": "0.2 기획을 코드로 옮긴 과정",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "기획서를 바로 코드로 옮기지 않고, 규칙 문서 → 의사코드 → C# 순서로 세 번 다듬었습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "0. 기획",
-          "0.2 기획을 코드로 옮긴 과정"
-        ],
+        "title": { "text": "0.2 기획을 코드로 옮긴 과정", "verbatim": true },
+        "lead": { "text": "기획서를 바로 코드로 옮기지 않고, 규칙 문서 → 의사코드 → C# 순서로 세 번 다듬었습니다.", "verbatim": true },
+        "sectionPath": ["0. 기획", "0.2 기획을 코드로 옮긴 과정"],
         "points": [
-          {
-            "label": "",
-            "text": "이벤트 영역의 의사코드가 그대로 커맨드 시스템의 상태 머신이 되었습니다.",
-            "verbatim": true
-          }
+          { "label": "", "text": "이벤트 영역의 의사코드가 그대로 커맨드 시스템의 상태 머신이 되었습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "mermaid",
-            "n": 1,
-            "fp": "flowchart LR"
-          },
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "의사코드 (기획 단계)|구현"
-          }
+          { "kind": "mermaid", "n": 1, "fp": "flowchart LR" },
+          { "kind": "table", "n": 1, "fp": "의사코드 (기획 단계)|구현" }
         ]
       },
       {
@@ -316,41 +171,16 @@
         "chapter": "plan",
         "layout": "visual",
         "tab": "구조",
-        "title": {
-          "text": "0.3 상성과 수치 설계",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "세 기호가 서로 물고 물리도록 하나의 순환으로 정했습니다. 유리한 상대에게는 2배, 불리한 상대에게는 0.5배 피해를 줍니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "0. 기획",
-          "0.3 상성과 수치 설계"
-        ],
+        "title": { "text": "0.3 상성과 수치 설계", "verbatim": true },
+        "lead": { "text": "세 기호가 서로 물고 물리도록 하나의 순환으로 정했습니다. 유리한 상대에게는 2배, 불리한 상대에게는 0.5배 피해를 줍니다.", "verbatim": true },
+        "sectionPath": ["0. 기획", "0.3 상성과 수치 설계"],
         "points": [
-          {
-            "label": "",
-            "text": "아군과 적은 같은 기호가 같은 역할을 맡는 거울 구조라서, 적의 모양만 보고 역할(원거리·공격형·탱커)과 카운터 유닛을 함께 읽을 수 있습니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "아군은 적보다 체력과 사거리가 조금씩 높아 먼저 공격을 시작합니다. 대신 제자리에 고정되므로, 어디에 놓느냐가 성능을 결정합니다.",
-            "verbatim": true
-          }
+          { "label": "", "text": "아군과 적은 같은 기호가 같은 역할을 맡는 거울 구조라서, 적의 모양만 보고 역할(원거리·공격형·탱커)과 카운터 유닛을 함께 읽을 수 있습니다.", "verbatim": true },
+          { "label": "", "text": "아군은 적보다 체력과 사거리가 조금씩 높아 먼저 공격을 시작합니다. 대신 제자리에 고정되므로, 어디에 놓느냐가 성능을 결정합니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "mermaid",
-            "n": 1,
-            "fp": "flowchart LR"
-          },
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "기호|역할|아군 (체력 / 공격 / 사거리)|적 (체력 / 공격 / 사거리)"
-          }
+          { "kind": "mermaid", "n": 1, "fp": "flowchart LR" },
+          { "kind": "table", "n": 1, "fp": "기호|역할|아군 (체력 / 공격 / 사거리)|적 (체력 / 공격 / 사거리)" }
         ]
       },
       {
@@ -358,36 +188,28 @@
         "chapter": "plan",
         "layout": "full",
         "tab": "선택",
-        "title": {
-          "text": "0.3 상성과 수치 설계",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "강한 유닛일수록 네 가지 비용(자원·인구수·커맨드 길이·쿨타임)이 함께 올라가도록 맞췄습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "0. 기획",
-          "0.3 상성과 수치 설계"
-        ],
+        "title": { "text": "0.3 상성과 수치 설계", "verbatim": true },
+        "lead": { "text": "강한 유닛일수록 네 가지 비용(자원·인구수·커맨드 길이·쿨타임)이 함께 올라가도록 맞췄습니다.", "verbatim": true },
+        "sectionPath": ["0. 기획", "0.3 상성과 수치 설계"],
         "points": [
-          {
-            "label": "경제",
-            "text": "자원은 최대 50, 초당 1 회복, 적 처치 시 5를 얻습니다. 인구수는 최대 20입니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "자원 상한 50은 \"지원 폭격 두 번\" 분량입니다. 상한에 닿으면 회복분이 버려지므로, 모아 두기보다 계속 소환하는 쪽이 유리합니다.",
-            "verbatim": true
-          }
+          { "label": "경제", "text": "자원은 최대 50, 초당 1 회복, 적 처치 시 5를 얻습니다. 인구수는 최대 20입니다.", "verbatim": true },
+          { "label": "", "text": "자원 상한 50은 \"지원 폭격 두 번\" 분량입니다. 상한에 닿으면 회복분이 버려지므로, 모아 두기보다 계속 소환하는 쪽이 유리합니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 2,
-            "fp": "유닛|자원|인구수|커맨드 길이|쿨타임"
-          }
+          { "kind": "table", "n": 2, "fp": "유닛|자원|인구수|커맨드 길이|쿨타임" }
+        ]
+      },
+      {
+        "key": "plan-adjust",
+        "chapter": "plan",
+        "layout": "full",
+        "tab": "선택",
+        "title": { "text": "0.4 기획 대비 조정한 규칙", "verbatim": true },
+        "lead": { "text": "규칙 문서(2026.06.21)에 적은 규칙과 실제 구현이 달라진 부분입니다.", "verbatim": true },
+        "sectionPath": ["0. 기획", "0.4 기획 대비 조정한 규칙"],
+        "points": [],
+        "visuals": [
+          { "kind": "table", "n": 1, "fp": "항목|기획 (규칙 문서)|구현" }
         ]
       },
       {
@@ -395,38 +217,16 @@
         "chapter": "command",
         "layout": "visual",
         "tab": "구조",
-        "title": {
-          "text": "1.2 시스템 구조",
-          "verbatim": true
-        },
+        "title": { "text": "1.2 시스템 구조", "verbatim": true },
         "lead": null,
-        "sectionPath": [
-          "1. 커맨드 시스템",
-          "1.2 시스템 구조"
-        ],
+        "sectionPath": ["1. 커맨드 시스템", "1.2 시스템 구조"],
         "points": [
-          {
-            "label": "Idle",
-            "text": "플레이어가 UI에서 특정 유닛의 소환 버튼을 클릭했을 때, 자원과 쿨타임 조건이 충족되었다면 초기 커맨드를 생성하고 Commanding 상태로 전환합니다.",
-            "verbatim": true
-          },
-          {
-            "label": "Commanding",
-            "text": "플레이어가 방향키를 하나라도 틀리게 입력하면 입력 기록과 화살표 색이 초기화되지만, 정답 커맨드와 상태는 그대로 유지되어 바로 재도전할 수 있습니다.",
-            "verbatim": true
-          },
-          {
-            "label": "Spawning",
-            "text": "유닛을 전장에 투하하기 위해 마우스로 위치를 지정하는 상태입니다.",
-            "verbatim": true
-          }
+          { "label": "Idle", "text": "플레이어가 UI에서 특정 유닛의 소환 버튼을 클릭했을 때, 자원과 쿨타임 조건이 충족되었다면 초기 커맨드를 생성하고 Commanding 상태로 전환합니다.", "verbatim": true },
+          { "label": "Commanding", "text": "플레이어가 방향키를 하나라도 틀리게 입력하면 입력 기록과 화살표 색이 초기화되지만, 정답 커맨드와 상태는 그대로 유지되어 바로 재도전할 수 있습니다.", "verbatim": true },
+          { "label": "Spawning", "text": "유닛을 전장에 투하하기 위해 마우스로 위치를 지정하는 상태입니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "mermaid",
-            "n": 1,
-            "fp": "stateDiagram-v2"
-          }
+          { "kind": "mermaid", "n": 1, "fp": "stateDiagram-v2" }
         ]
       },
       {
@@ -434,45 +234,16 @@
         "chapter": "command",
         "layout": "code",
         "tab": "구현",
-        "title": {
-          "text": "1.3 핵심 기능 및 사용법",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "외부(UI 버튼)에서는 시스템의 내부 상태를 알 필요가 없습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "1. 커맨드 시스템",
-          "1.3 핵심 기능 및 사용법"
-        ],
+        "title": { "text": "1.3 핵심 기능 및 사용법", "verbatim": true },
+        "lead": { "text": "외부(UI 버튼)에서는 시스템의 내부 상태를 알 필요가 없습니다.", "verbatim": true },
+        "sectionPath": ["1. 커맨드 시스템", "1.3 핵심 기능 및 사용법"],
         "points": [
-          {
-            "label": "사용법",
-            "text": "유닛 버튼의 `OnClick`에 `OnTriangleClick()` 같은 유닛 지정 함수만 연결하면, CommandSystem이 스스로 자원과 쿨타임을 묻고 커맨드를 생성합니다.",
-            "verbatim": false
-          },
-          {
-            "label": "핵심 동작 2",
-            "text": "플레이어의 키보드 입력을 한 키마다 확인하는 CheckCommand 함수입니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "오입력: 정답 커맨드(commandList)는 유지하고 입력 기록과 화살표 색만 되돌립니다.",
-            "verbatim": true
-          }
+          { "label": "사용법", "text": "유닛 버튼의 `OnClick`에 `OnTriangleClick()` 같은 유닛 지정 함수만 연결하면, CommandSystem이 스스로 자원과 쿨타임을 묻고 커맨드를 생성합니다.", "verbatim": false },
+          { "label": "핵심 동작 2", "text": "플레이어의 키보드 입력을 한 키마다 확인하는 CheckCommand 함수입니다.", "verbatim": true },
+          { "label": "", "text": "오입력: 정답 커맨드(commandList)는 유지하고 입력 기록과 화살표 색만 되돌립니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "code",
-            "n": 2,
-            "lines": [
-              4,
-              22
-            ],
-            "fp": "private void CheckCommand()"
-          }
+          { "kind": "code", "n": 2, "lines": [4, 22], "fp": "private void CheckCommand()" }
         ]
       },
       {
@@ -480,39 +251,14 @@
         "chapter": "command",
         "layout": "overview",
         "tab": "선택",
-        "title": {
-          "text": "1.4 실시간 커맨드 검증 및 실패 처리 방식",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "사용자의 키보드 입력을 어느 타이밍에 검증하고, 오타가 발생했을 때 어떻게 처리할 것인가?",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "1. 커맨드 시스템",
-          "1.4 실시간 커맨드 검증 및 실패 처리 방식"
-        ],
+        "title": { "text": "1.4 실시간 커맨드 검증 및 실패 처리 방식", "verbatim": true },
+        "lead": { "text": "사용자의 키보드 입력을 어느 타이밍에 검증하고, 오타가 발생했을 때 어떻게 처리할 것인가?", "verbatim": true },
+        "sectionPath": ["1. 커맨드 시스템", "1.4 실시간 커맨드 검증 및 실패 처리 방식"],
         "points": [
-          {
-            "label": "대안 A",
-            "text": "입력 완료 후 일괄 검증 — 로직이 단순하지만, 끝까지 입력한 뒤에야 실패를 알게 되어 피드백이 늦습니다.",
-            "verbatim": false
-          },
-          {
-            "label": "대안 B",
-            "text": "매 입력마다 현재 인덱스(count)를 확인해 즉각적인 시각적 피드백이 가능하지만, Update 루프 안에서 매 입력마다 검증 로직이 돌아야 합니다.",
-            "verbatim": false
-          },
-          {
-            "label": "이유",
-            "text": "대안 B를 선택했습니다. 플레이어의 빠른 판단이 중요한 게임에서 모든 입력을 하고 나서 피드백이 오는 것은 유저가 납득 하지 못하는 시스템입니다.",
-            "verbatim": false
-          },
-          {
-            "label": "",
-            "text": "틀려도 유닛 선택을 취소하지 않고 같은 커맨드를 다시 치게 해, 실패의 대가를 \"시간 손실\"로만 한정했습니다.",
-            "verbatim": false
-          }
+          { "label": "대안 A", "text": "입력 완료 후 일괄 검증 — 로직이 단순하지만, 끝까지 입력한 뒤에야 실패를 알게 되어 피드백이 늦습니다.", "verbatim": false },
+          { "label": "대안 B", "text": "매 입력마다 현재 인덱스(count)를 확인해 즉각적인 시각적 피드백이 가능하지만, Update 루프 안에서 매 입력마다 검증 로직이 돌아야 합니다.", "verbatim": false },
+          { "label": "이유", "text": "대안 B를 선택했습니다. 플레이어의 빠른 판단이 중요한 게임에서 모든 입력을 하고 나서 피드백이 오는 것은 유저가 납득 하지 못하는 시스템입니다.", "verbatim": false },
+          { "label": "", "text": "틀려도 유닛 선택을 취소하지 않고 같은 커맨드를 다시 치게 해, 실패의 대가를 \"시간 손실\"로만 한정했습니다.", "verbatim": false }
         ],
         "visuals": []
       },
@@ -521,46 +267,17 @@
         "chapter": "combat",
         "layout": "visual",
         "tab": "구조",
-        "title": {
-          "text": "2.2 시스템 구조",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "전투 시스템은 유닛들의 공통 속성을 묶은 부모 클래스와, 탐색 및 상성 로직을 각기 다르게 구현한 자식 클래스 간의 상속 및 다형성을 활용하여 설계되었습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "2. 기호 상성 기반 자동 전투 시스템",
-          "2.2 시스템 구조"
-        ],
+        "title": { "text": "2.2 시스템 구조", "verbatim": true },
+        "lead": { "text": "전투 시스템은 유닛들의 공통 속성을 묶은 부모 클래스와, 탐색 및 상성 로직을 각기 다르게 구현한 자식 클래스 간의 상속 및 다형성을 활용하여 설계되었습니다.", "verbatim": true },
+        "sectionPath": ["2. 기호 상성 기반 자동 전투 시스템", "2.2 시스템 구조"],
         "points": [
-          {
-            "label": "PlayerUnit",
-            "text": "모든 플레이어 유닛이 공유하는 체력, 사기(Morale), 사거리, 공격력 등의 기본 데이터를 정의합니다.",
-            "verbatim": true
-          },
-          {
-            "label": "MeleeUnit",
-            "text": "GetClosestEnemy 메서드를 통해 사거리 내에서 가장 가까운 적을 탐색하여 타겟팅합니다.",
-            "verbatim": true
-          },
-          {
-            "label": "RangeUnit",
-            "text": "GetLowHealthEnemy 메서드를 사용하여 사거리 내의 적들 중 체력이 가장 낮은 대상을 식별하고 죽을 때까지 점사합니다.",
-            "verbatim": true
-          },
-          {
-            "label": "SupportUnit",
-            "text": "HashSet으로 이미 맞은 적을 기록해 한 번의 폭격이 같은 적에게 중복 피해를 주지 않게 했습니다.",
-            "verbatim": true
-          }
+          { "label": "PlayerUnit", "text": "모든 플레이어 유닛이 공유하는 체력, 사기(Morale), 사거리, 공격력 등의 기본 데이터를 정의합니다.", "verbatim": true },
+          { "label": "MeleeUnit", "text": "GetClosestEnemy 메서드를 통해 사거리 내에서 가장 가까운 적을 탐색하여 타겟팅합니다.", "verbatim": true },
+          { "label": "RangeUnit", "text": "GetLowHealthEnemy 메서드를 사용하여 사거리 내의 적들 중 체력이 가장 낮은 대상을 식별하고 죽을 때까지 점사합니다.", "verbatim": true },
+          { "label": "SupportUnit", "text": "HashSet으로 이미 맞은 적을 기록해 한 번의 폭격이 같은 적에게 중복 피해를 주지 않게 했습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "mermaid",
-            "n": 1,
-            "fp": "classDiagram"
-          }
+          { "kind": "mermaid", "n": 1, "fp": "classDiagram" }
         ]
       },
       {
@@ -568,43 +285,17 @@
         "chapter": "combat",
         "layout": "visual",
         "tab": "흐름",
-        "title": {
-          "text": "상태 머신 흐름도 : PlayerUnit",
-          "verbatim": true
-        },
+        "title": { "text": "상태 머신 흐름도 : PlayerUnit", "verbatim": true },
         "lead": null,
-        "sectionPath": [
-          "2. 기호 상성 기반 자동 전투 시스템",
-          "상태 머신 흐름도 : PlayerUnit"
-        ],
+        "sectionPath": ["2. 기호 상성 기반 자동 전투 시스템", "상태 머신 흐름도 : PlayerUnit"],
         "points": [
-          {
-            "label": "SpawnCoroutine",
-            "text": "유닛이 활성화(OnEnable)될 때 먼저 진입하는 상태입니다.",
-            "verbatim": true
-          },
-          {
-            "label": "ScanCoroutine",
-            "text": "MeleeUnit은 거리가 가장 가까운 적을, RangeUnit은 체력이 가장 낮은 적을 타겟으로 지정한 후 AttackCoroutine으로 넘어갑니다.",
-            "verbatim": true
-          },
-          {
-            "label": "AttackCoroutine",
-            "text": "타겟이 파괴되었거나, 사거리를 벗어났거나, 체력이 0 이하가 되면 즉시 공격 루프를 빠져나와 ScanCoroutine으로 되돌아갑니다.",
-            "verbatim": true
-          },
-          {
-            "label": "DeadState",
-            "text": "진입 후 0.3초 대기 후 반경 2f 내에 있는 다른 아군 유닛들의 사기를 감소시키고, PlayerManager의 Dead 함수를 호출하여 인구수를 반환하고 자신을 파괴합니다.",
-            "verbatim": true
-          }
+          { "label": "SpawnCoroutine", "text": "유닛이 활성화(OnEnable)될 때 먼저 진입하는 상태입니다.", "verbatim": true },
+          { "label": "ScanCoroutine", "text": "MeleeUnit은 거리가 가장 가까운 적을, RangeUnit은 체력이 가장 낮은 적을 타겟으로 지정한 후 AttackCoroutine으로 넘어갑니다.", "verbatim": true },
+          { "label": "AttackCoroutine", "text": "타겟이 파괴되었거나, 사거리를 벗어났거나, 체력이 0 이하가 되면 즉시 공격 루프를 빠져나와 ScanCoroutine으로 되돌아갑니다.", "verbatim": true },
+          { "label": "DeadState", "text": "진입 후 0.3초 대기 후 반경 2f 내에 있는 다른 아군 유닛들의 사기를 감소시키고, PlayerManager의 Dead 함수를 호출하여 인구수를 반환하고 자신을 파괴합니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "mermaid",
-            "n": 1,
-            "fp": "stateDiagram-v2"
-          }
+          { "kind": "mermaid", "n": 1, "fp": "stateDiagram-v2" }
         ]
       },
       {
@@ -612,40 +303,15 @@
         "chapter": "combat",
         "layout": "code",
         "tab": "구현",
-        "title": {
-          "text": "2.3 핵심 기능 및 사용법 (PlayerUnit)",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "PlayerUnit은 전장에 소환되는 즉시 내부의 코루틴 상태 머신에 의해 자율적으로 주변을 탐색하고 전투를 수행합니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "2. 기호 상성 기반 자동 전투 시스템",
-          "2.3 핵심 기능 및 사용법 (PlayerUnit)"
-        ],
+        "title": { "text": "2.3 핵심 기능 및 사용법 (PlayerUnit)", "verbatim": true },
+        "lead": { "text": "PlayerUnit은 전장에 소환되는 즉시 내부의 코루틴 상태 머신에 의해 자율적으로 주변을 탐색하고 전투를 수행합니다.", "verbatim": true },
+        "sectionPath": ["2. 기호 상성 기반 자동 전투 시스템", "2.3 핵심 기능 및 사용법 (PlayerUnit)"],
         "points": [
-          {
-            "label": "핵심 동작 2",
-            "text": "근거리 유닛과 원거리 유닛은 동일한 탐색 주기(ScanCoroutine)를 가지지만, 타겟을 선정하는 기준이 다릅니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "핵심 설계: 중심점이 아닌, 유닛의 가장 외곽(Edge)을 기준으로 거리를 측정",
-            "verbatim": true
-          }
+          { "label": "핵심 동작 2", "text": "근거리 유닛과 원거리 유닛은 동일한 탐색 주기(ScanCoroutine)를 가지지만, 타겟을 선정하는 기준이 다릅니다.", "verbatim": true },
+          { "label": "", "text": "핵심 설계: 중심점이 아닌, 유닛의 가장 외곽(Edge)을 기준으로 거리를 측정", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "code",
-            "n": 2,
-            "lines": [
-              7,
-              25
-            ],
-            "fp": "private EnemyUnit GetClosestEnemy(Collider2D[] enemies)"
-          }
+          { "kind": "code", "n": 2, "lines": [7, 25], "fp": "private EnemyUnit GetClosestEnemy(Collider2D[] enemies)" }
         ]
       },
       {
@@ -653,38 +319,16 @@
         "chapter": "combat",
         "layout": "code",
         "tab": "구현",
-        "title": {
-          "text": "2.3 핵심 기능 및 사용법 (PlayerUnit)",
-          "verbatim": true
-        },
+        "title": { "text": "2.3 핵심 기능 및 사용법 (PlayerUnit)", "verbatim": true },
         "lead": null,
-        "sectionPath": [
-          "2. 기호 상성 기반 자동 전투 시스템",
-          "2.3 핵심 기능 및 사용법 (PlayerUnit)"
-        ],
+        "sectionPath": ["2. 기호 상성 기반 자동 전투 시스템", "2.3 핵심 기능 및 사용법 (PlayerUnit)"],
         "points": [
-          {
-            "label": "핵심 동작 3",
-            "text": "0.3의 순환(세모 > 동그라미 > 네모 > 세모)을 피격 측에서 판정합니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "다음은 동그라미와 네모 기호를 담당하는 MeleeUnit의 피격 로직입니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "천적에게 맞을수록 사기도 크게 깎임",
-            "verbatim": true
-          }
+          { "label": "핵심 동작 3", "text": "0.3의 순환(세모 > 동그라미 > 네모 > 세모)을 피격 측에서 판정합니다.", "verbatim": true },
+          { "label": "", "text": "다음은 동그라미와 네모 기호를 담당하는 MeleeUnit의 피격 로직입니다.", "verbatim": true },
+          { "label": "", "text": "천적에게 맞을수록 사기도 크게 깎임", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "code",
-            "n": 3,
-            "fp": "public override void TakeDamage(float damage, EnemyUnit.Enem"
-          }
+          { "kind": "code", "n": 3, "fp": "public override void TakeDamage(float damage, EnemyUnit.Enem" }
         ]
       },
       {
@@ -692,47 +336,17 @@
         "chapter": "combat",
         "layout": "problem",
         "tab": "문제 해결",
-        "title": {
-          "text": "2.5 거리 계산과 탐지 영역의 기준 불일치 문제 해결",
-          "verbatim": true
-        },
+        "title": { "text": "2.5 거리 계산과 탐지 영역의 기준 불일치 문제 해결", "verbatim": true },
         "lead": null,
-        "sectionPath": [
-          "2. 기호 상성 기반 자동 전투 시스템",
-          "2.5 거리 계산과 탐지 영역의 기준 불일치 문제 해결"
-        ],
+        "sectionPath": ["2. 기호 상성 기반 자동 전투 시스템", "2.5 거리 계산과 탐지 영역의 기준 불일치 문제 해결"],
         "points": [
-          {
-            "label": "문제",
-            "text": "적을 인지해 놓고도 공격은 하지 않고 가만히 서 있는 버그가 발생했습니다.",
-            "verbatim": true
-          },
-          {
-            "label": "원인",
-            "text": "탐지는 `OverlapCircleAll`, 공격 사거리 판정은 중심점 거리(`Vector3.Distance`)라서 큰 유닛은 탐지되어도 사거리보다 멀게 계산되었습니다.",
-            "verbatim": false
-          },
-          {
-            "label": "해결",
-            "text": "`OverlapCircleAll`과 `LayerMask`로 적만 수집하고, 공격 사거리 판정도 `Collider2D.ClosestPoint`로 외곽선 기준으로 통일했습니다.",
-            "verbatim": false
-          },
-          {
-            "label": "결과",
-            "text": "탐지 범위에 들어온 적을 바로 공격합니다.",
-            "verbatim": false
-          }
+          { "label": "문제", "text": "적을 인지해 놓고도 공격은 하지 않고 가만히 서 있는 버그가 발생했습니다.", "verbatim": true },
+          { "label": "원인", "text": "탐지는 `OverlapCircleAll`, 공격 사거리 판정은 중심점 거리(`Vector3.Distance`)라서 큰 유닛은 탐지되어도 사거리보다 멀게 계산되었습니다.", "verbatim": false },
+          { "label": "해결", "text": "`OverlapCircleAll`과 `LayerMask`로 적만 수집하고, 공격 사거리 판정도 `Collider2D.ClosestPoint`로 외곽선 기준으로 통일했습니다.", "verbatim": false },
+          { "label": "결과", "text": "탐지 범위에 들어온 적을 바로 공격합니다.", "verbatim": false }
         ],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "|수정 전|수정 후",
-            "sectionPath": [
-              "2.5 거리 계산과 탐지 영역의 기준 불일치 문제 해결",
-              "[결과]"
-            ]
-          }
+          { "kind": "table", "n": 1, "fp": "|수정 전|수정 후", "sectionPath": ["2.5 거리 계산과 탐지 영역의 기준 불일치 문제 해결", "[결과]"] }
         ]
       },
       {
@@ -740,41 +354,32 @@
         "chapter": "resource",
         "layout": "visual",
         "tab": "흐름",
-        "title": {
-          "text": "3.2 시스템 구조",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "PlayerManager는 게임 내 경제와 제약 조건을 총괄하는 싱글톤(Singleton) 객체로 설계되었습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "3. 자원, 인구수 쿨타임 시스템",
-          "3.2 시스템 구조"
-        ],
+        "title": { "text": "3.2 시스템 구조", "verbatim": true },
+        "lead": { "text": "PlayerManager는 게임 내 경제와 제약 조건을 총괄하는 싱글톤(Singleton) 객체로 설계되었습니다.", "verbatim": true },
+        "sectionPath": ["3. 자원, 인구수 쿨타임 시스템", "3.2 시스템 구조"],
         "points": [
-          {
-            "label": "1단계 (쿨타임 검사)",
-            "text": "가장 먼저 딕셔너리에 저장된 해당 유닛의 쿨타임 상태(`IsCooldownDic`)를 확인하여, 대기 시간 중이면 거부합니다.",
-            "verbatim": true
-          },
-          {
-            "label": "2단계 (예외 및 자원/인구 검사)",
-            "text": "쿨타임이 돌고 있지 않다면 `CanAfford`를 호출합니다.",
-            "verbatim": true
-          },
-          {
-            "label": "3단계 (소모 및 갱신)",
-            "text": "모든 검증을 통과해 배치가 확정되면 `UseCost`가 호출되어 자원과 인구수를 갱신하고, 해당 유닛의 쿨타임 코루틴(`UnitCoolDown`)을 독립적으로 실행시킵니다.",
-            "verbatim": true
-          }
+          { "label": "1단계 (쿨타임 검사)", "text": "가장 먼저 딕셔너리에 저장된 해당 유닛의 쿨타임 상태(`IsCooldownDic`)를 확인하여, 대기 시간 중이면 거부합니다.", "verbatim": true },
+          { "label": "2단계 (예외 및 자원/인구 검사)", "text": "쿨타임이 돌고 있지 않다면 `CanAfford`를 호출합니다.", "verbatim": true },
+          { "label": "3단계 (소모 및 갱신)", "text": "모든 검증을 통과해 배치가 확정되면 `UseCost`가 호출되어 자원과 인구수를 갱신하고, 해당 유닛의 쿨타임 코루틴(`UnitCoolDown`)을 독립적으로 실행시킵니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "mermaid",
-            "n": 2,
-            "fp": "flowchart TD"
-          }
+          { "kind": "mermaid", "n": 2, "fp": "flowchart TD" }
+        ]
+      },
+      {
+        "key": "res-afford",
+        "chapter": "resource",
+        "layout": "code",
+        "tab": "구현",
+        "title": { "text": "3.3 핵심 기능 및 사용법", "verbatim": true },
+        "lead": { "text": "이 시스템은 자원이 충분한지 묻는 로직(CanAfford)과 실제로 자원을 깎는 로직(UseCost)을 나누어 설계했습니다.", "verbatim": true },
+        "sectionPath": ["3. 자원, 인구수 쿨타임 시스템", "3.3 핵심 기능 및 사용법"],
+        "points": [
+          { "label": "핵심 동작 1", "text": "버튼을 누른 시점과 투하하는 시점 사이에 자원이 변할 수 있으므로, `UseCost`가 차감 직전에 한 번 더 `CanAfford`로 확인합니다.", "verbatim": true },
+          { "label": "사용법", "text": "입력을 담당하는 CommandSystem 등 외부 클래스는 내부 자원 계산식을 알 필요 없이, 검증 함수와 소비 함수만 호출하여 시스템을 제어합니다.", "verbatim": true }
+        ],
+        "visuals": [
+          { "kind": "code", "n": 2, "fp": "public bool CanAfford(UnitType type)" }
         ]
       },
       {
@@ -782,95 +387,43 @@
         "chapter": "resource",
         "layout": "overview",
         "tab": "선택",
-        "title": {
-          "text": "3.4 개별 쿨타임 관리 및 확인",
-          "verbatim": true
-        },
+        "title": { "text": "3.4 개별 쿨타임 관리 및 확인", "verbatim": true },
         "lead": null,
-        "sectionPath": [
-          "3. 자원, 인구수 쿨타임 시스템",
-          "3.4 개별 쿨타임 관리 및 확인"
-        ],
+        "sectionPath": ["3. 자원, 인구수 쿨타임 시스템", "3.4 개별 쿨타임 관리 및 확인"],
         "points": [
-          {
-            "label": "문제",
-            "text": "CommandSystem에서 유닛 소환을 요청할 때 해당 유닛의 쿨타임이 다 찼는지 아닌지 판단하는 로직을 어떻게 구현할 것이고, 쿨타임 진행 상황을 UI로 어떻게 내보낼 것인지 고민을 했습니다.",
-            "verbatim": true
-          },
-          {
-            "label": "대안 A",
-            "text": "유닛마다 변수를 따로 두기 — 구조는 단순하지만 유닛이 늘 때마다 변수와 `switch` 분기를 함께 늘려야 합니다.",
-            "verbatim": false
-          },
-          {
-            "label": "대안 B",
-            "text": "쿨타임을 유닛·버튼 쪽에 두기 — UI 연결은 쉽지만 소환 가능 여부를 판단하는 곳이 `PlayerManager`와 버튼 두 군데로 나뉩니다.",
-            "verbatim": false
-          },
-          {
-            "label": "이유",
-            "text": "대안 C(`PlayerManager`의 `UnitType` Key Dictionary)를 선택했습니다. 소환 조건 검사를 한 곳에 모으는 것이 목표였습니다.",
-            "verbatim": false
-          }
+          { "label": "문제", "text": "CommandSystem에서 유닛 소환을 요청할 때 해당 유닛의 쿨타임이 다 찼는지 아닌지 판단하는 로직을 어떻게 구현할 것이고, 쿨타임 진행 상황을 UI로 어떻게 내보낼 것인지 고민을 했습니다.", "verbatim": true },
+          { "label": "대안 A", "text": "유닛마다 변수를 따로 두기 — 구조는 단순하지만 유닛이 늘 때마다 변수와 `switch` 분기를 함께 늘려야 합니다.", "verbatim": false },
+          { "label": "대안 B", "text": "쿨타임을 유닛·버튼 쪽에 두기 — UI 연결은 쉽지만 소환 가능 여부를 판단하는 곳이 `PlayerManager`와 버튼 두 군데로 나뉩니다.", "verbatim": false },
+          { "label": "이유", "text": "대안 C(`PlayerManager`의 `UnitType` Key Dictionary)를 선택했습니다. 소환 조건 검사를 한 곳에 모으는 것이 목표였습니다.", "verbatim": false }
         ],
         "visuals": []
+      },
+      {
+        "key": "ai-roles",
+        "chapter": "ai",
+        "layout": "full",
+        "tab": "",
+        "title": { "text": "4.1 원칙", "verbatim": true },
+        "lead": { "text": "AI는 선택지를 넓히고 반복을 줄이는 도구로 쓰고, 무엇을 고를지는 게임의 재미 기준으로 직접 정한다는 원칙을 세웠습니다.", "verbatim": true },
+        "sectionPath": ["4. AI 활용 방식", "4.1 원칙"],
+        "points": [],
+        "visuals": [
+          { "kind": "table", "n": 1, "fp": "구분|내가 맡은 것|AI에게 맡긴 것" }
+        ]
       },
       {
         "key": "ai-verify",
         "chapter": "ai",
         "layout": "full",
         "tab": "문제 해결",
-        "title": {
-          "text": "4.4 AI 결과를 검증하며 찾은 문제",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "그 결과 문서에는 맞게 적혀 있지만 코드는 다르게 동작하는 곳을 찾아 수정했습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "4. AI 활용 방식",
-          "4.4 AI 결과를 검증하며 찾은 문제"
-        ],
+        "title": { "text": "4.4 AI 결과를 검증하며 찾은 문제", "verbatim": true },
+        "lead": { "text": "그 결과 문서에는 맞게 적혀 있지만 코드는 다르게 동작하는 곳을 찾아 수정했습니다.", "verbatim": true },
+        "sectionPath": ["4. AI 활용 방식", "4.4 AI 결과를 검증하며 찾은 문제"],
         "points": [
-          {
-            "label": "배운 점",
-            "text": "AI가 만든 문서와 코드는 그럴듯하게 읽히는 것과 실제로 맞는 것이 다를 수 있다는 점을 배웠고, 앞으로는 AI 결과물을 코드와 대조하는 검수 단계를 작업 순서에 넣기로 했습니다.",
-            "verbatim": true
-          }
+          { "label": "배운 점", "text": "AI가 만든 문서와 코드는 그럴듯하게 읽히는 것과 실제로 맞는 것이 다를 수 있다는 점을 배웠고, 앞으로는 AI 결과물을 코드와 대조하는 검수 단계를 작업 순서에 넣기로 했습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "위치|문서에 적힌 동작|실제 코드|수정"
-          }
-        ]
-      },
-      {
-        "key": "outcome",
-        "chapter": "result",
-        "layout": "full",
-        "tab": "결과",
-        "title": {
-          "text": "5.1 결과",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "'전술적 판단과 조작의 긴장감'이라는 초기 기획 의도를 시스템적으로 구현했습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "5. 결과 및 배운 점 (프로젝트 회고)",
-          "5.1 결과"
-        ],
-        "points": [],
-        "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "항목|내용"
-          }
+          { "kind": "table", "n": 1, "fp": "위치|문서에 적힌 동작|실제 코드|수정" }
         ]
       }
     ]
