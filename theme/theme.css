@@ -1,10 +1,40 @@
 /* ─────────────────────────────────────────────────────────────
-   테마 (theme/theme.css) — 포트폴리오 페이지·슬라이드·상세 문서가 마지막에 싣는 파일
-   지금은 비어 있어 기본 테마(어두운 바탕 · profile.md 강조색 → 보랏빛 그러데이션)를 씁니다.
-
-   바꾸려면: Claude Code에서 마음에 드는 웹페이지 스크린샷을 첨부하고
-     /portfolio-theme
-   를 입력하세요. Claude가 색·모양·영문 글꼴·효과를 정해진 규칙으로 뽑아 이 파일을 채웁니다.
-   손잡이(--t-*) 설명: .claude/skills/portfolio-theme/rules.md
-   이 파일은 /portfolio-update가 건드리지 않습니다(템플릿을 업데이트해도 내 테마가 남음).
+   테마 (theme/theme.css) — /portfolio-theme가 만듦 · 2026-11-23
+   참고한 화면: 거의 검은 바탕의 제품 소개 페이지(남보라 강조 · 깔끔한 고딕 영문) — 수강생 요청으로 바탕을 한 단 밝힌 "밝은 다크"
+   뽑은 인상: 짙은 회색 바탕 · 한 단 밝은 카드 · 남보라 단색 강조 · 살짝 둥근 카드(12px) · 둥근 네모 버튼(8px) · 중립 고딕 영문 · 은은한 광채
+   값을 고쳐도 됩니다(저장 → 새로고침). 손잡이 설명: .claude/skills/portfolio-theme/rules.md
+   이 파일은 /portfolio-update가 건드리지 않습니다. 기본 테마로 되돌리기: /portfolio-theme 되돌리기
    ───────────────────────────────────────────────────────────── */
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/latin-700.css");   /* 영문 라벨 글꼴 — Montserrat·Pretendard면 두 줄 모두 지움 */
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/latin-800.css");
+
+:root {
+  /* ① 바탕과 글자 — 바탕 대비: 제목 12 · 본문 7 · 보조 4.5 이상(check-theme.py가 확인) */
+  --t-scheme: dark;             /* 바탕이 어두우면 dark, 밝으면 light */
+  --t-bg: #1A1B1F;              /* 페이지·장면 바탕 */
+  --t-surface: #25262B;         /* 카드·판(바탕에서 한 단) */
+  --t-ink: #F7F8F8;             /* 제목·강한 글자 */
+  --t-body: #D0D6E0;            /* 본문 */
+  --t-muted: #9AA0A9;           /* 보조 글자(날짜·캡션) */
+  --t-line: #2D2E32;            /* 얇은 구분선·카드 테두리 */
+  --t-line-2: #3B3C41;          /* 알약 버튼·태그 테두리(구분선보다 한 단 진하게) */
+
+  /* ② 강조색 — 이 줄을 지우면 profile.md의 강조색을 씀. 글자용 진하기·흰 글자 칠은 페이지가 자동으로 맞춤 */
+  --t-accent: #7170FF;
+  --t-accent-2: #7170FF;        /* 그러데이션 둘째 색 — 강조가 한 색이면 --t-accent와 같은 값(지우면 보랏빛 쪽 짝 색이 자동으로 생김) */
+  --t-accent-3: #7170FF;        /* 광채 셋째 색 — 강조가 한 색이면 --t-accent와 같은 값 */
+
+  /* ③ 모양 */
+  --t-radius: 12px;             /* 큰 카드 모서리(작은 모서리는 이 값의 비율) — 0 각진 · 8 단정 · 20 둥근 · 28 아주 둥근 */
+  --t-pill: 8px;                /* 버튼·태그·칩 모서리 — 999px 알약 · 6px 둥근 네모 · 0px 네모 */
+  --t-shadow: rgb(0 0 0 / .8);  /* 떠 있는 카드·창 그림자 — 어두운 바탕 rgb(0 0 0 / .8) · 밝은 바탕 rgb(20 22 30 / .16) */
+
+  /* ④ 영문 라벨 글꼴(PORTFOLIO·CHAPTER 같은 눈썹 글자, 머리 뒤 큰 영문 이름) — 한글은 늘 Pretendard */
+  --t-display: 'Inter';
+
+  /* ⑤ 효과 */
+  --t-grad: linear-gradient(var(--accent-ink), var(--accent-ink));   /* 영문 라벨 글자색 — 단색 */
+  --t-badge: var(--accent-fill);   /* 번호 배지 칠 — 단색 */
+  --t-glow: .5;                 /* 배경에 번지는 빛 — 0 없음 · .5 은은 · 1 기본 */
+  --t-mark: 0;                  /* 포트폴리오 페이지 머리 뒤 큰 영문 이름 — 0 숨김 · 1 보임 */
+}

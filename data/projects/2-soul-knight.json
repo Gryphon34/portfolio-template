@@ -15,22 +15,10 @@
     "role": ""
   },
   "meta": [
-    {
-      "label": "장르",
-      "value": "3D 보스 레이드 액션"
-    },
-    {
-      "label": "기간",
-      "value": "2026.10.21 ~ 2026.11.04 (2주)"
-    },
-    {
-      "label": "인원",
-      "value": "1인"
-    },
-    {
-      "label": "환경",
-      "value": "Unity 6000.3.15f1 (URP), C#, Input System, UniTask, DOTween"
-    }
+    { "label": "장르", "value": "3D 보스 레이드 액션" },
+    { "label": "기간", "value": "2026.10.21 ~ 2026.11.04 (2주)" },
+    { "label": "인원", "value": "1인" },
+    { "label": "환경", "value": "Unity 6000.3.15f1 (URP), C#, Input System, UniTask, DOTween" }
   ],
   "tags": [
     "Unity 6.3 (URP)",
@@ -84,9 +72,9 @@
     {
       "title": "씬을 넘는 진행 상황 static Progress",
       "what": "사냥터에서 얻은 소울과 소재가 씬이 마을로 바뀐 뒤에도 남도록, `static` 클래스 `GameData`가 `Progress` 객체 하나(`GameData.Current`)로 들고 있습니다.",
-      "how": "어느 씬, 어느 스크립트에서든 `GameData.Current`로 읽고, 값을 `Progress` 클래스 한 벌로 묶어 새 게임은 `GameData.Current = new Progress();` 한 줄로 처음 상태가 됩니다.",
+      "how": "어느 스크립트에서든 `GameData.Current`로 바로 읽고, 값을 `Progress` 한 벌로 묶어 새 게임도 `GameData.Current = new Progress();` 한 줄로 시작합니다.",
       "why": "ScriptableObject는 Play 중에 바꾼 값이 에셋에 남고, `DontDestroyOnLoad` 오브젝트는 만든 씬을 다시 불러오면 하나가 더 생깁니다. 사냥이 끝날 때마다 마을 씬을 다시 불러오는 이 프로젝트에서 static은 몇 번 다시 불러와도 하나뿐이고 연결 없이 바로 읽을 수 있어 골랐습니다.",
-      "section": "바뀌는 값은 static Progress 한 벌로",
+      "section": "씬이 바뀌어도 소울과 소재가 남는다",
       "image": null
     }
   ],
@@ -120,42 +108,12 @@
     }
   ],
   "screenshots": [
-    {
-      "src": "images/player_animator.png",
-      "w": 2560,
-      "h": 1392,
-      "caption": "플레이어 Animator: Locomotion → Combo1_Start와 Start 태그"
-    },
-    {
-      "src": "images/combo_collider.png",
-      "w": 2560,
-      "h": 1392,
-      "caption": "Combo1_Attack 도중 칼 궤적을 따라 놓인 Combo1_Collider"
-    },
-    {
-      "src": "images/charge_slash.gif",
-      "w": 960,
-      "h": 540,
-      "caption": "조작감: 퍼펙트 가드로 차지가 한 단계 오른 뒤 내려치기, 맞는 순간 히트스탑"
-    },
-    {
-      "src": "images/part_break.gif",
-      "w": 960,
-      "h": 540,
-      "caption": "부위 파괴: 꼬리가 잘리고 소재 알림"
-    },
-    {
-      "src": "images/result_panel.png",
-      "w": 1920,
-      "h": 1080,
-      "caption": "사망 후 결과 창: 받은 소울·소재"
-    },
-    {
-      "src": "images/forge_ui.png",
-      "w": 1920,
-      "h": 1080,
-      "caption": "대장간: 다음 단계 비용과 능력치"
-    }
+    { "src": "images/player_animator.png", "w": 2560, "h": 1392, "caption": "플레이어 Animator: Locomotion → Combo1_Start와 Start 태그" },
+    { "src": "images/combo_collider.png", "w": 2560, "h": 1392, "caption": "Combo1_Attack 도중 칼 궤적을 따라 놓인 Combo1_Collider" },
+    { "src": "images/charge_slash.gif", "w": 960, "h": 540, "caption": "조작감: 퍼펙트 가드로 차지가 한 단계 오른 뒤 내려치기, 맞는 순간 히트스탑" },
+    { "src": "images/part_break.gif", "w": 960, "h": 540, "caption": "부위 파괴: 꼬리가 잘리고 소재 알림" },
+    { "src": "images/result_panel.png", "w": 1920, "h": 1080, "caption": "사망 후 결과 창: 받은 소울·소재" },
+    { "src": "images/forge_ui.png", "w": 1920, "h": 1080, "caption": "대장간: 다음 단계 비용과 능력치" }
   ],
   "retro": {
     "achieved": [
@@ -168,55 +126,19 @@
       "진행 상황을 `Progress` 한 벌로 묶었지만, 시간 관계상 실제로 파일에 쓰는 저장 기능은 넣지 못함"
     ],
     "plans": [
-      "XZ 이동도 Rigidbody의 속도(`linearVelocity`)에 맡기고 Y는 중력에 그대로 두어 순간이동을 없앰",
-      "화톳불에 앉았을 때 `Progress`를 저장하고, 메인 메뉴에서 불러오는 흐름으로 만듦"
+      "XZ 이동을 Rigidbody의 속도(`linearVelocity`)에 넣고 Y는 그대로 중력에 맡겨 순간이동을 없앰",
+      "화톳불에 앉았을 때 `Progress`를 파일로 저장하고, 메인 메뉴에서 파일을 불러옴"
     ],
     "section": "6. 돌아보며"
   },
   "deck": {
     "chapters": [
-      {
-        "key": "intro",
-        "title": "이 문서에 대해",
-        "sectionPath": [
-          "0. 이 문서에 대해"
-        ]
-      },
-      {
-        "key": "player",
-        "title": "플레이어 — 상태와 이동",
-        "sectionPath": [
-          "1. 플레이어 — 상태와 이동"
-        ]
-      },
-      {
-        "key": "boss",
-        "title": "보스 — 상태와 패턴",
-        "sectionPath": [
-          "2. 보스 — 상태와 패턴"
-        ]
-      },
-      {
-        "key": "combat",
-        "title": "전투 판정 — 때리고 맞기",
-        "sectionPath": [
-          "3. 전투 판정 — 때리고 맞기"
-        ]
-      },
-      {
-        "key": "data",
-        "title": "데이터 — 정해진 수치와 바뀌는 값",
-        "sectionPath": [
-          "4. 데이터 — 정해진 수치와 바뀌는 값"
-        ]
-      },
-      {
-        "key": "gear",
-        "title": "장비와 요리",
-        "sectionPath": [
-          "5. 장비와 요리"
-        ]
-      }
+      { "key": "intro", "title": "이 문서에 대해", "sectionPath": ["0. 이 문서에 대해"] },
+      { "key": "player", "title": "플레이어 — 상태와 이동", "sectionPath": ["1. 플레이어 — 상태와 이동"] },
+      { "key": "boss", "title": "보스 — 상태와 패턴", "sectionPath": ["2. 보스 — 상태와 패턴"] },
+      { "key": "combat", "title": "전투 판정 — 때리고 맞기", "sectionPath": ["3. 전투 판정 — 때리고 맞기"] },
+      { "key": "data", "title": "데이터 — 정해진 수치와 바뀌는 값", "sectionPath": ["4. 데이터 — 정해진 수치와 바뀌는 값"] },
+      { "key": "gear", "title": "장비와 요리", "sectionPath": ["5. 장비와 요리"] }
     ],
     "slides": [
       {
@@ -224,99 +146,15 @@
         "chapter": "intro",
         "layout": "overview",
         "tab": "개요",
-        "title": {
-          "text": "만들고 싶었던 것",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "\"지난 판에 나를 죽인 보스의 공격을, 다음 판엔 준비한 장비와 익힌 손으로 받아친다.\"",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "0. 이 문서에 대해",
-          "만들고 싶었던 것"
-        ],
+        "title": { "text": "만들고 싶었던 것", "verbatim": true },
+        "lead": { "text": "\"지난 판에 나를 죽인 보스의 공격을, 다음 판엔 준비한 장비와 익힌 손으로 받아친다.\"", "verbatim": true },
+        "sectionPath": ["0. 이 문서에 대해", "만들고 싶었던 것"],
         "points": [
-          {
-            "label": "",
-            "text": "이 목표를 세 가지로 나눠 노렸습니다.",
-            "verbatim": true
-          }
+          { "label": "", "text": "이 목표를 세 가지로 나눠 노렸습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "노린 것|내용|그래서 정한 규칙|본문"
-          },
-          {
-            "kind": "image",
-            "src": "images/charge_slash.gif",
-            "w": 960,
-            "h": 540,
-            "caption": {
-              "text": "조작감: 퍼펙트 가드로 차지가 한 단계 오른 뒤 내려치기, 맞는 순간 히트스탑",
-              "verbatim": true
-            }
-          }
-        ]
-      },
-      {
-        "key": "loop",
-        "chapter": "intro",
-        "layout": "visual",
-        "tab": "흐름",
-        "title": {
-          "text": "한 판의 흐름",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "플레이어는 마을에서 준비하고, 안개문을 지나 투기장에서 보스와 싸운 뒤, 이기든 지든 마을로 돌아옵니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "0. 이 문서에 대해",
-          "한 판의 흐름"
-        ],
-        "points": [
-          {
-            "label": "",
-            "text": "투기장 안의 싸움은 1~3장, 사냥이 끝날 때 보상을 더하고 진행 상황을 남기는 것은 4장, 마을의 대장간과 냄비는 5장에서 다룹니다.",
-            "verbatim": true
-          }
-        ],
-        "visuals": [
-          {
-            "kind": "mermaid",
-            "n": 1,
-            "fp": "flowchart TD"
-          }
-        ]
-      },
-      {
-        "key": "ai-collab",
-        "chapter": "intro",
-        "layout": "full",
-        "tab": "",
-        "title": {
-          "text": "AI와 함께 개발한 방식",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "무엇을 만들지, 무엇이 맞는지는 내가 정하고, 그 사이의 구현이나 설명은 맡긴다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "0. 이 문서에 대해",
-          "AI와 함께 개발한 방식"
-        ],
-        "points": [],
-        "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "경우|맡긴 것|내가 한 것|본문"
-          }
+          { "kind": "table", "n": 1, "fp": "노린 것|내용|그래서 정한 규칙|본문" },
+          { "kind": "image", "src": "images/charge_slash.gif", "w": 960, "h": 540, "caption": { "text": "조작감: 퍼펙트 가드로 차지가 한 단계 오른 뒤 내려치기, 맞는 순간 히트스탑", "verbatim": true } }
         ]
       },
       {
@@ -324,170 +162,16 @@
         "chapter": "player",
         "layout": "code",
         "tab": "구현",
-        "title": {
-          "text": "상태는 애니메이터가 정한다",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "`PlayerController`가 매 프레임 애니메이터의 현재 칸 Tag를 읽고, 그 Tag에 맞는 상태의 `Enter` / `UpdateState` / `Exit`를 불러 줄 뿐입니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "1. 플레이어 — 상태와 이동",
-          "상태는 애니메이터가 정한다"
-        ],
+        "title": { "text": "상태는 애니메이터가 정한다", "verbatim": true },
+        "lead": { "text": "`PlayerController`가 매 프레임 애니메이터의 현재 칸 Tag를 읽고, 그 Tag에 맞는 상태의 `Enter` / `UpdateState` / `Exit`를 불러 줄 뿐입니다.", "verbatim": true },
+        "sectionPath": ["1. 플레이어 — 상태와 이동", "상태는 애니메이터가 정한다"],
         "points": [
-          {
-            "label": "구현",
-            "text": "①에서 화살표를 타고 섞이는 중(`IsInTransition`)이면 넘어가고 있는 다음 칸의 Tag를 기준으로 삼습니다.",
-            "verbatim": true
-          },
-          {
-            "label": "문제",
-            "text": "섞임이 끝날 때까지 이동 상태가 계속 돌아 공격 버튼을 누른 뒤에도 잠깐 걸어감",
-            "verbatim": true
-          },
-          {
-            "label": "구현",
-            "text": "③ 덕분에 Tag가 달라도 같은 상태 객체에 등록하면 상태가 끊기지 않습니다.",
-            "verbatim": true
-          }
+          { "label": "구현", "text": "①에서 화살표를 타고 섞이는 중(`IsInTransition`)이면 넘어가고 있는 다음 칸의 Tag를 기준으로 삼습니다.", "verbatim": true },
+          { "label": "문제", "text": "섞임이 끝날 때까지 이동 상태가 계속 돌아 공격 버튼을 누른 뒤에도 잠깐 걸어감", "verbatim": true },
+          { "label": "구현", "text": "③ 덕분에 Tag가 달라도 같은 상태 객체에 등록하면 상태가 끊기지 않습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "code",
-            "n": 1,
-            "lines": [
-              3,
-              22
-            ],
-            "fp": "// PlayerController.cs — Update에서 매 프레임 호출"
-          }
-        ]
-      },
-      {
-        "key": "anim-choice",
-        "chapter": "player",
-        "layout": "full",
-        "tab": "선택",
-        "title": {
-          "text": "상태는 애니메이터가 정한다",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "그중 전환은 애니메이터가 하고 코드는 칸의 Tag를 따라가는 지금의 구조를 골랐습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "1. 플레이어 — 상태와 이동",
-          "상태는 애니메이터가 정한다"
-        ],
-        "points": [
-          {
-            "label": "원인",
-            "text": "입력 · 판단 · 재생이 한 파일에 섞여 있는 것이 원인이라고 보고, AI에게 상태를 나누는 다른 구조를 물었습니다.",
-            "verbatim": true
-          }
-        ],
-        "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "|처음: 코드가 직접 CrossFade|지금: 애니메이터가 전환, 코드는 Tag를 따라감 (선택)"
-          },
-          {
-            "kind": "table",
-            "n": 2,
-            "fp": "기준|좌클릭 직후"
-          }
-        ]
-      },
-      {
-        "key": "move-axis",
-        "chapter": "player",
-        "layout": "full",
-        "tab": "선택",
-        "title": {
-          "text": "코드가 방향을 정하고, 물리가 몸을 움직인다",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "이 프로젝트는 루트 모션을 끄고(`applyRootMotion = false`) 코드와 Dynamic Rigidbody로 움직입니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "1. 플레이어 — 상태와 이동",
-          "캐릭터를 누가 움직이나",
-          "코드가 방향을 정하고, 물리가 몸을 움직인다"
-        ],
-        "points": [
-          {
-            "label": "",
-            "text": "그래서 코드는 \"어느 방향으로 얼마나 가는가\"만 다룹니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "Rigidbody의 모드가 달라지면 높이를 내려 줄 쪽이 사라진다는 것은 직접 겪었습니다.",
-            "verbatim": true
-          }
-        ],
-        "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "|애니메이션이 움직임 (루트 모션 켬)|코드 + Dynamic Rigidbody (선택)"
-          }
-        ]
-      },
-      {
-        "key": "root-motion",
-        "chapter": "player",
-        "layout": "problem",
-        "tab": "문제 해결",
-        "title": {
-          "text": "그 대가: 모션마다 몸이 뜨거나 바닥을 뚫음",
-          "verbatim": true
-        },
-        "lead": null,
-        "sectionPath": [
-          "1. 플레이어 — 상태와 이동",
-          "캐릭터를 누가 움직이나",
-          "그 대가: 모션마다 몸이 뜨거나 바닥을 뚫음"
-        ],
-        "points": [
-          {
-            "label": "원인",
-            "text": "루트 모션을 끈 상태에서는 빼낸 이동이 그대로 버려지므로, 클립 안에서 몸이 내려가거나 올라가는 움직임이 사라집니다.",
-            "verbatim": true
-          },
-          {
-            "label": "해결",
-            "text": "Root Transform Position (Y)를 Bake Into Pose → 위아래 이동을 자세에 남김. 루트 모션을 꺼도 몸이 바닥까지 내려옴",
-            "verbatim": true
-          },
-          {
-            "label": "배운 점",
-            "text": "루트 모션을 끄는 것은 이동을 없애는 것이 아니라, 그 이동을 처리할 책임이 내 쪽으로 넘어오는 것이었습니다.",
-            "verbatim": true
-          }
-        ],
-        "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "모션|버려진 움직임|결과"
-          },
-          {
-            "kind": "image",
-            "src": "images/bake_into_pose.png",
-            "w": 2560,
-            "h": 1392,
-            "caption": {
-              "text": "사망 클립 Import 설정: Root Transform Position (Y) Bake Into Pose",
-              "verbatim": true
-            }
-          }
+          { "kind": "code", "n": 1, "lines": [3, 22], "fp": "// PlayerController.cs — Update에서 매 프레임 호출" }
         ]
       },
       {
@@ -495,28 +179,13 @@
         "chapter": "boss",
         "layout": "problem",
         "tab": "문제 해결",
-        "title": {
-          "text": "공격이 언제 끝났는지 — 코드와 애니메이터가 따로 안다",
-          "verbatim": true
-        },
+        "title": { "text": "공격이 언제 끝났는지 — 코드와 애니메이터가 따로 안다", "verbatim": true },
         "lead": null,
-        "sectionPath": [
-          "2. 보스 — 상태와 패턴",
-          "공격이 언제 끝났는지 — 코드와 애니메이터가 따로 안다",
-          "두 번 갇혔다"
-        ],
+        "sectionPath": ["2. 보스 — 상태와 패턴", "공격이 언제 끝났는지 — 코드와 애니메이터가 따로 안다", "두 번 갇혔다"],
         "points": [],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "|1차: 값으로 맞추기|2차: 11/02 플레이테스트"
-          },
-          {
-            "kind": "table",
-            "n": 2,
-            "fp": "고치는 법|장점|단점"
-          }
+          { "kind": "table", "n": 1, "fp": "|1차: 값으로 맞추기|2차: 11/02 플레이테스트" },
+          { "kind": "table", "n": 2, "fp": "고치는 법|장점|단점" }
         ]
       },
       {
@@ -524,41 +193,16 @@
         "chapter": "boss",
         "layout": "visual",
         "tab": "흐름",
-        "title": {
-          "text": "거리와 각도로 패턴을 고른다",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "`DecideState`가 지금 플레이어의 거리와 각도가 그 안에 드는 패턴만 후보로 모읍니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "2. 보스 — 상태와 패턴",
-          "거리와 각도로 패턴을 고른다"
-        ],
+        "title": { "text": "거리와 각도로 패턴을 고른다", "verbatim": true },
+        "lead": { "text": "`DecideState`가 지금 플레이어의 거리와 각도가 그 안에 드는 패턴만 후보로 모읍니다.", "verbatim": false },
+        "sectionPath": ["2. 보스 — 상태와 패턴", "거리와 각도로 패턴을 고른다"],
         "points": [
-          {
-            "label": "기획 의도",
-            "text": "자리에 따라 패턴이 정해지므로, 플레이어는 예비동작뿐 아니라 자기가 선 자리로도 다음 공격을 읽을 수 있습니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "후보가 여럿이면 그중 하나를 무작위로 뽑되, 직전에 쓴 패턴은 후보에서 뺍니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "다만 후보가 직전 패턴 하나뿐일 때는 빼지 않고 그대로 씁니다.",
-            "verbatim": true
-          }
+          { "label": "기획 의도", "text": "자리에 따라 패턴이 정해지므로, 플레이어는 예비동작뿐 아니라 자기가 선 자리로도 다음 공격을 읽을 수 있습니다.", "verbatim": true },
+          { "label": "", "text": "후보가 여럿이면 그중 하나를 무작위로 뽑되, 직전에 쓴 패턴은 후보에서 뺍니다.", "verbatim": true },
+          { "label": "", "text": "다만 후보가 직전 패턴 하나뿐일 때는 빼지 않고 그대로 씁니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "mermaid",
-            "n": 1,
-            "fp": "flowchart TD"
-          }
+          { "kind": "mermaid", "n": 1, "fp": "flowchart TD" }
         ]
       },
       {
@@ -566,35 +210,14 @@
         "chapter": "boss",
         "layout": "code",
         "tab": "구현",
-        "title": {
-          "text": "거리와 각도로 패턴을 고른다",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "빼지 않으면 같은 패턴만 계속 나올 수 있기 때문입니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "2. 보스 — 상태와 패턴",
-          "거리와 각도로 패턴을 고른다"
-        ],
+        "title": { "text": "거리와 각도로 패턴을 고른다", "verbatim": true },
+        "lead": { "text": "빼지 않으면 같은 패턴만 계속 나올 수 있기 때문입니다.", "verbatim": true },
+        "sectionPath": ["2. 보스 — 상태와 패턴", "거리와 각도로 패턴을 고른다"],
         "points": [
-          {
-            "label": "이유",
-            "text": "그것까지 빼면 후보가 비어 `ChaseState`로 가고, `ChaseState`는 범위만 보고 다시 `DecideState`로 보내므로, 보스가 공격하지 않고 계속 쫓아가기만 할 수 있습니다.",
-            "verbatim": true
-          }
+          { "label": "이유", "text": "그것까지 빼면 후보가 비어 `ChaseState`로 가고, `ChaseState`는 범위만 보고 다시 `DecideState`로 보내므로, 보스가 공격하지 않고 계속 쫓아가기만 할 수 있습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "code",
-            "n": 1,
-            "lines": [
-              17,
-              35
-            ],
-            "fp": "// DecideState.cs (줄 일부 생략)"
-          }
+          { "kind": "code", "n": 1, "lines": [17, 35], "fp": "// DecideState.cs (줄 일부 생략)" }
         ]
       },
       {
@@ -602,70 +225,16 @@
         "chapter": "boss",
         "layout": "code",
         "tab": "구현",
-        "title": {
-          "text": "공격 판정은 애니메이션 신호로 켜고 끈다",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "보스의 히트박스(`BossHitbox`)는 애니메이터 칸에 붙인 `AnimStateEventSender`가 보내는 신호로 켜고 끕니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "2. 보스 — 상태와 패턴",
-          "공격 판정은 애니메이션 신호로 켜고 끈다"
-        ],
+        "title": { "text": "공격 판정은 애니메이션 신호로 켜고 끈다", "verbatim": true },
+        "lead": { "text": "보스의 히트박스(`BossHitbox`)는 애니메이터 칸에 붙인 `AnimStateEventSender`가 보내는 신호로 켜고 끕니다.", "verbatim": true },
+        "sectionPath": ["2. 보스 — 상태와 패턴", "공격 판정은 애니메이션 신호로 켜고 끈다"],
         "points": [
-          {
-            "label": "이유",
-            "text": "보스는 지치거나 죽는 등 상태에 따라 공격이 중간에 끊길 수 있어서 신호를 썼습니다.",
-            "verbatim": false
-          },
-          {
-            "label": "문제",
-            "text": "히트박스가 켜진 채 남을 수 있음",
-            "verbatim": true
-          },
-          {
-            "label": "해결",
-            "text": "`Exit`이 모두 꺼 주므로 남지 않음",
-            "verbatim": true
-          }
+          { "label": "이유", "text": "보스는 지치거나 죽는 등 상태에 따라 공격이 중간에 끊길 수 있어서 신호를 썼습니다.", "verbatim": false },
+          { "label": "문제", "text": "히트박스가 켜진 채 남을 수 있음", "verbatim": true },
+          { "label": "해결", "text": "`Exit`이 모두 꺼 주므로 남지 않음", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "code",
-            "n": 1,
-            "lines": [
-              2,
-              19
-            ],
-            "fp": "// Attack.cs (줄 일부 생략)"
-          }
-        ]
-      },
-      {
-        "key": "hit-flow",
-        "chapter": "combat",
-        "layout": "full",
-        "tab": "흐름",
-        "title": {
-          "text": "3. 전투 판정 — 때리고 맞기",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "플레이어의 칼이 보스에 닿으면 아래 순서로 처리됩니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "3. 전투 판정 — 때리고 맞기"
-        ],
-        "points": [],
-        "visuals": [
-          {
-            "kind": "mermaid",
-            "n": 1,
-            "fp": "sequenceDiagram"
-          }
+          { "kind": "code", "n": 1, "lines": [2, 19], "fp": "// Attack.cs (줄 일부 생략)" }
         ]
       },
       {
@@ -673,158 +242,45 @@
         "chapter": "combat",
         "layout": "problem",
         "tab": "문제 해결",
-        "title": {
-          "text": "칼에 붙인 콜라이더의 문제",
-          "verbatim": true
-        },
+        "title": { "text": "칼에 붙인 콜라이더의 문제", "verbatim": true },
         "lead": null,
-        "sectionPath": [
-          "3. 전투 판정 — 때리고 맞기",
-          "공격 판정 — 칼 궤적을 클립에 굽다",
-          "칼에 붙인 콜라이더의 문제"
-        ],
+        "sectionPath": ["3. 전투 판정 — 때리고 맞기", "공격 판정 — 칼 궤적을 클립에 굽다", "칼에 붙인 콜라이더의 문제"],
         "points": [
-          {
-            "label": "원인",
-            "text": "두 번째 문제는 콜라이더를 어디에 붙이느냐가 아니라 언제 켜져 있느냐의 문제였습니다.",
-            "verbatim": true
-          },
-          {
-            "label": "해결",
-            "text": "공격 클립마다 칼이 지나가는 궤적에 맞춰 콜라이더를 배치하고, 그 클립의 공격 구간에만 켰다가 끝나면 끕니다.",
-            "verbatim": false
-          },
-          {
-            "label": "결과",
-            "text": "칼을 거둬들이는 동작은 다른 클립이라 판정이 없으므로, 두 번 맞는 문제가 풀렸습니다.",
-            "verbatim": false
-          }
+          { "label": "원인", "text": "두 번째 문제는 콜라이더를 어디에 붙이느냐가 아니라 언제 켜져 있느냐의 문제였습니다.", "verbatim": true },
+          { "label": "해결", "text": "공격 클립마다 칼이 지나가는 궤적에 맞춰 콜라이더를 배치하고, 그 클립의 공격 구간에만 켰다가 끝나면 끕니다.", "verbatim": false },
+          { "label": "결과", "text": "칼을 거둬들이는 동작은 다른 클립이라 판정이 없으므로, 두 번 맞는 문제가 풀렸습니다.", "verbatim": false }
         ],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "문제|겪은 일"
-          },
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "클립|콜라이더|켜짐 → 꺼짐",
-            "sectionPath": [
-              "3. 전투 판정 — 때리고 맞기",
-              "공격 판정 — 칼 궤적을 클립에 굽다",
-              "켜고 끄기도 클립이 한다"
-            ]
-          }
+          { "kind": "table", "n": 1, "fp": "문제|겪은 일" },
+          { "kind": "table", "n": 1, "fp": "클립|콜라이더|켜짐 → 꺼짐", "sectionPath": ["3. 전투 판정 — 때리고 맞기", "공격 판정 — 칼 궤적을 클립에 굽다", "켜고 끄기도 클립이 한다"] }
         ]
       },
       {
-        "key": "part-break",
-        "chapter": "combat",
-        "layout": "visual",
-        "tab": "결과",
-        "title": {
-          "text": "맞는 곳 · 부위 · 판단을 나눈다",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "그래서 보스는 \"어디를 맞았는지\"를 알아야 했고, 아래처럼 맞는 곳과 부위를 나눴습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "3. 전투 판정 — 때리고 맞기",
-          "피격 — 보스가 맞는 과정",
-          "맞는 곳 · 부위 · 판단을 나눈다"
-        ],
-        "points": [
-          {
-            "label": "기획 의도",
-            "text": "부위 파괴는 이 게임의 \"다음에 노릴 곳\"을 만드는 장치입니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "앞발은 보스의 공격에 가장 많이 쓰여 자주 맞히게 되므로, 부위 파괴를 처음 경험하는 곳으로 넣었습니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "나눈 덕분에 Hurtbox와 BossPart는 정보를 넘기기만 하고, 피해 계산은 `Boss.ApplyHit` 한 곳에만 있습니다.",
-            "verbatim": true
-          }
-        ],
+        "key": "data-flow",
+        "chapter": "data",
+        "layout": "full",
+        "tab": "구조",
+        "title": { "text": "4. 데이터 — 정해진 수치와 바뀌는 값", "verbatim": true },
+        "lead": { "text": "정해진 수치(보상 개수, 차지 배율, 장비 능력치)는 TSV 표에 두고, 플레이하며 바뀌는 값(소울, 소재, 가진 장비)은 `GameData.Current`가 들고 있습니다.", "verbatim": true },
+        "sectionPath": ["4. 데이터 — 정해진 수치와 바뀌는 값"],
+        "points": [],
         "visuals": [
-          {
-            "kind": "image",
-            "src": "images/part_break.gif",
-            "w": 960,
-            "h": 540,
-            "caption": {
-              "text": "부위 파괴: 꼬리가 잘리고 소재 알림",
-              "verbatim": true
-            }
-          }
+          { "kind": "mermaid", "n": 1, "fp": "flowchart LR" },
+          { "kind": "table", "n": 1, "fp": "절|그림에서" }
         ]
       },
       {
-        "key": "attack-info",
-        "chapter": "combat",
+        "key": "tsv-choice",
+        "chapter": "data",
         "layout": "full",
         "tab": "선택",
-        "title": {
-          "text": "한 번의 공격은 AttackInfo 하나로",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "`AttackInfo`는 `class`가 아니라 `readonly struct`입니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "3. 전투 판정 — 때리고 맞기",
-          "피격 — 보스가 맞는 과정",
-          "한 번의 공격은 AttackInfo 하나로"
-        ],
+        "title": { "text": "정해진 수치는 TSV 표로", "verbatim": true },
+        "lead": { "text": "수치를 코드나 인스펙터가 아니라 표로 뺀 이유와, 그 대신 생긴 차이입니다.", "verbatim": true },
+        "sectionPath": ["4. 데이터 — 정해진 수치와 바뀌는 값", "정해진 수치는 TSV 표로"],
         "points": [],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "필드|내용|주로 쓰는 쪽"
-          },
-          {
-            "kind": "table",
-            "n": 2,
-            "fp": "|하는 일|아니었다면"
-          }
-        ]
-      },
-      {
-        "key": "hurtbox-null",
-        "chapter": "combat",
-        "layout": "problem",
-        "tab": "문제 해결",
-        "title": {
-          "text": "맡긴 결과는 직접 확인한다",
-          "verbatim": true
-        },
-        "lead": null,
-        "sectionPath": [
-          "3. 전투 판정 — 때리고 맞기",
-          "피격 — 보스가 맞는 과정",
-          "맡긴 결과는 직접 확인한다"
-        ],
-        "points": [],
-        "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "단계|한 일"
-          },
-          {
-            "kind": "mermaid",
-            "n": 1,
-            "fp": "flowchart BT"
-          }
+          { "kind": "table", "n": 1, "fp": "표 (StreamingAssets/…)|담긴 것|읽는 곳" },
+          { "kind": "table", "n": 2, "fp": "|TSV 표 (선택)|인스펙터 값" }
         ]
       },
       {
@@ -832,36 +288,15 @@
         "chapter": "data",
         "layout": "full",
         "tab": "선택",
-        "title": {
-          "text": "바뀌는 값은 static Progress 한 벌로",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "사냥터에서 얻은 소울과 소재는 씬이 마을로 바뀐 뒤에도 남아 있어야 합니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "4. 데이터 — 정해진 수치와 바뀌는 값",
-          "바뀌는 값은 static Progress 한 벌로"
-        ],
+        "title": { "text": "씬이 바뀌어도 소울과 소재가 남는다", "verbatim": true },
+        "lead": { "text": "사냥터에서 얻은 소울과 소재는 씬이 마을로 바뀐 뒤에도 남아 있어야 합니다.", "verbatim": true },
+        "sectionPath": ["4. 데이터 — 정해진 수치와 바뀌는 값", "씬이 바뀌어도 소울과 소재가 남는다"],
         "points": [
-          {
-            "label": "",
-            "text": "이 프로젝트는 사냥이 끝날 때마다 마을 씬을 다시 불러옵니다.",
-            "verbatim": true
-          },
-          {
-            "label": "이유",
-            "text": "static은 몇 번을 다시 불러와도 하나뿐이고, 아무것도 연결하지 않고 어느 스크립트에서든 `GameData.Current`로 바로 읽을 수 있어서 골랐습니다.",
-            "verbatim": true
-          }
+          { "label": "", "text": "이 프로젝트는 사냥이 끝날 때마다 마을 씬을 다시 불러옵니다.", "verbatim": true },
+          { "label": "이유", "text": "static은 몇 번을 다시 불러와도 하나뿐이고, 아무것도 연결하지 않고 어느 스크립트에서든 `GameData.Current`로 바로 읽을 수 있어서 골랐습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "|static 클래스 (선택)|ScriptableObject|DontDestroyOnLoad 오브젝트"
-          }
+          { "kind": "table", "n": 1, "fp": "|static 클래스 (선택)|ScriptableObject|DontDestroyOnLoad 오브젝트" }
         ]
       },
       {
@@ -869,41 +304,32 @@
         "chapter": "data",
         "layout": "full",
         "tab": "구현",
-        "title": {
-          "text": "사냥 중에는 모으고, 끝날 때 한 번에 더한다",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "`HuntManager`가 이번 판 보상(`HuntReward`)에 모아 두었다가, 사냥이 끝날 때(`Finish`) 한 번에 더합니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "4. 데이터 — 정해진 수치와 바뀌는 값",
-          "사냥 중에는 모으고, 끝날 때 한 번에 더한다"
-        ],
+        "title": { "text": "사냥 중에는 모으고, 끝날 때 한 번에 더한다", "verbatim": true },
+        "lead": { "text": "`HuntManager`가 이번 판 보상(`HuntReward`)에 모아 두었다가, 사냥이 끝날 때(`Finish`) 한 번에 더합니다.", "verbatim": true },
+        "sectionPath": ["4. 데이터 — 정해진 수치와 바뀌는 값", "사냥 중에는 모으고, 끝날 때 한 번에 더한다"],
         "points": [
-          {
-            "label": "이유",
-            "text": "죽으면 가지고 있던 소울을 죽은 자리에 떨어뜨려야 하는데, 사냥 중에 번 소울을 바로 더해 버렸다면 그것까지 같이 떨어지기 때문입니다.",
-            "verbatim": true
-          }
+          { "label": "이유", "text": "죽으면 가지고 있던 소울을 죽은 자리에 떨어뜨려야 하는데, 사냥 중에 번 소울을 바로 더해 버렸다면 그것까지 같이 떨어지기 때문입니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "끝난 결과|① 가지고 있던 소울|② 이번 판 소울|③ 사냥 중 모은 소재 (부위 소재 포함)"
-          },
-          {
-            "kind": "image",
-            "src": "images/result_panel.png",
-            "w": 1920,
-            "h": 1080,
-            "caption": {
-              "text": "사망 후 결과 창: 받은 소울·소재",
-              "verbatim": true
-            }
-          }
+          { "kind": "table", "n": 1, "fp": "끝난 결과|① 가지고 있던 소울|② 이번 판 소울|③ 사냥 중 모은 소재 (부위 소재 포함)" },
+          { "kind": "image", "src": "images/result_panel.png", "w": 1920, "h": 1080, "caption": { "text": "사망 후 결과 창: 받은 소울·소재", "verbatim": true } }
+        ]
+      },
+      {
+        "key": "forge-next",
+        "chapter": "gear",
+        "layout": "visual",
+        "tab": "흐름",
+        "title": { "text": "제작과 강화는 표의 다음 줄을 읽는다", "verbatim": true },
+        "lead": { "text": "제작과 강화를 한 표에 둔 이유는, 둘 다 표의 다음 줄을 읽기만 하면 되기 때문입니다.", "verbatim": true },
+        "sectionPath": ["5. 장비와 요리", "제작과 강화는 표의 다음 줄을 읽는다"],
+        "points": [
+          { "label": "", "text": "대장간(`Forge.GetNext`)은 제작인지 강화인지 따로 묻지 않습니다.", "verbatim": true },
+          { "label": "", "text": "단계를 늘리고 싶으면 코드를 고치지 않고 표에 줄을 하나 더하면 됩니다.", "verbatim": true }
+        ],
+        "visuals": [
+          { "kind": "mermaid", "n": 1, "fp": "flowchart LR" },
+          { "kind": "image", "src": "images/forge_ui.png", "w": 1920, "h": 1080, "caption": { "text": "대장간: 다음 단계 비용과 능력치", "verbatim": true } }
         ]
       },
       {
@@ -911,36 +337,16 @@
         "chapter": "gear",
         "layout": "visual",
         "tab": "구조",
-        "title": {
-          "text": "비용은 CostValue 하나를 물려받는다",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "무기 · 방어구 · 요리 표의 한 줄을 읽는 클래스는 모두 `CostValue`를 물려받습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "5. 장비와 요리",
-          "비용은 CostValue 하나를 물려받는다"
-        ],
+        "title": { "text": "장비와 요리는 같은 방식으로 값을 치른다", "verbatim": true },
+        "lead": { "text": "장비를 만들든 요리를 하든 소울과 소재를 내는 기능은 같으므로, 무기 · 방어구 · 요리 표의 한 줄을 읽는 클래스는 모두 `CostValue`를 물려받습니다.", "verbatim": true },
+        "sectionPath": ["5. 장비와 요리", "장비와 요리는 같은 방식으로 값을 치른다"],
         "points": [
-          {
-            "label": "이유",
-            "text": "장비를 만들든 요리를 하든 소울과 소재를 내는 기능은 같기 때문입니다.",
-            "verbatim": true
-          },
-          {
-            "label": "결과",
-            "text": "새 소재가 생기면 소재 목록(`MaterialType`)과 `CostValue`만 고치면 되고, 무기 · 방어구 · 요리 클래스는 손대지 않아도 됩니다.",
-            "verbatim": true
-          }
+          { "label": "CanPay", "text": "소울과 소재를 종류마다 비교해, 하나라도 모자라면 false", "verbatim": true },
+          { "label": "Pay", "text": "확인 없이 빼기만 함 → 반드시 `CanPay`를 먼저 부름", "verbatim": true },
+          { "label": "새 소재가 생기면", "text": "소재 목록(`MaterialType`)과 `CostValue`만 고침. 무기 · 방어구 · 요리 클래스는 그대로", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "mermaid",
-            "n": 1,
-            "fp": "classDiagram"
-          }
+          { "kind": "mermaid", "n": 1, "fp": "classDiagram" }
         ]
       },
       {
@@ -948,36 +354,32 @@
         "chapter": "gear",
         "layout": "full",
         "tab": "선택",
-        "title": {
-          "text": "효과는 Apply 하나로 처음부터 다시 정한다",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "장비와 요리의 효과는 `PlayerLoadout.Apply()` 한 곳에서 플레이어에 넣습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "5. 장비와 요리",
-          "효과는 Apply 하나로 처음부터 다시 정한다"
-        ],
+        "title": { "text": "요리를 바꿔 먹어도 효과가 겹치지 않는다", "verbatim": true },
+        "lead": { "text": "장비와 요리의 효과는 `PlayerLoadout.Apply()` 한 곳에서 플레이어에 넣습니다.", "verbatim": true },
+        "sectionPath": ["5. 장비와 요리", "요리를 바꿔 먹어도 효과가 겹치지 않는다"],
         "points": [
-          {
-            "label": "이유",
-            "text": "바꿔 먹으면 이전 효과가 사라져야 하므로, 바뀐 만큼만 더하는 방식은 쓰지 않았습니다.",
-            "verbatim": true
-          }
+          { "label": "이유", "text": "바꿔 먹으면 이전 효과가 사라져야 하므로, 바뀐 만큼만 더하는 방식은 쓰지 않았습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 2,
-            "fp": "|바뀐 만큼 더하고 빼기|지금 상태로 다시 정하기 (선택)"
-          },
-          {
-            "kind": "table",
-            "n": 3,
-            "fp": "읽는 것|넣는 곳|없을 때"
-          }
+          { "kind": "table", "n": 2, "fp": "|바뀐 만큼 더하고 빼기|지금 상태로 다시 정하기 (선택)" },
+          { "kind": "table", "n": 3, "fp": "읽는 것|넣는 곳|없을 때" }
+        ]
+      },
+      {
+        "key": "recipe-unlock",
+        "chapter": "gear",
+        "layout": "visual",
+        "tab": "흐름",
+        "title": { "text": "요리가 열리는 조건도 표에 적는다", "verbatim": true },
+        "lead": { "text": "이 조건은 코드가 아니라 레시피 표(`RecipeTable.tsv`)의 `Unlock` 칸에 소재 이름으로 적어 두었습니다.", "verbatim": true },
+        "sectionPath": ["5. 장비와 요리", "요리가 열리는 조건도 표에 적는다"],
+        "points": [
+          { "label": "이유", "text": "열림 조건을 코드에 쓰면 요리나 소재를 추가할 때마다 `if`를 더해야 하지만, 표로 두면 레시피 줄의 `Unlock` 칸에 소재 이름만 적으면 됩니다.", "verbatim": true },
+          { "label": "기획 의도", "text": "요리도 꼬리를 처음 잘랐을 때 꼬리 요리가 열리는 식이라, 부위 파괴가 새 요리를 여는 계기가 됩니다.", "verbatim": true }
+        ],
+        "visuals": [
+          { "kind": "mermaid", "n": 1, "fp": "flowchart LR" },
+          { "kind": "image", "src": "images/cooking_pot.png", "w": 1920, "h": 1080, "caption": { "text": "냄비: 열린 요리와 잠긴 요리", "verbatim": true } }
         ]
       }
     ]

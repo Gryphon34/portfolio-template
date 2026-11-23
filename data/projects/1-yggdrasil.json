@@ -11,31 +11,12 @@
     "role": "팀장(일정·범위 관리), 게임 기본 아이디어 제안(보드게임 + 실시간 대전), 야차 전투 클라이언트 전체"
   },
   "meta": [
-    {
-      "label": "장르",
-      "value": "2~4인 온라인 보드게임"
-    },
-    {
-      "label": "기간",
-      "value": "2026.08.20 ~ 2026.09.11 (약 3주)"
-    },
-    {
-      "label": "인원",
-      "value": "3인 (시작 4인, 1인 중도 이탈)"
-    },
-    {
-      "label": "환경",
-      "value": "Unity 6 (C#), UniTask, ChatGPT(정해 둔 구조의 코드 작성 보조, 6.5)"
-    }
+    { "label": "장르", "value": "2~4인 온라인 보드게임" },
+    { "label": "기간", "value": "2026.08.20 ~ 2026.09.11 (약 3주)" },
+    { "label": "인원", "value": "3인 (시작 4인, 1인 중도 이탈)" },
+    { "label": "환경", "value": "Unity 6 (C#), UniTask, ChatGPT(정해 둔 구조의 코드 작성 보조, 6.5)" }
   ],
-  "tags": [
-    "Unity 6",
-    "C#",
-    "UniTask",
-    "애니메이션 클립",
-    "Animator",
-    "BoxCast"
-  ],
+  "tags": ["Unity 6", "C#", "UniTask", "애니메이션 클립", "Animator", "BoxCast"],
   "links": {
     "github": "https://github.com/KooHoo-Dev/3rd-TeamProject-KM",
     "video": "https://youtu.be/EDO_ncrxliU",
@@ -51,7 +32,7 @@
       "what": "장비마다 다른 궤적을 코드 공식 대신 애니메이션 클립으로 만들어, 장비 10종을 완성했습니다.",
       "how": "투사체 프리팹의 애니메이션 클립이 이동 경로를 그리고, 히트박스의 위치·크기도 같은 클립에서 움직입니다. 범위형은 공격이 떨어지는 프레임에만 히트박스를 켜므로, 눈에 보이는 궤적과 판정이 어긋나지 않습니다.",
       "why": "처음에는 궤적을 코드로 계산했지만, 같은 \"직선\"이라도 장비마다 원하는 움직임이 달라 공식을 따로 만들고 수치를 조정해도 원하는 모양이 잘 나오지 않았습니다. 남은 기간은 일주일 정도였고, 그 안에 10종을 원하는 모양으로 완성하는 것이 확장성보다 중요해 클립 방식을 선택했습니다.",
-      "section": "4.3 고민과 선택: 궤적을 코드로 계산할 것인가, 애니메이션 클립으로 만들 것인가",
+      "section": "4.3 궤적을 코드로 계산할 것인가, 애니메이션 클립으로 만들 것인가",
       "image": {
         "src": "images/clip_trajectories.png",
         "w": 2250,
@@ -64,7 +45,7 @@
       "what": "투사체를 입력 순간이 아니라 공격 모션의 '놓는 프레임'에 생성해, 모든 화면에서 같은 연출로 보이게 했습니다.",
       "how": "`BattleManager`가 공격 모션을 재생하고, `PlayerAnimator`가 매 프레임 공격 상태의 진행도(`normalizedTime`)를 확인해 놓는 시점(0.65)을 넘으면 콜백을 호출해 투사체를 생성합니다. 모션이 없는 캐릭터·테스트 더미는 즉시 생성합니다.",
       "why": "요청 즉시 생성하면 입력 반응은 가장 빠르지만 모션과 투사체가 따로 놀아 어색합니다. 온라인에서는 각 클라이언트가 같은 메시지를 받아 각자 모션을 재생하므로, 발사 시점을 모션 기준으로 정하면 모든 화면에서 같은 연출이 나옵니다. 입력부터 발사까지의 지연은 자동 공격 간격(1.3초)이 충분히 길어 감수했습니다.",
-      "section": "3.3 고민과 선택: 투사체를 언제 만들 것인가",
+      "section": "3.3 투사체를 언제 만들 것인가",
       "image": {
         "src": "images/attack_release_timing.png",
         "w": 1950,
@@ -77,7 +58,7 @@
       "what": "스킬을 \"요청\"과 \"실행\"으로 나눠, 로컬 테스트와 온라인 전투가 같은 실행 코드를 쓰도록 했습니다.",
       "how": "입력은 `CastLocal`(요청)만 하고 실제 생성은 `ExecuteSkill`(실행)이 합니다. 서버에서 온 요청은 `ExecuteSkillFromNetwork`로 같은 실행 함수에 들어오고, 요청마다 고유한 `CastId`를 붙여 이미 실행한 ID면 무시합니다.",
       "why": "입력 즉시 실행하면 단순하지만 온라인 연결 시 입력부터 생성까지 다시 나눠야 합니다. 요청과 실행을 나누면 서버를 붙일 때 요청과 실행 사이에 서버 왕복만 끼우면 되고, 로컬 테스트와 온라인이 같은 실행 코드를 씁니다.",
-      "section": "5.1 고민과 선택: 스킬 실행 경로를 어떻게 나눌 것인가",
+      "section": "5.1 스킬 실행 경로를 어떻게 나눌 것인가",
       "image": null
     }
   ],
@@ -89,46 +70,16 @@
       "solution": "`CombatEntity`가 이동 컨트롤러의 무적 상태를 노출하고 피격 적용(`TryApplyLocalHit`) 직전에 확인하도록 연결했습니다(`b2272da`). 그러자 회피를 연타하면 무적이 끊기지 않는 문제가 드러나, 회피 쿨타임 1.5초를 추가하고 무적 시간을 0.2초에서 늘렸습니다(현재 전투 씬 0.35초, `d5152b8`).",
       "result": "회피 무적이 피격 판정에 실제로 적용되어 회피 중에는 투사체가 몸을 통과해도 HP가 줄지 않게 됐고, 쿨타임이 생겨 연타로 무적을 이어 가는 문제도 사라졌습니다.",
       "lesson": "상태 플래그를 만드는 것과 그 플래그를 판정에 연결하는 것은 별개의 작업입니다. 기능을 만들면 \"실제로 효과가 나는지\"를 확인하는 테스트까지가 한 작업이라는 것을 배웠습니다. 또 하나를 고치면 그동안 그 버그에 가려져 있던 문제(무한 무적)가 드러날 수 있다는 것도 체감했습니다.",
-      "section": "3.4 트러블슈팅: 회피했는데도 맞는 문제"
+      "section": "3.4 회피했는데도 맞는 문제"
     }
   ],
   "screenshots": [
-    {
-      "src": "images/yacha_battle.gif",
-      "w": 960,
-      "h": 540,
-      "caption": "결투 신청 → 전투 → 승리 → 토르의 대장간이 승자 색(보라)으로 바뀜 (3배속)"
-    },
-    {
-      "src": "images/shop_equipment.gif",
-      "w": 960,
-      "h": 540,
-      "caption": "빈 장비 칸 → 상점에서 3개 구매 → 장비 칸이 채워짐 (1.5배속)"
-    },
-    {
-      "src": "images/auto_attack_stop.gif",
-      "w": 960,
-      "h": 540,
-      "caption": "실제 대전에서 이동하는 동안은 쏘지 않고, 멈추면 자동 공격이 나가는 장면. 장비 슬롯이 쿨타임 중이라 나가는 화살이 자동 공격임을 알 수 있음 (0.5배속)"
-    },
-    {
-      "src": "images/dodge.gif",
-      "w": 960,
-      "h": 540,
-      "caption": "회피 중에는 화살이 몸을 지나가도 HP가 그대로 (0.5배속)"
-    },
-    {
-      "src": "images/equipment_skills.gif",
-      "w": 960,
-      "h": 540,
-      "caption": "장비 스킬: 투석탄(포물선) · 화살비(범위) · 낙뢰(범위) · 화염구(포물선)"
-    },
-    {
-      "src": "images/combat_ui.gif",
-      "w": 960,
-      "h": 540,
-      "caption": "피해 배율 ×5에서 한 방에 사망 → 승자 패널"
-    }
+    { "src": "images/yacha_battle.gif", "w": 960, "h": 540, "caption": "결투 신청 → 전투 → 승리 → 토르의 대장간이 승자 색(보라)으로 바뀜 (3배속)" },
+    { "src": "images/shop_equipment.gif", "w": 960, "h": 540, "caption": "빈 장비 칸 → 상점에서 3개 구매 → 장비 칸이 채워짐 (1.5배속)" },
+    { "src": "images/auto_attack_stop.gif", "w": 960, "h": 540, "caption": "실제 대전에서 이동하는 동안은 쏘지 않고, 멈추면 자동 공격이 나가는 장면. 장비 슬롯이 쿨타임 중이라 나가는 화살이 자동 공격임을 알 수 있음 (0.5배속)" },
+    { "src": "images/dodge.gif", "w": 960, "h": 540, "caption": "회피 중에는 화살이 몸을 지나가도 HP가 그대로 (0.5배속)" },
+    { "src": "images/equipment_skills.gif", "w": 960, "h": 540, "caption": "장비 스킬: 투석탄(포물선) · 화살비(범위) · 낙뢰(범위) · 화염구(포물선)" },
+    { "src": "images/combat_ui.gif", "w": 960, "h": 540, "caption": "피해 배율 ×5에서 한 방에 사망 → 승자 패널" }
   ],
   "retro": {
     "achieved": [
@@ -153,203 +104,30 @@
   },
   "deck": {
     "chapters": [
-      {
-        "key": "intro",
-        "title": "프로젝트 개요",
-        "sectionPath": [
-          "1. 프로젝트 개요"
-        ]
-      },
-      {
-        "key": "arch",
-        "title": "전체 구조",
-        "sectionPath": [
-          "2. 전체 구조"
-        ]
-      },
-      {
-        "key": "control",
-        "title": "시스템 ① 조작: 이동 · 자동 공격 · 회피",
-        "sectionPath": [
-          "3. 시스템 ① 조작: 이동 · 자동 공격 · 회피"
-        ]
-      },
-      {
-        "key": "skill",
-        "title": "시스템 ② 장비 스킬",
-        "sectionPath": [
-          "4. 시스템 ② 장비 스킬 ★"
-        ]
-      },
-      {
-        "key": "online",
-        "title": "시스템 ③ 판정 · 테스트 · 온라인 연결 준비",
-        "sectionPath": [
-          "5. 시스템 ③ 판정 · 테스트 · 온라인 연결 준비"
-        ]
-      },
-      {
-        "key": "leader",
-        "title": "팀장으로서: 일정과 협업",
-        "sectionPath": [
-          "6. 팀장으로서: 일정과 협업"
-        ]
-      },
-      {
-        "key": "appendix",
-        "title": "기획서 대비: 야차",
-        "sectionPath": [
-          "부록 A. 기획서 대비: 야차"
-        ]
-      }
+      { "key": "intro", "title": "프로젝트 개요", "sectionPath": ["1. 프로젝트 개요"] },
+      { "key": "arch", "title": "전체 구조", "sectionPath": ["2. 전체 구조"] },
+      { "key": "control", "title": "조작: 이동 · 자동 공격 · 회피", "sectionPath": ["3. 조작: 이동 · 자동 공격 · 회피"] },
+      { "key": "skill", "title": "장비 스킬", "sectionPath": ["4. 장비 스킬 ★"] },
+      { "key": "online", "title": "판정 · 테스트 · 온라인 연결 준비", "sectionPath": ["5. 판정 · 테스트 · 온라인 연결 준비"] },
+      { "key": "leader", "title": "팀장으로서: 일정과 협업", "sectionPath": ["6. 팀장으로서: 일정과 협업"] },
+      { "key": "appendix", "title": "기획서 대비: 야차", "sectionPath": ["부록 A. 기획서 대비: 야차"] }
     ],
     "slides": [
-      {
-        "key": "yacha",
-        "chapter": "intro",
-        "layout": "overview",
-        "tab": "개요",
-        "title": {
-          "text": "1.1 무엇을 만들었나 (What)",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "야차는 보드에서 상대 영토에 도착했을 때 걸 수 있는 30초 1:1 횡스크롤 대전입니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "1.1 무엇을 만들었나 (What)"
-        ],
-        "points": [
-          {
-            "label": "",
-            "text": "이기면 상대 영토를 빼앗고, 지면 통행료를 한 번 더 냅니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "두 플레이어는 각자의 화면에서 자기 캐릭터를 조작하고, 나머지 플레이어는 관전합니다.",
-            "verbatim": true
-          }
-        ],
-        "visuals": [
-          {
-            "kind": "image",
-            "src": "images/yacha_battle.gif",
-            "w": 960,
-            "h": 540,
-            "caption": {
-              "text": "결투 신청 → 전투 → 승리 → 토르의 대장간이 승자 색(보라)으로 바뀜 (3배속)",
-              "verbatim": true
-            }
-          },
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "구분|규칙",
-            "sectionPath": [
-              "1.5 야차 규칙"
-            ]
-          }
-        ]
-      },
       {
         "key": "board-link",
         "chapter": "intro",
         "layout": "overview",
         "tab": "개요",
-        "title": {
-          "text": "1.2 기획: 왜 보드게임에 실시간 대전을 붙였나",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "저는 부루마블 같은 보드게임에서 승부가 주사위 운만으로 결정되는 것이 아쉬웠습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "1.2 기획: 왜 보드게임에 실시간 대전을 붙였나"
-        ],
+        "title": { "text": "1.2 왜 보드게임에 실시간 대전을 붙였나", "verbatim": true },
+        "lead": { "text": "저는 부루마블 같은 보드게임에서 승부가 주사위 운만으로 결정되는 것이 아쉬웠습니다.", "verbatim": true },
+        "sectionPath": ["1. 프로젝트 개요", "1.2 왜 보드게임에 실시간 대전을 붙였나"],
         "points": [
-          {
-            "label": "",
-            "text": "부루마블 방식의 자산 경쟁을 벌이며, 실시간 액션 대전인 '야차'로 영토를 빼앗고 지키는 캐주얼 파티 게임",
-            "verbatim": true
-          },
-          {
-            "label": "보드와 야차를 잇는 고리",
-            "text": "야차가 보드와 따로 노는 미니게임이 되지 않도록, 보드에서 쌓은 것이 야차에 영향을 미치고 야차의 결과가 다시 보드에 영향을 주도록 하였습니다.",
-            "verbatim": true
-          }
+          { "label": "", "text": "부루마블 방식의 자산 경쟁을 벌이며, 실시간 액션 대전인 '야차'로 영토를 빼앗고 지키는 캐주얼 파티 게임", "verbatim": true },
+          { "label": "보드와 야차를 잇는 고리", "text": "야차가 보드와 따로 노는 미니게임이 되지 않도록, 보드에서 쌓은 것이 야차에 영향을 미치고 야차의 결과가 다시 보드에 영향을 주도록 하였습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "방향|고리|내용"
-          }
-        ]
-      },
-      {
-        "key": "focus",
-        "chapter": "intro",
-        "layout": "overview",
-        "tab": "개요",
-        "title": {
-          "text": "1.3 야차에서 무엇에 집중했나",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "보드게임 사이사이에 들어가는 짧은 대전이므로, 저는 다음 두 가지에 집중했습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "1.3 야차에서 무엇에 집중했나"
-        ],
-        "points": [
-          {
-            "label": "",
-            "text": "레퍼런스는 아처 오브 갓이었습니다. 좌우로만 움직이며 멈춰 있을 때 자동으로 활을 쏘고, 상대 공격은 회피로 피하는 대전 게임입니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "결투의 서버 흐름과 온라인 연동은 서버 담당 팀원이 맡았으므로, 이 문서에서는 제가 넘겨준 지점까지만 설명합니다.",
-            "verbatim": true
-          }
-        ],
-        "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "집중한 것|내용"
-          }
-        ]
-      },
-      {
-        "key": "team",
-        "chapter": "intro",
-        "layout": "overview",
-        "tab": "개요",
-        "title": {
-          "text": "1.4 팀 구성과 내 역할",
-          "verbatim": true
-        },
-        "lead": null,
-        "sectionPath": [
-          "1.4 팀 구성과 내 역할"
-        ],
-        "points": [],
-        "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "담당|역할"
-          },
-          {
-            "kind": "table",
-            "n": 2,
-            "fp": "영역|주요 클래스"
-          }
+          { "kind": "table", "n": 1, "fp": "방향|고리|내용" },
+          { "kind": "image", "src": "images/yacha_battle.gif", "w": 960, "h": 540, "caption": { "text": "결투 신청 → 전투 → 승리 → 토르의 대장간이 승자 색(보라)으로 바뀜 (3배속)", "verbatim": true }, "sectionPath": ["1. 프로젝트 개요", "1.1 야차: 영토를 걸고 싸우는 30초 대전"] }
         ]
       },
       {
@@ -357,35 +135,30 @@
         "chapter": "arch",
         "layout": "visual",
         "tab": "구조",
-        "title": {
-          "text": "2.1 아키텍처",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "입력은 `PlayerController` 한 곳으로만 들어옵니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "2.1 아키텍처"
-        ],
+        "title": { "text": "2.1 아키텍처", "verbatim": true },
+        "lead": { "text": "입력은 `PlayerController` 한 곳으로만 들어옵니다.", "verbatim": true },
+        "sectionPath": ["2. 전체 구조", "2.1 아키텍처"],
         "points": [
-          {
-            "label": "",
-            "text": "이동과 회피는 `CharacterController2D`가, 공격은 `EquipmentCaster` → `BattleManager` 순으로 처리합니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "점선 부분(서버 왕복)은 서버 담당 팀원이 연결했고, 저는 그 연결 지점(요청 이벤트와 실행 함수)을 만들어 넘겼습니다(5.1).",
-            "verbatim": true
-          }
+          { "label": "입력을 한 곳으로", "text": "공격 모션 중이나 사망 뒤처럼 입력을 막아야 하는 경우를 `PlayerController` 한 곳에서만 판단하고, 이동 · 회피 · 장비 1~5 키를 한 스크립트에서 볼 수 있게 하려고 했습니다.", "verbatim": true },
+          { "label": "이동과 공격을 따로", "text": "이동은 입력하면 바로 반영되지만, 공격은 요청 → 서버 왕복 → 실행(5.1)을 거쳐야 해서 한 클래스에 두면 두 흐름이 섞입니다.", "verbatim": true },
+          { "label": "", "text": "점선 부분(서버 왕복)은 서버 담당 팀원이 연결했고, 저는 그 연결 지점(요청 이벤트와 실행 함수)을 만들어 넘겼습니다(5.1).", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "mermaid",
-            "n": 1,
-            "fp": "flowchart LR"
-          }
+          { "kind": "mermaid", "n": 1, "fp": "flowchart LR" },
+          { "kind": "mermaid", "n": 2, "fp": "flowchart LR" }
+        ]
+      },
+      {
+        "key": "class-roles",
+        "chapter": "arch",
+        "layout": "full",
+        "tab": "구조",
+        "title": { "text": "2.2 클래스 역할", "verbatim": true },
+        "lead": null,
+        "sectionPath": ["2. 전체 구조", "2.2 클래스 역할"],
+        "points": [],
+        "visuals": [
+          { "kind": "table", "n": 1, "fp": "클래스|하는 일|하지 않는 일" }
         ]
       },
       {
@@ -393,35 +166,15 @@
         "chapter": "arch",
         "layout": "full",
         "tab": "선택",
-        "title": {
-          "text": "2.3 고민과 선택: 이어받은 이동 코드에서 점프와 중력을 뺄 것인가",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "야차의 첫 기반 코드는 중도 이탈한 팀원이 올린 것이었습니다(이동 충돌 컨트롤러, 30초 타이머, 자동 공격 프로토타입, 화살, 테스트용 더미).",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "2.3 고민과 선택: 이어받은 이동 코드에서 점프와 중력을 뺄 것인가"
-        ],
+        "title": { "text": "2.3 이어받은 이동 코드에서 점프와 중력을 뺄 것인가", "verbatim": true },
+        "lead": { "text": "야차의 첫 기반 코드는 중도 이탈한 팀원이 올린 것이었습니다(이동 충돌 컨트롤러, 30초 타이머, 자동 공격 프로토타입, 화살, 테스트용 더미).", "verbatim": true },
+        "sectionPath": ["2. 전체 구조", "2.3 이어받은 이동 코드에서 점프와 중력을 뺄 것인가"],
         "points": [
-          {
-            "label": "이동",
-            "text": "평평한 바닥에서 좌우로만 → 중력·접지 검사가 필요 없어짐",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "회피에서 사용한 코루틴도 UniTask로 바꿔 취소 토큰으로 관리하게 했습니다.",
-            "verbatim": true
-          }
+          { "label": "이동", "text": "평평한 바닥에서 좌우로만 → 중력·접지 검사가 필요 없어짐", "verbatim": true },
+          { "label": "", "text": "회피에서 사용한 코루틴도 UniTask로 바꿔 취소 토큰으로 관리하게 했습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "|처음 레퍼런스: 「니드호그」|바꾼 레퍼런스: 「아처 오브 갓」"
-          }
+          { "kind": "table", "n": 1, "fp": "|처음 레퍼런스: 「니드호그」|바꾼 레퍼런스: 「아처 오브 갓」" }
         ]
       },
       {
@@ -429,39 +182,15 @@
         "chapter": "control",
         "layout": "code",
         "tab": "구현",
-        "title": {
-          "text": "3.1 고민과 선택: 공격 버튼 vs 자동 공격",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "움직이는 동안에는 공격 시각을 계속 뒤로 미뤄, 멈추자마자 바로 쏘지 못하게 했습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "3.1 고민과 선택: 공격 버튼 vs 자동 공격"
-        ],
+        "title": { "text": "3.1 공격 버튼 vs 자동 공격", "verbatim": true },
+        "lead": { "text": "움직이는 동안에는 공격 시각을 계속 뒤로 미뤄, 멈추자마자 바로 쏘지 못하게 했습니다.", "verbatim": true },
+        "sectionPath": ["3. 조작: 이동 · 자동 공격 · 회피", "3.1 공격 버튼 vs 자동 공격"],
         "points": [
-          {
-            "label": "최종 결정",
-            "text": "레퍼런스인 「아처 오브 갓」이 자동 공격 방식이었고, 야차의 재미도 위치를 잡고 피하는 판단에 두고 싶었기 때문입니다.",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "자동 공격 루프는 내가 조작하는 캐릭터에서만 돕니다(`SetLocalPlayer`). 상대 캐릭터의 공격은 서버에서 온 메시지로만 실행됩니다.",
-            "verbatim": true
-          }
+          { "label": "최종 결정", "text": "레퍼런스인 「아처 오브 갓」이 자동 공격 방식이었고, 야차의 재미도 위치를 잡고 피하는 판단에 두고 싶었기 때문입니다.", "verbatim": true },
+          { "label": "", "text": "자동 공격 루프는 내가 조작하는 캐릭터에서만 돕니다(`SetLocalPlayer`). 상대 캐릭터의 공격은 서버에서 온 메시지로만 실행됩니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "code",
-            "n": 1,
-            "lines": [
-              2,
-              21
-            ],
-            "fp": "// EquipmentCaster.cs — 멈춰 있을 때만 자동 공격"
-          }
+          { "kind": "code", "n": 1, "lines": [2, 21], "fp": "// EquipmentCaster.cs — 멈춰 있을 때만 자동 공격" }
         ]
       },
       {
@@ -469,40 +198,16 @@
         "chapter": "control",
         "layout": "code",
         "tab": "구현",
-        "title": {
-          "text": "3.3 고민과 선택: 투사체를 언제 만들 것인가",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "공격 요청이 들어왔을 때 투사체를 바로 만들 것인가, 캐릭터의 공격 모션에 맞춰 만들 것인가?",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "3.3 고민과 선택: 투사체를 언제 만들 것인가"
-        ],
+        "title": { "text": "3.3 투사체를 언제 만들 것인가", "verbatim": true },
+        "lead": { "text": "공격 요청이 들어왔을 때 투사체를 바로 만들 것인가, 캐릭터의 공격 모션에 맞춰 만들 것인가?", "verbatim": true },
+        "sectionPath": ["3. 조작: 이동 · 자동 공격 · 회피", "3.3 투사체를 언제 만들 것인가"],
         "points": [
-          {
-            "label": "방식",
-            "text": "공격 모션을 재생하고, 진행도 65% 지점에서 투사체 생성",
-            "verbatim": true
-          },
-          {
-            "label": "최종 결정",
-            "text": "온라인에서는 각 클라이언트가 같은 메시지를 받아 각자 모션을 재생하므로 발사 시점을 모션 기준으로 정하면 모든 화면에서 같은 연출이 나옵니다.",
-            "verbatim": false
-          },
-          {
-            "label": "감수한 대가",
-            "text": "입력부터 발사까지 모션 길이의 65%만큼 지연이 생깁니다.",
-            "verbatim": true
-          }
+          { "label": "방식", "text": "공격 모션을 재생하고, 진행도 65% 지점에서 투사체 생성", "verbatim": true },
+          { "label": "최종 결정", "text": "온라인에서는 각 클라이언트가 같은 메시지를 받아 각자 모션을 재생하므로 발사 시점을 모션 기준으로 정하면 모든 화면에서 같은 연출이 나옵니다.", "verbatim": false },
+          { "label": "감수한 대가", "text": "입력부터 발사까지 모션 길이의 65%만큼 지연이 생깁니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "code",
-            "n": 1,
-            "fp": "// BattleManager.cs — 모션을 재생하고, 놓는 시점에 투사체 생성"
-          }
+          { "kind": "code", "n": 1, "fp": "// BattleManager.cs — 모션을 재생하고, 놓는 시점에 투사체 생성" }
         ]
       },
       {
@@ -510,42 +215,12 @@
         "chapter": "control",
         "layout": "problem",
         "tab": "문제 해결",
-        "title": {
-          "text": "3.4 트러블슈팅: 회피했는데도 맞는 문제",
-          "verbatim": true
-        },
+        "title": { "text": "3.4 회피했는데도 맞는 문제", "verbatim": true },
         "lead": null,
-        "sectionPath": [
-          "3.4 트러블슈팅: 회피했는데도 맞는 문제"
-        ],
-        "points": [
-          {
-            "label": "문제",
-            "text": "회피 중인데도 투사체에 맞아 HP가 깎임. 시연 이틀 전(09-09) 테스트에서 발견",
-            "verbatim": true
-          },
-          {
-            "label": "원인",
-            "text": "피격을 적용하는 쪽에서 이 값을 확인하지 않았음",
-            "verbatim": false
-          },
-          {
-            "label": "해결",
-            "text": "`CombatEntity`가 이동 컨트롤러의 무적 상태를 노출하고, 피격 적용(`TryApplyLocalHit`) 직전에 확인하도록 연결 (`b2272da`)",
-            "verbatim": true
-          },
-          {
-            "label": "결과",
-            "text": "회피 무적이 피격 판정에 실제로 적용되어, 회피 중에는 투사체가 몸을 통과해도 HP가 줄지 않게 됨.",
-            "verbatim": true
-          }
-        ],
+        "sectionPath": ["3. 조작: 이동 · 자동 공격 · 회피", "3.4 회피했는데도 맞는 문제"],
+        "points": [],
         "visuals": [
-          {
-            "kind": "code",
-            "n": 1,
-            "fp": "// CombatSystem.TryApplyLocalHit — 피해 적용 직전에 무적 확인 (해결 ①에서 추"
-          }
+          { "kind": "table", "n": 1, "fp": "단계|내용" }
         ]
       },
       {
@@ -553,30 +228,14 @@
         "chapter": "skill",
         "layout": "visual",
         "tab": "흐름",
-        "title": {
-          "text": "4.2 흐름",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "장비가 달라도 왼쪽 위 코드 경로는 같습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "4.2 흐름"
-        ],
+        "title": { "text": "4.2 코드 경로는 하나, 장비마다 다른 것은 클립에만", "verbatim": true },
+        "lead": { "text": "장비가 달라도 위쪽 코드 경로는 같습니다.", "verbatim": true },
+        "sectionPath": ["4. 장비 스킬 ★", "4.2 코드 경로는 하나, 장비마다 다른 것은 클립에만"],
         "points": [
-          {
-            "label": "",
-            "text": "장비마다 다른 궤적과 판정 범위는 클립 안의 키프레임에만 있어서, 새 장비는 표 한 줄과 프리팹 · 클립으로 추가되고 코드 경로는 바뀌지 않습니다.",
-            "verbatim": true
-          }
+          { "label": "", "text": "장비마다 다른 궤적과 판정 범위는 클립 안의 키프레임에만 있어서, 새 장비는 표 한 줄과 프리팹 · 클립으로 추가되고 코드 경로는 바뀌지 않습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "mermaid",
-            "n": 1,
-            "fp": "flowchart TB"
-          }
+          { "kind": "mermaid", "n": 1, "fp": "flowchart TB" }
         ]
       },
       {
@@ -584,35 +243,15 @@
         "chapter": "skill",
         "layout": "full",
         "tab": "선택",
-        "title": {
-          "text": "4.3 고민과 선택: 궤적을 코드로 계산할 것인가, 애니메이션 클립으로 만들 것인가",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "남은 기간은 일주일 정도였고, 그 안에 10종을 원하는 모양으로 완성하는 것이 확장성보다 중요했습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "4.3 고민과 선택: 궤적을 코드로 계산할 것인가, 애니메이션 클립으로 만들 것인가"
-        ],
+        "title": { "text": "4.3 궤적을 코드로 계산할 것인가, 애니메이션 클립으로 만들 것인가", "verbatim": true },
+        "lead": { "text": "남은 기간은 일주일 정도였고, 그 안에 10종을 원하는 모양으로 완성하는 것이 확장성보다 중요했습니다.", "verbatim": true },
+        "sectionPath": ["4. 장비 스킬 ★", "4.3 궤적을 코드로 계산할 것인가, 애니메이션 클립으로 만들 것인가"],
         "points": [
-          {
-            "label": "",
-            "text": "장비마다 공식을 따로 만들고 수치를 조정해도 원하는 모양이 잘 나오지 않았습니다.",
-            "verbatim": true
-          },
-          {
-            "label": "얻은 것",
-            "text": "궤적 조정이 코드 수정이 아니라 Animation 창에서 키프레임을 옮기는 작업이 되어 반복이 빨랐습니다.",
-            "verbatim": true
-          }
+          { "label": "", "text": "장비마다 공식을 따로 만들고 수치를 조정해도 원하는 모양이 잘 나오지 않았습니다.", "verbatim": true },
+          { "label": "얻은 것", "text": "궤적 조정이 코드 수정이 아니라 Animation 창에서 키프레임을 옮기는 작업이 되어 반복이 빨랐습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 2,
-            "fp": "|[A] 코드 + 데이터로 궤적 계산|[B] 애니메이션 클립으로 궤적과 판정 ✓"
-          }
+          { "kind": "table", "n": 2, "fp": "|[A] 코드 + 데이터로 궤적 계산|[B] 애니메이션 클립으로 궤적과 판정 ✓" }
         ]
       },
       {
@@ -620,40 +259,16 @@
         "chapter": "skill",
         "layout": "code",
         "tab": "구현",
-        "title": {
-          "text": "4.4 핵심 구현: 클립 하나로 양방향 · 회전까지",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "애니메이션 방식으로 바꾸면서 생긴 문제는 클립은 한 방향(오른쪽 기준)으로만 만든다는 점이었습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "4.4 핵심 구현: 클립 하나로 양방향 · 회전까지"
-        ],
+        "title": { "text": "4.4 클립 하나로 양방향 · 회전까지", "verbatim": true },
+        "lead": { "text": "애니메이션 방식으로 바꾸면서 생긴 문제는 클립은 한 방향(오른쪽 기준)으로만 만든다는 점이었습니다.", "verbatim": true },
+        "sectionPath": ["4. 장비 스킬 ★", "4.4 클립 하나로 양방향 · 회전까지"],
         "points": [
-          {
-            "label": "① 발사 방향",
-            "text": "루트의 X 스케일만 반전",
-            "verbatim": true
-          },
-          {
-            "label": "② 외형 회전",
-            "text": "이동은 클립이, 회전은 이 컴포넌트가 맡도록 나눴습니다.",
-            "verbatim": false
-          },
-          {
-            "label": "③ 판정",
-            "text": "`HitBox`는 첫 타격 후 콜라이더를 꺼서, 관통하거나 범위가 넓은 클립에서도 한 번만 피해를 줍니다.",
-            "verbatim": true
-          }
+          { "label": "① 발사 방향", "text": "루트의 X 스케일만 반전", "verbatim": true },
+          { "label": "② 외형 회전", "text": "이동은 클립이, 회전은 이 컴포넌트가 맡도록 나눴습니다.", "verbatim": false },
+          { "label": "③ 판정", "text": "`HitBox`는 첫 타격 후 콜라이더를 꺼서, 관통하거나 범위가 넓은 클립에서도 한 번만 피해를 줍니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "code",
-            "n": 1,
-            "fp": "// AnimatedProjectile.cs"
-          }
+          { "kind": "code", "n": 1, "fp": "// AnimatedProjectile.cs" }
         ]
       },
       {
@@ -661,21 +276,12 @@
         "chapter": "skill",
         "layout": "full",
         "tab": "선택",
-        "title": {
-          "text": "4.5 감수한 대가와 남은 흔적",
-          "verbatim": true
-        },
+        "title": { "text": "4.5 감수한 대가와 남은 흔적", "verbatim": true },
         "lead": null,
-        "sectionPath": [
-          "4.5 감수한 대가와 남은 흔적"
-        ],
+        "sectionPath": ["4. 장비 스킬 ★", "4.5 감수한 대가와 남은 흔적"],
         "points": [],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "항목|내용"
-          }
+          { "kind": "table", "n": 1, "fp": "항목|내용" }
         ]
       },
       {
@@ -683,35 +289,15 @@
         "chapter": "online",
         "layout": "code",
         "tab": "구현",
-        "title": {
-          "text": "5.1 고민과 선택: 스킬 실행 경로를 어떻게 나눌 것인가",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "요청마다 고유한 `CastId`를 붙이고, 실행할 때 이미 실행한 ID면 무시하게 했습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "5.1 고민과 선택: 스킬 실행 경로를 어떻게 나눌 것인가"
-        ],
+        "title": { "text": "5.1 스킬 실행 경로를 어떻게 나눌 것인가", "verbatim": true },
+        "lead": { "text": "요청마다 고유한 `CastId`를 붙이고, 실행할 때 이미 실행한 ID면 무시하게 했습니다.", "verbatim": true },
+        "sectionPath": ["5. 판정 · 테스트 · 온라인 연결 준비", "5.1 스킬 실행 경로를 어떻게 나눌 것인가"],
         "points": [
-          {
-            "label": "장점",
-            "text": "서버를 붙일 때 요청과 실행 사이에 서버 왕복만 끼우면 됨. 로컬 테스트와 온라인이 같은 실행 코드를 씀",
-            "verbatim": true
-          },
-          {
-            "label": "얻은 것",
-            "text": "서버 담당 팀원은 `RequestSkillCast`와 `ExecuteSkillFromNetwork` 사이에 서버 중계를 연결했습니다.",
-            "verbatim": true
-          }
+          { "label": "장점", "text": "서버를 붙일 때 요청과 실행 사이에 서버 왕복만 끼우면 됨. 로컬 테스트와 온라인이 같은 실행 코드를 씀", "verbatim": true },
+          { "label": "얻은 것", "text": "서버 담당 팀원은 `RequestSkillCast`와 `ExecuteSkillFromNetwork` 사이에 서버 중계를 연결했습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "code",
-            "n": 1,
-            "fp": "// BattleManager.cs — ★ 표시 줄은 온라인 연결 때(09-08) 서버 담당 팀원이 추가"
-          }
+          { "kind": "code", "n": 1, "fp": "// BattleManager.cs — ★ 표시 줄은 온라인 연결 때(09-08) 서버 담당 팀원이 추가" }
         ]
       },
       {
@@ -719,30 +305,31 @@
         "chapter": "online",
         "layout": "code",
         "tab": "구현",
-        "title": {
-          "text": "5.2 네트워크 없이 도는 전투 테스트 씬",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "장비 하나의 궤적을 고칠 때마다 이 과정을 거칠 수는 없어서, 전투 씬만 단독으로 실행하는 테스트 환경을 만들었습니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "5.2 네트워크 없이 도는 전투 테스트 씬"
-        ],
+        "title": { "text": "5.2 네트워크 없이 도는 전투 테스트 씬", "verbatim": true },
+        "lead": { "text": "장비 하나의 궤적을 고칠 때마다 이 과정을 거칠 수는 없어서, 전투 씬만 단독으로 실행하는 테스트 환경을 만들었습니다.", "verbatim": true },
+        "sectionPath": ["5. 판정 · 테스트 · 온라인 연결 준비", "5.2 네트워크 없이 도는 전투 테스트 씬"],
         "points": [
-          {
-            "label": "",
-            "text": "이 테스트 씬(`TestCombat.unity`) 덕분에 장비 10종의 클립을 만들면서 바로바로 확인할 수 있었습니다.",
-            "verbatim": true
-          }
+          { "label": "", "text": "이 테스트 씬(`TestCombat.unity`) 덕분에 장비 10종의 클립을 만들면서 바로바로 확인할 수 있었습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "code",
-            "n": 1,
-            "fp": "// CombatTestSetup.cs — 서버 배정이 있으면 그대로, 없으면 테스트 모드"
-          }
+          { "kind": "code", "n": 1, "fp": "// CombatTestSetup.cs — 서버 배정이 있으면 그대로, 없으면 테스트 모드" }
+        ]
+      },
+      {
+        "key": "combat-ui",
+        "chapter": "online",
+        "layout": "visual",
+        "tab": "결과",
+        "title": { "text": "5.3 전투 UI와 결과 연출", "verbatim": true },
+        "lead": { "text": "`CombatUI`는 `CombatSystem`의 값을 읽어 표시만 하고, 전투 상태를 바꾸지 않습니다.", "verbatim": true },
+        "sectionPath": ["5. 판정 · 테스트 · 온라인 연결 준비", "5.3 전투 UI와 결과 연출"],
+        "points": [
+          { "label": "HUD", "text": "남은 시간, 피해 배율, 좌우 HP 바, 장비 슬롯 아이콘과 쿨타임", "verbatim": true },
+          { "label": "플레이어 구분", "text": "대전 안에서 플레이어마다 색 지정, 내 캐릭터 위 커서 표시", "verbatim": true },
+          { "label": "결과", "text": "패자는 사망 모션 재생, 끝나면 승자 닉네임 패널 표시", "verbatim": true }
+        ],
+        "visuals": [
+          { "kind": "image", "src": "images/combat_ui.gif", "w": 960, "h": 540, "caption": { "text": "피해 배율 ×5에서 한 방에 사망 → 승자 패널", "verbatim": true } }
         ]
       },
       {
@@ -750,30 +337,14 @@
         "chapter": "leader",
         "layout": "full",
         "tab": "선택",
-        "title": {
-          "text": "6.2 고민과 선택: 보드 작업을 넘기고 전투로 옮기다",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "서버 연결을 기다려야 하는 보드 작업을 계속 붙잡을 것인가, 다른 파트로 옮길 것인가?",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "6.2 고민과 선택: 보드 작업을 넘기고 전투로 옮기다"
-        ],
+        "title": { "text": "6.2 보드 작업을 넘기고 전투로 옮기다", "verbatim": true },
+        "lead": { "text": "서버 연결을 기다려야 하는 보드 작업을 계속 붙잡을 것인가, 다른 파트로 옮길 것인가?", "verbatim": true },
+        "sectionPath": ["6. 팀장으로서: 일정과 협업", "6.2 보드 작업을 넘기고 전투로 옮기다"],
         "points": [
-          {
-            "label": "최종 결정",
-            "text": "팀장으로서 \"기다리는 사람\"이 생기지 않게 일을 다시 나눈 결정이었습니다.",
-            "verbatim": true
-          }
+          { "label": "최종 결정", "text": "팀장으로서 \"기다리는 사람\"이 생기지 않게 일을 다시 나눈 결정이었습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "|[A] 보드 작업 유지|[B] 보드를 서버 담당에게 넘기고 전투로 이동 ✓"
-          }
+          { "kind": "table", "n": 1, "fp": "|[A] 보드 작업 유지|[B] 보드를 서버 담당에게 넘기고 전투로 이동 ✓" }
         ]
       },
       {
@@ -781,50 +352,17 @@
         "chapter": "leader",
         "layout": "visual",
         "tab": "결과",
-        "title": {
-          "text": "6.3 일정 관리 방식",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "일정표를 그대로 지키기보다, 데드라인을 넘긴 작업이 생기면 무엇을 버릴지 팀이 함께 빨리 정하는 쪽으로 운영했습니다.",
-          "verbatim": false
-        },
-        "sectionPath": [
-          "6.3 일정 관리 방식"
-        ],
+        "title": { "text": "6.3 일정 관리 방식", "verbatim": true },
+        "lead": { "text": "일정표를 그대로 지키기보다, 데드라인을 넘긴 작업이 생기면 무엇을 버릴지 팀이 함께 빨리 정하는 쪽으로 운영했습니다.", "verbatim": false },
+        "sectionPath": ["6. 팀장으로서: 일정과 협업", "6.3 일정 관리 방식"],
         "points": [
-          {
-            "label": "도구",
-            "text": "Asana로 작업 관리. 목표일은 상위 작업 일부(121개 중 13개)에만 넣음",
-            "verbatim": true
-          },
-          {
-            "label": "처음 계획한 대표 작업",
-            "text": "29개 중 26개 완료(90%). 하면서 새로 생긴 대표 작업은 1개(1차 빌드)뿐",
-            "verbatim": true
-          },
-          {
-            "label": "야차 대표 작업",
-            "text": "목표일이 있던 3개 모두 목표일 9/3을 넘겨 9/9~9/10에 완료",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "다만 작업 상태는 마지막에 한꺼번에 정리해서, 날짜별 진행은 기록으로 보여 주지 못합니다(6.6).",
-            "verbatim": true
-          }
+          { "label": "도구", "text": "Asana로 작업 관리. 목표일은 상위 작업 일부(121개 중 13개)에만 넣음", "verbatim": true },
+          { "label": "처음 계획한 대표 작업", "text": "29개 중 26개 완료(90%). 하면서 새로 생긴 대표 작업은 1개(1차 빌드)뿐", "verbatim": true },
+          { "label": "야차 대표 작업", "text": "목표일이 있던 3개 모두 목표일 9/3을 넘겨 9/9~9/10에 완료", "verbatim": true },
+          { "label": "", "text": "다만 작업 상태는 마지막에 한꺼번에 정리해서, 날짜별 진행은 기록으로 보여 주지 못합니다(6.6).", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "image",
-            "src": "images/asana_plan_vs_actual.png",
-            "w": 1742,
-            "h": 1021,
-            "caption": {
-              "text": "Asana 기록: 처음 계획과 실제",
-              "verbatim": true
-            }
-          }
+          { "kind": "image", "src": "images/asana_plan_vs_actual.png", "w": 1742, "h": 1021, "caption": { "text": "Asana 기록: 처음 계획과 실제", "verbatim": true } }
         ]
       },
       {
@@ -832,21 +370,12 @@
         "chapter": "leader",
         "layout": "full",
         "tab": "문제 해결",
-        "title": {
-          "text": "6.4 협업에서 생긴 문제와 대응",
-          "verbatim": true
-        },
+        "title": { "text": "6.4 협업에서 생긴 문제와 대응", "verbatim": true },
         "lead": null,
-        "sectionPath": [
-          "6.4 협업에서 생긴 문제와 대응"
-        ],
+        "sectionPath": ["6. 팀장으로서: 일정과 협업", "6.4 협업에서 생긴 문제와 대응"],
         "points": [],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "문제|대응"
-          }
+          { "kind": "table", "n": 1, "fp": "문제|대응" }
         ]
       },
       {
@@ -854,30 +383,27 @@
         "chapter": "leader",
         "layout": "full",
         "tab": "",
-        "title": {
-          "text": "6.5 AI 활용 방식",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "무엇을 만들지와 구조는 제가 정하고, 정해진 구조를 코드로 옮기는 반복 작업만 맡긴다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "6.5 AI 활용 방식"
-        ],
+        "title": { "text": "6.5 AI 활용 방식", "verbatim": true },
+        "lead": { "text": "무엇을 만들지와 구조는 제가 정하고, 정해진 구조를 코드로 옮기는 반복 작업만 맡긴다.", "verbatim": true },
+        "sectionPath": ["6. 팀장으로서: 일정과 협업", "6.5 AI 활용 방식"],
         "points": [
-          {
-            "label": "",
-            "text": "플레이 감각을 결정하는 조정은 직접 했습니다.",
-            "verbatim": true
-          }
+          { "label": "확인 방법", "text": "받은 코드는 테스트 씬(5.2)에서 장비를 직접 써 보며 동작으로 확인했습니다.", "verbatim": true }
         ],
         "visuals": [
-          {
-            "kind": "table",
-            "n": 1,
-            "fp": "작업|제가 한 것|ChatGPT에 맡긴 것"
-          }
+          { "kind": "table", "n": 1, "fp": "작업|제가 한 것|ChatGPT에 맡긴 것|결과" }
+        ]
+      },
+      {
+        "key": "plan-vs-impl",
+        "chapter": "appendix",
+        "layout": "full",
+        "tab": "결과",
+        "title": { "text": "부록 A. 기획서 대비: 야차", "verbatim": true },
+        "lead": { "text": "기획서는 야차의 조작과 방향을 정했고, 구체적인 동작과 수치는 구현 단계에서 정해졌습니다.", "verbatim": true },
+        "sectionPath": ["부록 A. 기획서 대비: 야차"],
+        "points": [],
+        "visuals": [
+          { "kind": "table", "n": 1, "fp": "기획서|구현|문서" }
         ]
       }
     ]

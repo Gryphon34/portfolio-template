@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "madeAt": "2026-11-23",
+  "reference": "개발자 개인 포트폴리오. 페이지 전체가 2단으로, 왼쪽 단(이름·한 줄 소개·절 이동)은 화면에 고정되고 오른쪽 단만 스크롤되며, 오른쪽의 경력·작업은 줄마다 짧은 머리(또는 작은 썸네일) | 내용 24:76으로 나뉜 목록",
+  "mode": "measured+screenshot",
+  "viewport": "1440×900",
+  "page": { "contentWidth": 1184, "nav": "sticky" },
+  "sections": {
+    "cover":    { "from": 1, "layout": "split", "ratio": [48, 52], "align": "left", "height": 1.0, "background": "same" },
+    "intro":    { "from": 2, "layout": "stack", "align": "left" },
+    "stack":    { "from": 3, "layout": "rows", "cols": 2, "ratio": [24, 76], "media": "none" },
+    "project":  { "from": 4, "layout": "split", "ratio": [24, 76], "media": "left", "alternate": false },
+    "features": { "from": 4, "layout": "rows", "cols": 2, "ratio": [24, 76], "media": "left" },
+    "glance":   { "from": 5, "layout": "rows", "cols": 2, "ratio": [24, 76], "media": "left" },
+    "contact":  { "from": 6, "layout": "stack", "align": "left" }
+  },
+  "unused": [],
+  "wireframe": " 1 cover   [··············|···············]  페이지 전체 2단 48:52 · 왼쪽 단 화면에 고정(이름 큰 글자 3배 · 한 줄 소개 · 절 이동) · 오른쪽 단만 스크롤\n 2 text    [        |≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡]        오른쪽 단 · 한 단 글 · 높이 0.41화면\n 3 list    [        |──────┼───────────────] ×6줄  줄마다 2단 24:76(짧은 머리 | 내용) · 높이 1.6화면\n 4 list    [        |■■■■■■┼───────────────] ×4줄  줄마다 2단 24:76 · 그림 왼쪽(작은 썸네일) · 높이 0.85화면\n 5 list    [        |■■■■■■┼───────────────] ×4줄  줄마다 2단 24:76 · 그림 왼쪽 · 줄이 낮음 · 높이 0.51화면\n 6 footer  [        |≡≡≡≡≡≡≡≡           ]        오른쪽 단 · 작은 글자 · 높이 0.07화면"
+}
