@@ -132,7 +132,7 @@
         on(); window.addEventListener('scroll', on, { passive: true });
         return () => window.removeEventListener('scroll', on);
       }, []);
-      const nav = [['cover', t('page.nav-intro')], ['projects', t('page.nav-projects')], ['glance', t('page.nav-glance')], ['stack', t('page.nav-stack')], ['contact', t('page.nav-contact')]];
+      const nav = [['cover', t('page.nav-intro')], ['projects', t('page.nav-projects')], ['glance', t('page.nav-glance')], ['analysis', '기획 분석'], ['stack', t('page.nav-stack')], ['contact', t('page.nav-contact')]];
       return (
         <header className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${solid ? 'bg-bg/85 backdrop-blur border-b border-line' : 'bg-transparent'}`}>
           <div className="mx-auto flex h-16 max-w-[1320px] items-center justify-between px-5 sm:px-8">
@@ -299,6 +299,45 @@
       );
     }
 
+    // ── 기획 분석 — 내가 만든 게임이 아닌 분석 문서. 프로젝트 목록(portfolio.json)에 넣지 않고 아래 ANALYSES의 폴더를 따로 읽음 ──
+    const ANALYSES = ['4-gow-ragnarok-analysis'];
+    function Analysis({ items }) {
+      if (!items || !items.length) return null;
+      return (
+        <section id="analysis" className="scroll-mt-16 border-t border-line py-24 lg:py-32">
+          <div className="mx-auto max-w-[1320px] px-5 sm:px-8">
+            <SectionHead en="Game Analysis" ko="기획 분석" note="다른 게임을 기획자 관점에서 분석한 문서입니다" />
+            <ul className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-2">
+              {items.map((a) => (
+                <li key={a.id} className="reveal flex flex-col rounded-card border border-line bg-surface p-6">
+                  <h3 className="font-serif text-2xl font-bold text-ink"><a href={docUrl(a.id)} className="hover:text-accent-ink">{a.title}</a></h3>
+                  {a.meta && a.meta.length > 0 && (
+                    <dl className="mt-5 space-y-2 border-t border-line pt-4 text-sm">
+                      {a.meta.map((m) => (
+                        <div key={m.label} className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-3">
+                          <dt className="text-muted">{m.label}</dt>
+                          <dd className="text-ink">{m.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                  {a.tags && a.tags.length > 0 && (
+                    <ul className="mt-5 flex flex-wrap gap-1.5">
+                      {a.tags.map((x) => <li key={x} className="rounded-full bg-accent/10 px-2.5 py-1 text-xs font-medium text-accent-ink">{x}</li>)}
+                    </ul>
+                  )}
+                  <div className="mt-auto flex flex-wrap gap-2 pt-6">
+                    <Btn href={docUrl(a.id)} primary>{t('name.doc-short')}</Btn>
+                    <Btn href={deckUrl(a.id)}>{t('name.deck')}</Btn>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      );
+    }
+
     // ── 기술 스택 — 줄마다 (기술 | 어디에 썼는지 + 근거 프로젝트) ──
     function Stack({ skills, titles }) {
       if (!skills || !skills.length) return null;
@@ -382,8 +421,12 @@
               const r = await fetch(`data/projects/${encodeURIComponent(id)}.json`, { cache: 'no-cache' });
               return r.ok ? r.json() : null;
             }))).filter(Boolean);
+            const analyses = (await Promise.all(ANALYSES.map(async (id) => {
+              const r = await fetch(`data/projects/${encodeURIComponent(id)}.json`, { cache: 'no-cache' });
+              return r.ok ? r.json() : null;
+            }))).filter(Boolean);
             document.title = `${pf.profile.name} · ${t('name.portfolio')}`;
-            setState({ status: 'ok', pf, projects });
+            setState({ status: 'ok', pf, projects, analyses });
           } catch (e) {
             setState({ status: 'error', message: String(e && e.message || e) });
           }
@@ -397,7 +440,7 @@
       if (state.status === 'loading') return <p className="p-10 text-muted">불러오는 중…</p>;
       if (state.status === 'error') return <p className="p-10 text-muted">데이터를 읽지 못했습니다: {state.message} — 로컬 서버로 열었는지, /portfolio-build를 했는지 확인하세요.</p>;
 
-      const { pf, projects } = state;
+      const { pf, projects, analyses } = state;
       const titles = Object.fromEntries(projects.map((p) => [p.id, p.title]));
       return (
         <>
@@ -406,6 +449,7 @@
             <Cover profile={pf.profile} generatedAt={pf.generatedAt} />
             <Games projects={projects} />
             <Glance projects={projects} />
+            <Analysis items={analyses} />
             <Stack skills={pf.skills} titles={titles} />
           </main>
           <Contact profile={pf.profile} projects={projects} />

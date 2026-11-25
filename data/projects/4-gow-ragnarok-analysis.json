@@ -1,0 +1,554 @@
+{
+  "id": "4-gow-ragnarok-analysis",
+  "doc": "기획분석.md",
+  "schemaVersion": 2,
+  "title": "갓 오브 워 라그나로크 기획 분석",
+  "tagline": "",
+  "cover": "images/core_fun.png",
+  "intent": {
+    "text": "플레이어로서 좋았던 것이 왜 좋았는지를 기획자의 시선으로 풀어 보는 것이 이 분석의 출발점입니다.",
+    "verbatim": true
+  },
+  "team": {
+    "type": "solo",
+    "size": "",
+    "role": ""
+  },
+  "meta": [
+    {
+      "label": "구분",
+      "value": "기획 분석"
+    },
+    {
+      "label": "대상 게임",
+      "value": "갓 오브 워 라그나로크"
+    },
+    {
+      "label": "분석 범위",
+      "value": "Core Fun · Core Loop · 시리즈에 걸친 전투(도전) 설계"
+    }
+  ],
+  "tags": [
+    "Core Fun",
+    "Core Loop",
+    "Mechanics & Dynamics",
+    "Gating",
+    "백트래킹",
+    "학습 곡선"
+  ],
+  "links": {
+    "github": "",
+    "video": "",
+    "extra": [
+      {
+        "label": "참고 영상 1",
+        "url": "https://youtu.be/crQ5pazN840"
+      },
+      {
+        "label": "참고 영상 2",
+        "url": "https://youtu.be/D7Enav00Lp8"
+      }
+    ]
+  },
+  "highlights": [],
+  "troubleshooting": [],
+  "screenshots": [],
+  "retro": {
+    "achieved": [],
+    "regrets": [],
+    "plans": [],
+    "section": ""
+  },
+  "deck": {
+    "chapters": [
+      {
+        "key": "intro",
+        "title": "개요",
+        "sectionPath": [
+          "1. 개요"
+        ]
+      },
+      {
+        "key": "core-fun",
+        "title": "Core Fun: 유저가 느끼는 3가지 핵심 경험",
+        "sectionPath": [
+          "2. Core Fun: 유저가 느끼는 3가지 핵심 경험"
+        ]
+      },
+      {
+        "key": "core-loop",
+        "title": "Core Loop",
+        "sectionPath": [
+          "3. Core Loop"
+        ]
+      },
+      {
+        "key": "challenge",
+        "title": "심층 분석: 도전",
+        "sectionPath": [
+          "4. 심층 분석: 도전"
+        ]
+      },
+      {
+        "key": "design",
+        "title": "기획자 관점의 전투 설계",
+        "sectionPath": [
+          "5. 기획자 관점의 전투 설계"
+        ]
+      },
+      {
+        "key": "positive",
+        "title": "개인적으로 긍정적으로 평가하는 부분",
+        "sectionPath": [
+          "6. 개인적으로 긍정적으로 평가하는 부분"
+        ]
+      },
+      {
+        "key": "compare",
+        "title": "내 프로젝트와 비교",
+        "sectionPath": [
+          "7. 내 프로젝트와 비교"
+        ]
+      }
+    ],
+    "slides": [
+      {
+        "key": "overview",
+        "chapter": "intro",
+        "layout": "overview",
+        "tab": "개요",
+        "title": {
+          "text": "1. 개요",
+          "verbatim": true
+        },
+        "lead": {
+          "text": "갓 오브 워 라그나로크의 핵심 재미(Core Fun)와 핵심 루프(Core Loop)를 정리하고, 그중 도전이 1편부터 2편까지 무기 체계를 넓혀 가며 어떻게 설계되었는지를 분석했습니다.",
+          "verbatim": true
+        },
+        "sectionPath": [
+          "1. 개요"
+        ],
+        "points": [
+          {
+            "label": "분석 계기",
+            "text": "기획 스터디에 참가해 \"인상적인 게임을 기획자의 시선에서 분석하기\"라는 주제로 고른 게임입니다.",
+            "verbatim": true
+          },
+          {
+            "label": "MDA",
+            "text": "게임이 정한 규칙(Mechanics)이 플레이어의 행동(Dynamics)을 만들고, 그 행동이 플레이어가 느끼는 경험(Aesthetics)으로 이어진다는 관점입니다.",
+            "verbatim": true
+          }
+        ],
+        "visuals": [
+          {
+            "kind": "table",
+            "n": 1,
+            "fp": "항목|내용"
+          }
+        ]
+      },
+      {
+        "key": "three-fun",
+        "chapter": "core-fun",
+        "layout": "visual",
+        "tab": "개요",
+        "title": {
+          "text": "2. Core Fun: 유저가 느끼는 3가지 핵심 경험",
+          "verbatim": true
+        },
+        "lead": null,
+        "sectionPath": [
+          "2. Core Fun: 유저가 느끼는 3가지 핵심 경험"
+        ],
+        "points": [
+          {
+            "label": "내러티브",
+            "text": "부자의 성장과 라그나로크라는 정해진 멸망의 운명에 깊이 몰입하는 경험입니다.",
+            "verbatim": true
+          },
+          {
+            "label": "도전",
+            "text": "콤보와 패링, 무기 스위칭을 통해 얻는 압도적 성취감입니다.",
+            "verbatim": true
+          },
+          {
+            "label": "발견",
+            "text": "환경 기믹 해제와 퍼즐을 풀어 길을 개척하는 지적 쾌감입니다.",
+            "verbatim": true
+          }
+        ],
+        "visuals": [
+          {
+            "kind": "image",
+            "src": "images/core_fun.png",
+            "w": 1600,
+            "h": 900,
+            "caption": {
+              "text": "3대 핵심 재미: 내러티브 · 도전 · 발견",
+              "verbatim": true
+            }
+          }
+        ]
+      },
+      {
+        "key": "fun-map",
+        "chapter": "core-fun",
+        "layout": "full",
+        "tab": "구조",
+        "title": {
+          "text": "2. Core Fun: 유저가 느끼는 3가지 핵심 경험",
+          "verbatim": true
+        },
+        "lead": {
+          "text": "세 재미는 따로 노는 것이 아니라, 이 문서에서 살펴본 장치들이 각각을 받치고 있습니다.",
+          "verbatim": true
+        },
+        "sectionPath": [
+          "2. Core Fun: 유저가 느끼는 3가지 핵심 경험"
+        ],
+        "points": [],
+        "visuals": [
+          {
+            "kind": "table",
+            "n": 1,
+            "fp": "핵심 재미|받치는 장치|다루는 곳"
+          }
+        ]
+      },
+      {
+        "key": "mech-dyn",
+        "chapter": "core-loop",
+        "layout": "visual",
+        "tab": "구조",
+        "title": {
+          "text": "3.1 Mechanics & Dynamics",
+          "verbatim": true
+        },
+        "lead": {
+          "text": "핵심은 전투용 무기가 곧 탐험의 열쇠라는 점입니다.",
+          "verbatim": true
+        },
+        "sectionPath": [
+          "3. Core Loop",
+          "3.1 Mechanics & Dynamics"
+        ],
+        "points": [
+          {
+            "label": "",
+            "text": "그래서 새 무기를 얻는 순간 전투 방식이 넓어지는 동시에, 예전에 지나친 막힌 길이 \"이제 풀 수 있는 퍼즐\"로 바뀝니다.",
+            "verbatim": true
+          },
+          {
+            "label": "",
+            "text": "이것이 플레이어를 이전 지역으로 되돌아가게 만드는 백트래킹의 동기가 됩니다.",
+            "verbatim": true
+          }
+        ],
+        "visuals": [
+          {
+            "kind": "image",
+            "src": "images/mechanics_dynamics.png",
+            "w": 1600,
+            "h": 900,
+            "caption": {
+              "text": "Core Loop: Mechanics(무기 고유 기믹 · 차단 요소)와 Dynamics(지형 퍼즐 해결 · 백트래킹)",
+              "verbatim": true
+            }
+          }
+        ]
+      },
+      {
+        "key": "mda",
+        "chapter": "core-loop",
+        "layout": "full",
+        "tab": "구조",
+        "title": {
+          "text": "3.2 발견과 성장의 환원 (Aesthetics & Growth Feedback)",
+          "verbatim": true
+        },
+        "lead": {
+          "text": "MDA로 이어 보면, 규칙 하나하나가 어떤 행동을 거쳐 어떤 경험으로 돌아오는지 보입니다.",
+          "verbatim": true
+        },
+        "sectionPath": [
+          "3. Core Loop",
+          "3.2 발견과 성장의 환원 (Aesthetics & Growth Feedback)"
+        ],
+        "points": [],
+        "visuals": [
+          {
+            "kind": "table",
+            "n": 1,
+            "fp": "Mechanics (규칙)|→ Dynamics (행동)|→ Aesthetics (경험)"
+          }
+        ]
+      },
+      {
+        "key": "loop",
+        "chapter": "core-loop",
+        "layout": "visual",
+        "tab": "흐름",
+        "title": {
+          "text": "3.2 발견과 성장의 환원 (Aesthetics & Growth Feedback)",
+          "verbatim": true
+        },
+        "lead": null,
+        "sectionPath": [
+          "3. Core Loop",
+          "3.2 발견과 성장의 환원 (Aesthetics & Growth Feedback)"
+        ],
+        "points": [
+          {
+            "label": "발견의 쾌감",
+            "text": "막혔던 길을 나의 힘과 아이템으로 풀어냈을 때의 지적 성취감을 줍니다.",
+            "verbatim": true
+          },
+          {
+            "label": "성장 체감",
+            "text": "퍼즐 및 탐험 보상(이둔의 사과, 핏빛 꿀주)을 통해 최대 체력 및 분노 게이지가 늘어납니다.",
+            "verbatim": true
+          },
+          {
+            "label": "루프의 완성",
+            "text": "강화된 스펙과 보상을 바탕으로 더 어려운 전투 및 다음 지역 탐험에 도전하는 선순환이 만들어집니다.",
+            "verbatim": true
+          }
+        ],
+        "visuals": [
+          {
+            "kind": "mermaid",
+            "n": 1,
+            "fp": "flowchart LR"
+          }
+        ]
+      },
+      {
+        "key": "weapon-flow",
+        "chapter": "challenge",
+        "layout": "visual",
+        "tab": "흐름",
+        "title": {
+          "text": "4.1 전투 시스템의 시리즈 진화 흐름",
+          "verbatim": true
+        },
+        "lead": {
+          "text": "새 무기는 언제나 이전 단계를 충분히 익힌 뒤에 들어옵니다.",
+          "verbatim": true
+        },
+        "sectionPath": [
+          "4. 심층 분석: 도전",
+          "4.1 전투 시스템의 시리즈 진화 흐름"
+        ],
+        "points": [],
+        "visuals": [
+          {
+            "kind": "image",
+            "src": "images/weapon_timeline.png",
+            "w": 1600,
+            "h": 900,
+            "caption": {
+              "text": "전투 시스템의 시리즈 진화 흐름: 1편 초반 → 1편 후반 → 2편 초반 → 2편 중후반",
+              "verbatim": true
+            }
+          }
+        ]
+      },
+      {
+        "key": "weapon-table",
+        "chapter": "challenge",
+        "layout": "visual",
+        "tab": "구조",
+        "title": {
+          "text": "4.1 전투 시스템의 시리즈 진화 흐름",
+          "verbatim": true
+        },
+        "lead": null,
+        "sectionPath": [
+          "4. 심층 분석: 도전",
+          "4.1 전투 시스템의 시리즈 진화 흐름"
+        ],
+        "points": [
+          {
+            "label": "직접 겪은 흐름",
+            "text": "좋아하는 무기가 어떤 적들에게는 먹히지 않아 무기를 바꿔 보게 되었고,",
+            "verbatim": false
+          },
+          {
+            "label": "",
+            "text": "나중에는 상황마다 맞는 스킬이 먼저 떠올라 쓰게 되었습니다.",
+            "verbatim": true
+          }
+        ],
+        "visuals": [
+          {
+            "kind": "table",
+            "n": 1,
+            "fp": "단계|새로 주는 것|플레이어가 익히는 것|설계"
+          }
+        ]
+      },
+      {
+        "key": "part1",
+        "chapter": "challenge",
+        "layout": "overview",
+        "tab": "",
+        "title": {
+          "text": "4.2 1편: 무기 제한과 학습 곡선",
+          "verbatim": true
+        },
+        "lead": {
+          "text": "1편은 무기를 일부러 제한하는 데서 시작합니다.",
+          "verbatim": true
+        },
+        "sectionPath": [
+          "4. 심층 분석: 도전",
+          "4.2 1편: 무기 제한과 학습 곡선"
+        ],
+        "points": [
+          {
+            "label": "도끼 단일 제공",
+            "text": "초반에는 '리바이어던 도끼'만 제공하여 던지기/회수 및 근접 기초 조작을 익히도록 유도합니다.",
+            "verbatim": true
+          },
+          {
+            "label": "아트레우스의 속성 화살",
+            "text": "단일 무기의 지루함을 막기 위해 동료의 속성 화살로 전투를 보완합니다.",
+            "verbatim": true
+          },
+          {
+            "label": "블레이드 해금과 향수",
+            "text": "후반부의 '혼돈의 블레이드'로 원작 팬에게는 향수를, 신규 유저에게는 신선함을 줍니다.",
+            "verbatim": true
+          },
+          {
+            "label": "속성 교육",
+            "text": "화염/빙결 면역 적을 교차 배치하여 속성 스위칭 전투를 학습시킵니다.",
+            "verbatim": true
+          }
+        ],
+        "visuals": []
+      },
+      {
+        "key": "part2",
+        "chapter": "challenge",
+        "layout": "overview",
+        "tab": "",
+        "title": {
+          "text": "4.3 2편: 서사 몰입과 콤보 확장",
+          "verbatim": true
+        },
+        "lead": {
+          "text": "2편은 새 무기를 언제 주는지가 1편과 다릅니다.",
+          "verbatim": true
+        },
+        "sectionPath": [
+          "4. 심층 분석: 도전",
+          "4.3 2편: 서사 몰입과 콤보 확장"
+        ],
+        "points": [
+          {
+            "label": "초반부: 서사 집중 유도",
+            "text": "1편 플레이어를 고려하여 복잡한 새 메커닉을 던지지 않습니다.",
+            "verbatim": true
+          },
+          {
+            "label": "중반부: 드라우프니르 창 해금",
+            "text": "전투 반복감이 시작될 수 있는 중반부에 3번째 무기 '드라우프니르 창'을 도입합니다.",
+            "verbatim": true
+          },
+          {
+            "label": "",
+            "text": "두 재미가 번갈아 앞에 서도록 배치한 것입니다.",
+            "verbatim": true
+          }
+        ],
+        "visuals": []
+      },
+      {
+        "key": "design",
+        "chapter": "design",
+        "layout": "overview",
+        "tab": "선택",
+        "title": {
+          "text": "5. 기획자 관점의 전투 설계",
+          "verbatim": true
+        },
+        "lead": null,
+        "sectionPath": [
+          "5. 기획자 관점의 전투 설계"
+        ],
+        "points": [
+          {
+            "label": "단계적 학습 곡선",
+            "text": "플레이어에게 모든 무기를 한 번에 주지 않고 시리즈 전체에 걸쳐 순차 제공하여 몰입(Flow) 채널을 유지합니다.",
+            "verbatim": true
+          },
+          {
+            "label": "속성 스위칭 강제",
+            "text": "적의 속성 면역 디자인을 활용해 단조로운 원 패턴 스팸 공격을 차단하고 전략적 무기 교체를 유도합니다.",
+            "verbatim": true
+          },
+          {
+            "label": "메커닉의 유기적 통일성",
+            "text": "전투용 무기가 곧 탐험 기믹을 푸는 열쇠로 작동하도록 설계하여 전투와 탐험 시스템을 완벽히 결합했습니다.",
+            "verbatim": true
+          }
+        ],
+        "visuals": []
+      },
+      {
+        "key": "positive",
+        "chapter": "positive",
+        "layout": "overview",
+        "tab": "",
+        "title": {
+          "text": "6. 개인적으로 긍정적으로 평가하는 부분",
+          "verbatim": true
+        },
+        "lead": null,
+        "sectionPath": [
+          "6. 개인적으로 긍정적으로 평가하는 부분"
+        ],
+        "points": [
+          {
+            "label": "대화를 통한 힌트",
+            "text": "플레이어가 어려움을 겪을 때 몰입을 해치지 않으면서 동료의 대화로 힌트를 줍니다.",
+            "verbatim": true
+          },
+          {
+            "label": "동료의 필요성",
+            "text": "동료의 속성 무기가 아니면 파훼할 수 없는 패턴과 퍼즐들이 있습니다.",
+            "verbatim": true
+          }
+        ],
+        "visuals": []
+      },
+      {
+        "key": "my-projects",
+        "chapter": "compare",
+        "layout": "full",
+        "tab": "결과",
+        "title": {
+          "text": "7. 내 프로젝트와 비교",
+          "verbatim": true
+        },
+        "lead": {
+          "text": "분석한 원칙을 내 프로젝트에 놓고 보면, 같은 생각이 규모만 다르게 들어가 있는 곳이 있습니다.",
+          "verbatim": true
+        },
+        "sectionPath": [
+          "7. 내 프로젝트와 비교"
+        ],
+        "points": [],
+        "visuals": [
+          {
+            "kind": "table",
+            "n": 1,
+            "fp": "분석한 원칙|갓 오브 워 라그나로크|내 프로젝트"
+          }
+        ]
+      }
+    ]
+  }
+}
