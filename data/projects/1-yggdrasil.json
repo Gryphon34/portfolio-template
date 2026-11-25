@@ -11,12 +11,31 @@
     "role": "팀장(일정·범위 관리), 게임 기본 아이디어 제안(보드게임 + 실시간 대전), 야차 전투 클라이언트 전체"
   },
   "meta": [
-    { "label": "장르", "value": "2~4인 온라인 보드게임" },
-    { "label": "기간", "value": "2026.08.20 ~ 2026.09.11 (약 3주)" },
-    { "label": "인원", "value": "3인 (시작 4인, 1인 중도 이탈)" },
-    { "label": "환경", "value": "Unity 6 (C#), UniTask, ChatGPT(정해 둔 구조의 코드 작성 보조, 6.5)" }
+    {
+      "label": "장르",
+      "value": "2~4인 온라인 보드게임 + 1:1 실시간 대전(야차)"
+    },
+    {
+      "label": "기간",
+      "value": "2026.08.20 ~ 2026.09.11 (약 3주)"
+    },
+    {
+      "label": "인원",
+      "value": "3인 (시작 4인, 1인 중도 이탈)"
+    },
+    {
+      "label": "환경",
+      "value": "Unity 6 (C#), UniTask, ChatGPT(정해 둔 구조의 코드 작성 보조, 6.5)"
+    }
   ],
-  "tags": ["Unity 6", "C#", "UniTask", "애니메이션 클립", "Animator", "BoxCast"],
+  "tags": [
+    "Unity 6",
+    "C#",
+    "UniTask",
+    "애니메이션 클립",
+    "Animator",
+    "BoxCast"
+  ],
   "links": {
     "github": "https://github.com/KooHoo-Dev/3rd-TeamProject-KM",
     "video": "https://youtu.be/EDO_ncrxliU",
@@ -65,21 +84,51 @@
   "troubleshooting": [
     {
       "title": "회피했는데도 맞는 문제",
-      "problem": "회피 중인데도 투사체에 맞아 HP가 깎였습니다. 시연 이틀 전(09-09) 테스트에서 발견했습니다.",
+      "problem": "회피 중인데도 투사체에 맞아 HP가 깎였습니다. 시연 이틀 전 테스트에서 발견했습니다.",
       "cause": "회피 중 무적 플래그(`IsInvincible`)는 이동 컨트롤러에 있었지만, 피격을 적용하는 쪽에서 이 값을 확인하지 않았습니다. 무적이 \"상태로만\" 존재하고 판정에 연결되지 않았습니다.",
-      "solution": "`CombatEntity`가 이동 컨트롤러의 무적 상태를 노출하고 피격 적용(`TryApplyLocalHit`) 직전에 확인하도록 연결했습니다(`b2272da`). 그러자 회피를 연타하면 무적이 끊기지 않는 문제가 드러나, 회피 쿨타임 1.5초를 추가하고 무적 시간을 0.2초에서 늘렸습니다(현재 전투 씬 0.35초, `d5152b8`).",
+      "solution": "`CombatEntity`가 이동 컨트롤러의 무적 상태를 노출하고 피격 적용(`TryApplyLocalHit`) 직전에 확인하도록 연결했습니다. 그러자 회피를 연타하면 무적이 끊기지 않는 문제가 드러나, 회피 쿨타임 1.5초를 추가하고 무적 시간을 0.2초에서 늘렸습니다(현재 전투 씬 0.35초).",
       "result": "회피 무적이 피격 판정에 실제로 적용되어 회피 중에는 투사체가 몸을 통과해도 HP가 줄지 않게 됐고, 쿨타임이 생겨 연타로 무적을 이어 가는 문제도 사라졌습니다.",
       "lesson": "상태 플래그를 만드는 것과 그 플래그를 판정에 연결하는 것은 별개의 작업입니다. 기능을 만들면 \"실제로 효과가 나는지\"를 확인하는 테스트까지가 한 작업이라는 것을 배웠습니다. 또 하나를 고치면 그동안 그 버그에 가려져 있던 문제(무한 무적)가 드러날 수 있다는 것도 체감했습니다.",
       "section": "3.4 회피했는데도 맞는 문제"
     }
   ],
   "screenshots": [
-    { "src": "images/yacha_battle.gif", "w": 960, "h": 540, "caption": "결투 신청 → 전투 → 승리 → 토르의 대장간이 승자 색(보라)으로 바뀜 (3배속)" },
-    { "src": "images/shop_equipment.gif", "w": 960, "h": 540, "caption": "빈 장비 칸 → 상점에서 3개 구매 → 장비 칸이 채워짐 (1.5배속)" },
-    { "src": "images/auto_attack_stop.gif", "w": 960, "h": 540, "caption": "실제 대전에서 이동하는 동안은 쏘지 않고, 멈추면 자동 공격이 나가는 장면. 장비 슬롯이 쿨타임 중이라 나가는 화살이 자동 공격임을 알 수 있음 (0.5배속)" },
-    { "src": "images/dodge.gif", "w": 960, "h": 540, "caption": "회피 중에는 화살이 몸을 지나가도 HP가 그대로 (0.5배속)" },
-    { "src": "images/equipment_skills.gif", "w": 960, "h": 540, "caption": "장비 스킬: 투석탄(포물선) · 화살비(범위) · 낙뢰(범위) · 화염구(포물선)" },
-    { "src": "images/combat_ui.gif", "w": 960, "h": 540, "caption": "피해 배율 ×5에서 한 방에 사망 → 승자 패널" }
+    {
+      "src": "images/yacha_battle.gif",
+      "w": 960,
+      "h": 540,
+      "caption": "결투 신청 → 전투 → 승리 → 토르의 대장간이 승자 색(보라)으로 바뀜 (3배속)"
+    },
+    {
+      "src": "images/shop_equipment.gif",
+      "w": 960,
+      "h": 540,
+      "caption": "빈 장비 칸 → 상점에서 3개 구매 → 장비 칸이 채워짐 (1.5배속)"
+    },
+    {
+      "src": "images/auto_attack_stop.gif",
+      "w": 960,
+      "h": 540,
+      "caption": "실제 대전에서 이동하는 동안은 쏘지 않고, 멈추면 자동 공격이 나가는 장면. 장비 슬롯이 쿨타임 중이라 나가는 화살이 자동 공격임을 알 수 있음 (0.5배속)"
+    },
+    {
+      "src": "images/dodge.gif",
+      "w": 960,
+      "h": 540,
+      "caption": "회피 중에는 화살이 몸을 지나가도 HP가 그대로 (0.5배속)"
+    },
+    {
+      "src": "images/equipment_skills.gif",
+      "w": 960,
+      "h": 540,
+      "caption": "장비 스킬: 투석탄(포물선) · 화살비(범위) · 낙뢰(범위) · 화염구(포물선)"
+    },
+    {
+      "src": "images/combat_ui.gif",
+      "w": 960,
+      "h": 540,
+      "caption": "피해 배율 ×5에서 한 방에 사망 → 승자 패널"
+    }
   ],
   "retro": {
     "achieved": [
@@ -107,7 +156,7 @@
       {"key": "intro", "title": "프로젝트 개요", "sectionPath": ["1. 프로젝트 개요"]},
       {"key": "arch", "title": "전체 구조", "sectionPath": ["2. 전체 구조"]},
       {"key": "control", "title": "조작: 이동 · 자동 공격 · 회피", "sectionPath": ["3. 조작: 이동 · 자동 공격 · 회피"]},
-      {"key": "skill", "title": "장비 스킬", "sectionPath": ["4. 장비 스킬 ★"]},
+      {"key": "skill", "title": "장비 스킬", "sectionPath": ["4. 장비 스킬"]},
       {"key": "online", "title": "판정 · 테스트 · 온라인 연결 준비", "sectionPath": ["5. 판정 · 테스트 · 온라인 연결 준비"]},
       {"key": "leader", "title": "팀장으로서: 일정과 협업", "sectionPath": ["6. 팀장으로서: 일정과 협업"]},
       {"key": "appendix", "title": "기획서 대비: 야차", "sectionPath": ["부록 A. 기획서 대비: 야차"]}
@@ -252,7 +301,7 @@
         "tab": "흐름",
         "title": {"text": "4.2 코드 경로는 하나, 장비마다 다른 것은 클립에만", "verbatim": true},
         "lead": {"text": "장비가 달라도 위쪽 코드 경로는 같습니다.", "verbatim": true},
-        "sectionPath": ["4. 장비 스킬 ★", "4.2 코드 경로는 하나, 장비마다 다른 것은 클립에만"],
+        "sectionPath": ["4. 장비 스킬", "4.2 코드 경로는 하나, 장비마다 다른 것은 클립에만"],
         "points": [
           {
             "label": "",
@@ -269,7 +318,7 @@
         "tab": "선택",
         "title": {"text": "4.3 궤적을 코드로 계산할 것인가, 애니메이션 클립으로 만들 것인가", "verbatim": true},
         "lead": {"text": "남은 기간은 일주일 정도였고, 그 안에 10종을 원하는 모양으로 완성하는 것이 확장성보다 중요했습니다.", "verbatim": true},
-        "sectionPath": ["4. 장비 스킬 ★", "4.3 궤적을 코드로 계산할 것인가, 애니메이션 클립으로 만들 것인가"],
+        "sectionPath": ["4. 장비 스킬", "4.3 궤적을 코드로 계산할 것인가, 애니메이션 클립으로 만들 것인가"],
         "points": [
           {"label": "", "text": "장비마다 공식을 따로 만들고 수치를 조정해도 원하는 모양이 잘 나오지 않았습니다.", "verbatim": true},
           {"label": "얻은 것", "text": "궤적 조정이 코드 수정이 아니라 Animation 창에서 키프레임을 옮기는 작업이 되어 반복이 빨랐습니다.", "verbatim": true}
@@ -283,7 +332,7 @@
         "tab": "구현",
         "title": {"text": "4.4 클립 하나로 양방향 · 회전까지", "verbatim": true},
         "lead": {"text": "애니메이션 방식으로 바꾸면서 생긴 문제는 클립은 한 방향(오른쪽 기준)으로만 만든다는 점이었습니다.", "verbatim": true},
-        "sectionPath": ["4. 장비 스킬 ★", "4.4 클립 하나로 양방향 · 회전까지"],
+        "sectionPath": ["4. 장비 스킬", "4.4 클립 하나로 양방향 · 회전까지"],
         "points": [
           {"label": "① 발사 방향", "text": "루트의 X 스케일만 반전", "verbatim": true},
           {"label": "② 외형 회전", "text": "이동은 클립이, 회전은 이 컴포넌트가 맡도록 나눴습니다.", "verbatim": false},
@@ -298,7 +347,7 @@
         "tab": "선택",
         "title": {"text": "4.5 감수한 대가와 남은 흔적", "verbatim": true},
         "lead": null,
-        "sectionPath": ["4. 장비 스킬 ★", "4.5 감수한 대가와 남은 흔적"],
+        "sectionPath": ["4. 장비 스킬", "4.5 감수한 대가와 남은 흔적"],
         "points": [],
         "visuals": [{"kind": "table", "n": 1, "fp": "항목|내용"}],
         "edited": true
@@ -310,7 +359,7 @@
         "tab": "선택",
         "title": {"text": "4.5 감수한 대가와 남은 흔적", "verbatim": true},
         "lead": null,
-        "sectionPath": ["4. 장비 스킬 ★", "4.5 감수한 대가와 남은 흔적"],
+        "sectionPath": ["4. 장비 스킬", "4.5 감수한 대가와 남은 흔적"],
         "points": [],
         "visuals": [{"kind": "mermaid", "n": 1, "fp": "classDiagram"}],
         "edited": true
@@ -331,7 +380,7 @@
             "verbatim": true
           }
         ],
-        "visuals": [{"kind": "code", "n": 1, "fp": "// BattleManager.cs — ★ 표시 줄은 온라인 연결 때(09-08) 서버 담당 팀원이 추가"}]
+        "visuals": [{"kind": "code", "n": 1, "fp": "// BattleManager.cs — ★ 표시 줄은 온라인 연결 때 서버 담당 팀원이 추가"}]
       },
       {
         "key": "test-scene",
@@ -576,7 +625,7 @@
         "tab": "흐름",
         "title": {"text": "4.2 코드 경로는 하나, 장비마다 다른 것은 클립에만", "verbatim": true},
         "lead": {"text": "장비가 달라도 위쪽 코드 경로는 같습니다.", "verbatim": true},
-        "sectionPath": ["4. 장비 스킬 ★", "4.2 코드 경로는 하나, 장비마다 다른 것은 클립에만"],
+        "sectionPath": ["4. 장비 스킬", "4.2 코드 경로는 하나, 장비마다 다른 것은 클립에만"],
         "points": [
           {
             "label": "",
@@ -593,7 +642,7 @@
         "tab": "선택",
         "title": {"text": "4.3 궤적을 코드로 계산할 것인가, 애니메이션 클립으로 만들 것인가", "verbatim": true},
         "lead": {"text": "남은 기간은 일주일 정도였고, 그 안에 10종을 원하는 모양으로 완성하는 것이 확장성보다 중요했습니다.", "verbatim": true},
-        "sectionPath": ["4. 장비 스킬 ★", "4.3 궤적을 코드로 계산할 것인가, 애니메이션 클립으로 만들 것인가"],
+        "sectionPath": ["4. 장비 스킬", "4.3 궤적을 코드로 계산할 것인가, 애니메이션 클립으로 만들 것인가"],
         "points": [
           {"label": "", "text": "장비마다 공식을 따로 만들고 수치를 조정해도 원하는 모양이 잘 나오지 않았습니다.", "verbatim": true},
           {"label": "얻은 것", "text": "궤적 조정이 코드 수정이 아니라 Animation 창에서 키프레임을 옮기는 작업이 되어 반복이 빨랐습니다.", "verbatim": true}
@@ -607,7 +656,7 @@
         "tab": "구현",
         "title": {"text": "4.4 클립 하나로 양방향 · 회전까지", "verbatim": true},
         "lead": {"text": "애니메이션 방식으로 바꾸면서 생긴 문제는 클립은 한 방향(오른쪽 기준)으로만 만든다는 점이었습니다.", "verbatim": true},
-        "sectionPath": ["4. 장비 스킬 ★", "4.4 클립 하나로 양방향 · 회전까지"],
+        "sectionPath": ["4. 장비 스킬", "4.4 클립 하나로 양방향 · 회전까지"],
         "points": [
           {"label": "① 발사 방향", "text": "루트의 X 스케일만 반전", "verbatim": true},
           {"label": "② 외형 회전", "text": "이동은 클립이, 회전은 이 컴포넌트가 맡도록 나눴습니다.", "verbatim": false},
@@ -622,7 +671,7 @@
         "tab": "선택",
         "title": {"text": "4.5 감수한 대가와 남은 흔적", "verbatim": true},
         "lead": null,
-        "sectionPath": ["4. 장비 스킬 ★", "4.5 감수한 대가와 남은 흔적"],
+        "sectionPath": ["4. 장비 스킬", "4.5 감수한 대가와 남은 흔적"],
         "points": [],
         "visuals": [{"kind": "table", "n": 1, "fp": "항목|내용"}]
       },
@@ -642,7 +691,7 @@
             "verbatim": true
           }
         ],
-        "visuals": [{"kind": "code", "n": 1, "fp": "// BattleManager.cs — ★ 표시 줄은 온라인 연결 때(09-08) 서버 담당 팀원이 추가"}]
+        "visuals": [{"kind": "code", "n": 1, "fp": "// BattleManager.cs — ★ 표시 줄은 온라인 연결 때 서버 담당 팀원이 추가"}]
       },
       {
         "key": "test-scene",
@@ -747,6 +796,6 @@
         "visuals": [{"kind": "table", "n": 1, "fp": "기획서|구현|문서"}]
       }
     ],
-    "applied": "680c8d2fc36d46c9"
+    "applied": "c1f0b2d5b5f6cc3e"
   }
 }
