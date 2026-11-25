@@ -4,12 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>포트폴리오</title>
-  <!-- /portfolio-custom (직접 생성 모드) · 2026-11-23
-       배치: theme/layout.json — 왼쪽 단 고정(이름·한 줄 정체성·절 이동·연락처) + 오른쪽 단 스크롤(줄마다 나뉜 목록)
-       색: 디자인 요청 — 바탕 #1A1B1F · 카드 #25262B · 글자 #F7F8F8 · 강조 #7170FF · 영문 Inter · 카드 12px · 버튼 8px · 그림 칸 조금 크게(24:76 → 36:64)
+  <!-- 기본 페이지(맨 위 index.html). 템플릿의 고정 렌더러 배치는 classic.html. 주의: /portfolio-update는 템플릿의 index.html로 이 파일을 덮어씁니다(업데이트 뒤 git으로 되돌리기) -->
+  <!-- /portfolio-custom (직접 생성 모드) · 2026-11-25
+       배치: 수강생 요청 — 첫 화면 프로필 → 게임 대표 이미지를 비스듬한 띠로 나란히(마우스를 올린 게임만 색이 살아남)
+             → 프로젝트 요약(한 줄 소개·핵심 기술·역할·기능 소개 제목, 클릭 없이 보임) → 기술 스택 → 연락처.
+             게임을 누르면 game.html?p=<id>(게임 소개 페이지). theme/layout.json의 배치 대신 이 요청을 따름.
+       색: 거의 검은 바탕 #0A0A0C · 글자 #F2F2F0 · 강조 #7170FF · 글꼴 Pretendard · 영문 Inter
        내용은 data/*.json을 실행 중에 읽습니다(/portfolio-build만 다시 하면 이 페이지도 최신). UI 문구는 theme/strings.tsv(문구 표)를 따릅니다. -->
-  <!-- 기본 페이지: custom/index.html을 맨 위 index.html로 옮김(2026-11-24). 템플릿의 고정 렌더러 배치는 classic.html.
-       주의: /portfolio-update는 템플릿의 index.html로 이 파일을 덮어씁니다(업데이트 뒤 git으로 되돌리거나 다시 옮기기) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/latin-700.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/latin-800.css">
@@ -20,30 +21,61 @@
         screens: { sm: '760px', lg: '1024px', xl: '1280px' },
         extend: {
           colors: {
-            bg: '#1A1B1F', surface: '#25262B', ink: '#F7F8F8', body: '#D0D6E0', muted: '#9AA0A9',
-            line: '#2D2E32', line2: '#3B3C41', accent: '#7170FF', 'accent-ink': '#A3A2FF',
+            bg: '#0A0A0C', surface: '#141417', ink: '#F2F2F0', body: '#C9CCD3', muted: '#8A8F98',
+            line: '#222227', line2: '#34343B', accent: '#7170FF', 'accent-ink': '#A3A2FF',
           },
           fontFamily: {
             sans: ['Pretendard', 'system-ui', 'sans-serif'],
-            en: ['Inter', 'Pretendard', 'system-ui', 'sans-serif'],
+            serif: ['Pretendard', 'system-ui', 'sans-serif'],
+            display: ['Inter', 'Pretendard', 'system-ui', 'sans-serif'],
           },
-          borderRadius: { card: '12px', btn: '8px' },
+          borderRadius: { card: '10px', btn: '6px' },
         },
       },
     };
   </script>
   <style>
     html { scroll-behavior: smooth; }
-    body { background: #1A1B1F; color: #D0D6E0; }
-    ::selection { background: rgba(113, 112, 255, .35); color: #F7F8F8; }
-    .glow { background: radial-gradient(600px circle at 15% 0%, rgba(113, 112, 255, .10), transparent 60%); }
+    body { background: #0A0A0C; color: #C9CCD3; }
+    ::selection { background: rgba(113, 112, 255, .35); color: #F2F2F0; }
+    .font-display, .big-title { font-variant-numeric: lining-nums; }
     code.inline { font-family: 'D2Coding', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .88em;
-      background: #2D2E32; color: #F7F8F8; padding: .1em .35em; border-radius: 4px; }
-    .nav-line { transition: width .2s ease, background-color .2s ease; }
-    a:focus-visible, button:focus-visible { outline: 2px solid #A3A2FF; outline-offset: 2px; border-radius: 8px; }
+      background: #222227; color: #F2F2F0; padding: .1em .35em; border-radius: 4px; }
+    a:focus-visible, button:focus-visible { outline: 2px solid #A3A2FF; outline-offset: 3px; }
+
+    /* 첫 화면 — 은은한 빛 */
+    .hero-glow { background:
+      radial-gradient(900px 600px at 80% 20%, rgba(113,112,255,.10), transparent 60%),
+      radial-gradient(700px 500px at 10% 90%, rgba(255,255,255,.04), transparent 60%); }
+    .scroll-cue { animation: cue 2.2s ease-in-out infinite; }
+    @keyframes cue { 0%,100% { transform: translateY(0); opacity: .5 } 50% { transform: translateY(8px); opacity: 1 } }
+
+    /* 게임 띠 — 비스듬히 잘린 판이 나란히, 마우스를 올린 판만 색이 살아나고 넓어짐 */
+    .fs-row { --skew: -13deg; }
+    .fs-panel { flex: 1 1 0; transform: skewX(var(--skew)); transition: flex-grow .7s cubic-bezier(.2,.7,.2,1); outline: none; }
+    .fs-unskew { transform: skewX(calc(var(--skew) * -1)); }
+    .fs-img { filter: grayscale(1) brightness(.42); transform: scale(1.04);
+      transition: filter .6s ease, transform 1.2s cubic-bezier(.2,.7,.2,1); }
+    .fs-meta { opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease; }
+    .fs-panel:hover, .fs-panel:focus-visible { flex-grow: 1.5; }
+    .fs-panel:hover .fs-img, .fs-panel:focus-visible .fs-img { filter: none; transform: scale(1); }
+    .fs-panel:hover .fs-meta, .fs-panel:focus-visible .fs-meta { opacity: 1; transform: none; }
+    .fs-panel:focus-visible .fs-title { text-decoration: underline; text-underline-offset: 8px; }
+    .fs-title { text-shadow: 0 2px 24px rgba(0,0,0,.6); }
+
+    /* 나타나기 */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .fs-panel, .fs-img, .fs-meta, .scroll-cue { transition: none; animation: none; }
+    }
+    @media print { .reveal { opacity: 1 !important; transform: none !important; } header.fixed { position: static; } }
   </style>
 </head>
 <body class="font-sans antialiased">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-btn focus:bg-accent focus:px-3 focus:py-2 focus:text-white" id="skip">본문으로 건너뛰기</a>
   <div id="root"></div>
 
   <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
@@ -55,290 +87,285 @@
     const { useEffect, useState } = React;
 
     // ── 문구 표(theme/strings.tsv) — 내 문구가 있으면 그것, 없으면 기본 문구 ──
-    // assets/strings.js의 PFStr는 전역 const라 window.PFStr로는 보이지 않음 → typeof로 확인
     const hasStr = typeof PFStr !== 'undefined';
     const t = (k, vars) => (hasStr ? PFStr.t(k, vars) : k);
 
     // ── 도움 함수 ──
     const img = (id, src) => `src/${id}/${src}`;
+    const gameUrl = (id) => `game.html?p=${encodeURIComponent(id)}`;
     const deckUrl = (id) => `project.html?p=${encodeURIComponent(id)}`;
     const docUrl = (id) => `doc.html?p=${encodeURIComponent(id)}`;
     const pad2 = (n) => String(n).padStart(2, '0');
-    const normTitle = (s) => String(s || '').replace(/[`*_~]/g, '').replace(/\s+/g, ' ').trim();
-    const keyOk = (k) => /^[a-z][a-z0-9-]{1,31}$/.test(k || '') && !/^s-\d+$/.test(k);
-    // 기능의 절 제목 → 슬라이드 장면 주소(포트폴리오 페이지의 [슬라이드 열기]와 같은 규칙)
-    function sceneFor(p, section) {
-      const want = normTitle(section);
-      const slides = (p.deck && p.deck.slides) || [];
-      if (!want || !slides.length) return '';
-      const last = (x) => normTitle((x.sectionPath || []).slice(-1)[0]);
-      const sl = slides.find((x) => last(x) === want) || slides.find((x) => (x.sectionPath || []).some((s) => normTitle(s) === want));
-      return sl && keyOk(sl.key) ? `#s=d-${sl.key}` : '';
-    }
-    // `코드` 조각만 코드 글자로 — 나머지는 글자 그대로
+    const ext = { target: '_blank', rel: 'noopener noreferrer' };
+    const metaOf = (p, label) => ((p.meta || []).find((m) => m.label === label) || {}).value || '';
+    const teamLabel = (p) => (p.team && p.team.type === 'team' ? t('name.team') : t('name.solo'));
     function Rich({ text }) {
       const parts = String(text || '').split(/(`[^`]+`)/g);
       return parts.map((s, i) => (s.startsWith('`') && s.endsWith('`') && s.length > 2
         ? <code key={i} className="inline">{s.slice(1, -1)}</code> : <React.Fragment key={i}>{s}</React.Fragment>));
     }
-    const ext = { target: '_blank', rel: 'noopener noreferrer' };
-    const Arrow = () => <span aria-hidden="true" className="ml-1 inline-block transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span>;
 
     function Btn({ href, children, primary, external }) {
       if (!href) return null;
-      const base = 'group inline-flex items-center rounded-btn px-3.5 py-2 text-sm font-semibold transition-colors';
-      const cls = primary ? `${base} bg-accent text-white hover:bg-[#8584FF]` : `${base} border border-line2 text-ink hover:border-accent hover:text-accent-ink`;
-      return <a href={href} className={cls} {...(external ? ext : {})}>{children}{external && <Arrow />}</a>;
+      const base = 'group inline-flex items-center gap-1 rounded-btn px-3.5 py-2 text-sm font-semibold transition-colors';
+      const cls = primary ? `${base} bg-accent text-white hover:bg-[#8584FF]`
+        : `${base} border border-line2 text-ink hover:border-accent-ink hover:text-accent-ink`;
+      return <a href={href} className={cls} {...(external ? ext : {})}>{children}{external && <span aria-hidden="true">↗</span>}</a>;
     }
-    const Eyebrow = ({ children }) => <p className="font-en text-xs font-bold uppercase tracking-[0.18em] text-accent-ink">{children}</p>;
     function SectionHead({ en, ko, note }) {
       return (
-        <div className="mb-8 lg:mb-10">
-          <Eyebrow>{en}</Eyebrow>
-          <div className="mt-2 flex items-baseline justify-between gap-4">
-            <h2 className="text-2xl font-bold text-ink">{ko}</h2>
+        <div className="reveal mb-10 lg:mb-14">
+          <p className="font-display text-sm font-bold uppercase tracking-[0.3em] text-accent-ink">{en}</p>
+          <div className="mt-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h2 className="font-serif text-3xl font-bold text-ink sm:text-4xl">{ko}</h2>
             {note && <span className="text-sm text-muted">{note}</span>}
           </div>
         </div>
       );
     }
-    const Tags = ({ tags }) => (tags && tags.length ? (
-      <ul className="mt-4 flex flex-wrap gap-2">
-        {tags.map((x) => <li key={x} className="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent-ink">{x}</li>)}
-      </ul>) : null);
 
-    // ── 왼쪽 단(고정) — 머리 ──
-    function Header({ profile, generatedAt, active }) {
-      const nav = [
-        ['intro', t('page.nav-intro')], ['stack', t('page.nav-stack')], ['projects', t('page.nav-projects')],
-        ['glance', t('page.nav-glance')], ['contact', t('page.nav-contact')],
-      ];
+    // ── 머리 막대 — 위에 고정, 스크롤하면 어두운 바탕 ──
+    function TopBar({ profile }) {
+      const [solid, setSolid] = useState(false);
+      useEffect(() => {
+        const on = () => setSolid(window.scrollY > 40);
+        on(); window.addEventListener('scroll', on, { passive: true });
+        return () => window.removeEventListener('scroll', on);
+      }, []);
+      const nav = [['cover', t('page.nav-intro')], ['projects', t('page.nav-projects')], ['glance', t('page.nav-glance')], ['stack', t('page.nav-stack')], ['contact', t('page.nav-contact')]];
       return (
-        <header id="cover" className="pt-16 pb-4 lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-[48%] lg:flex-col lg:justify-between lg:py-24">
-          <div>
-            <Eyebrow>{t('en.portfolio')}</Eyebrow>
-            <h1 className="mt-3 text-4xl font-bold tracking-tight text-ink sm:text-5xl">{profile.name}</h1>
-            {profile.nameEn && <p className="mt-2 font-en text-lg font-bold text-accent-ink">{profile.nameEn}</p>}
-            {profile.headline && <p className="mt-4 max-w-sm text-lg leading-relaxed text-body">{profile.headline}</p>}
-            <nav className="mt-16 hidden lg:block" aria-label={t('name.toc')}>
-              <ul className="space-y-1">
-                {nav.map(([id, label]) => (
-                  <li key={id}>
-                    <a href={`#${id}`} className="group flex items-center gap-4 py-2">
-                      <span className={`nav-line h-px ${active === id ? 'w-16 bg-ink' : 'w-8 bg-muted group-hover:w-16 group-hover:bg-ink'}`} />
-                      <span className={`text-xs font-bold tracking-wide ${active === id ? 'text-ink' : 'text-muted group-hover:text-ink'}`}>{label}</span>
-                    </a>
-                  </li>
-                ))}
+        <header className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${solid ? 'bg-bg/85 backdrop-blur border-b border-line' : 'bg-transparent'}`}>
+          <div className="mx-auto flex h-16 max-w-[1320px] items-center justify-between px-5 sm:px-8">
+            <a href="#cover" className="font-serif text-lg font-bold tracking-wide text-ink">{profile.name}</a>
+            <nav aria-label={t('name.toc')} className="hidden sm:block">
+              <ul className="flex gap-7 text-sm font-semibold">
+                {nav.map(([id, label]) => <li key={id}><a href={`#${id}`} className="text-body transition-colors hover:text-ink">{label}</a></li>)}
               </ul>
             </nav>
-          </div>
-          <div className="mt-8 lg:mt-0">
-            <div className="flex flex-wrap gap-2">
-              {profile.email && <Btn href={`mailto:${profile.email}`} primary>{profile.email}</Btn>}
-              <Btn href={profile.github} external>GitHub</Btn>
-              {(profile.links || []).map((l) => <Btn key={l.url} href={l.url} external>{l.label}</Btn>)}
-            </div>
-            {generatedAt && <p className="mt-6 text-xs text-muted">{t('page.updated', { date: generatedAt })}</p>}
+            {profile.github && <a href={profile.github} {...ext} className="text-sm font-semibold text-body hover:text-ink sm:hidden">GitHub ↗</a>}
           </div>
         </header>
       );
     }
 
-    // ── 오른쪽 단 — 자기소개 ──
-    function Intro({ profile }) {
-      if (!profile.intro) return null;
+    // ── 첫 화면 — 프로필(이름·한 줄 소개·자기소개·연락처) ──
+    function Cover({ profile, generatedAt }) {
       return (
-        <section id="intro" className="scroll-mt-16 pb-20 lg:pb-28">
-          <SectionHead en={t('en.about')} ko={t('page.intro')} />
-          <p className="whitespace-pre-line text-lg leading-8 text-body">{profile.intro}</p>
+        <section id="cover" className="hero-glow relative flex min-h-[100svh] items-center">
+          <div className="mx-auto w-full max-w-[1320px] px-5 pb-24 pt-28 sm:px-8">
+            <p className="reveal font-display text-sm font-bold uppercase tracking-[0.35em] text-accent-ink">{t('en.portfolio')}</p>
+            <h1 className="reveal mt-5 font-serif text-5xl font-black tracking-tight text-ink sm:text-7xl lg:text-8xl">{profile.name}</h1>
+            {profile.nameEn && <p className="reveal mt-3 font-display text-2xl font-semibold tracking-[0.12em] text-body sm:text-3xl">{profile.nameEn}</p>}
+            {profile.headline && <p className="reveal mt-8 max-w-2xl text-xl font-semibold leading-relaxed text-ink sm:text-2xl">{profile.headline}</p>}
+            {profile.intro && (
+              <div className="reveal mt-8 max-w-2xl border-l-2 border-accent pl-5">
+                <p className="text-xs font-bold tracking-wide text-accent-ink">{t('page.intro')}</p>
+                <p className="mt-2 whitespace-pre-line text-lg leading-8 text-body">{profile.intro}</p>
+              </div>
+            )}
+            <div className="reveal mt-10 flex flex-wrap gap-2">
+              {profile.email && <Btn href={`mailto:${profile.email}`} primary>{profile.email}</Btn>}
+              <Btn href={profile.github} external>GitHub</Btn>
+              {(profile.links || []).map((l) => <Btn key={l.url} href={l.url} external>{l.label}</Btn>)}
+            </div>
+            {generatedAt && <p className="reveal mt-6 text-xs text-muted">{t('page.updated', { date: generatedAt })}</p>}
+          </div>
+          <a href="#projects" className="scroll-cue absolute bottom-8 left-1/2 -translate-x-1/2 text-center font-display text-xs font-bold tracking-[0.35em] text-muted hover:text-ink">
+            SCROLL<span className="mt-2 block text-lg leading-none" aria-hidden="true">↓</span>
+          </a>
         </section>
       );
     }
 
-    // ── 기술 스택 — 줄마다 2단 24:76 (기술 | 어디에 썼는지 + 근거 프로젝트) ──
+    // ── 게임 띠 — 넓은 화면: 비스듬한 판이 나란히 / 좁은 화면: 세로로 쌓인 카드 ──
+    function Games({ projects }) {
+      return (
+        <section id="projects" className="scroll-mt-16" aria-label={t('page.nav-projects')}>
+          {/* 넓은 화면 */}
+          <div className="relative hidden h-[100svh] min-h-[560px] overflow-hidden bg-black sm:block">
+            {/* 비스듬한 판의 바깥 모서리가 화면 밖으로 나가도록 좌우로 tan(13°) × 화면 높이 절반만큼 넓힘 */}
+            <div className="fs-row absolute inset-y-0 flex gap-[3px]" style={{ left: 'calc(-12svh - 12px)', right: 'calc(-12svh - 12px)' }}>
+              {projects.map((p, i) => (
+                <a key={p.id} href={gameUrl(p.id)} className="fs-panel group relative block overflow-hidden bg-black">
+                  <div className="fs-unskew absolute inset-y-0 -left-[40%] -right-[40%]">
+                    {p.cover && <img src={img(p.id, p.cover)} alt="" className="fs-img h-full w-full object-cover" />}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/40" />
+                  </div>
+                  <div className={`fs-unskew absolute inset-0 flex flex-col items-center justify-center text-center ${projects.length > 1 && i === 0 ? 'pl-[30%] pr-[10%]' : projects.length > 1 && i === projects.length - 1 ? 'pl-[10%] pr-[30%]' : 'px-[16%]'}`}>
+                    <p className="font-display text-xs font-bold tracking-[0.35em] text-body/80">{t('en.project')} {pad2(i + 1)}</p>
+                    <h3 className="fs-title mt-3 font-serif text-[clamp(1.6rem,2.8vw,3rem)] font-black leading-tight text-ink [word-break:keep-all]">{p.title}</h3>
+                    <div className="fs-meta mt-4 text-sm text-ink/90">
+                      {metaOf(p, '장르') && <p>{metaOf(p, '장르')}</p>}
+                      <p className="mt-1 text-body/80">{teamLabel(p)}{p.team && p.team.size ? ` · ${p.team.size}` : ''}</p>
+                      <p className="mt-5 inline-block border border-ink/60 px-4 py-1.5 font-display text-xs font-bold tracking-[0.3em]">VIEW →</p>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+            <p className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-4 py-1.5 text-xs text-body">게임을 누르면 소개 페이지로 이동합니다</p>
+          </div>
+
+          {/* 좁은 화면 */}
+          <div className="space-y-[3px] bg-black sm:hidden">
+            {projects.map((p, i) => (
+              <a key={p.id} href={gameUrl(p.id)} className="relative block h-[46svh] min-h-[260px] overflow-hidden">
+                {p.cover && <img src={img(p.id, p.cover)} alt="" className="h-full w-full object-cover" loading="lazy" />}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-5">
+                  <p className="font-display text-xs font-bold tracking-[0.3em] text-body/80">{t('en.project')} {pad2(i + 1)}</p>
+                  <h3 className="mt-1 font-serif text-3xl font-black text-ink">{p.title}</h3>
+                  {metaOf(p, '장르') && <p className="mt-1 text-sm text-body">{metaOf(p, '장르')}</p>}
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      );
+    }
+
+    // ── 프로젝트 요약 — 클릭하지 않아도 보이는 정보(한 줄 소개·정보·역할·기능 소개 제목·핵심 기술·링크) ──
+    function Glance({ projects }) {
+      return (
+        <section id="glance" className="scroll-mt-16 py-24 lg:py-32">
+          <div className="mx-auto max-w-[1320px] px-5 sm:px-8">
+            <SectionHead en={t('en.glance')} ko={t('page.glance')} />
+            <ol className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-3">
+              {projects.map((p, i) => {
+                const links = p.links || {};
+                const hl = p.highlights || [];
+                return (
+                  <li key={p.id} id={`p-${p.id}`} className="reveal flex scroll-mt-20 flex-col overflow-hidden rounded-card border border-line bg-surface">
+                    {p.cover && (
+                      <a href={gameUrl(p.id)} className="group block overflow-hidden" aria-label={`${p.title} 게임 소개`}>
+                        <img src={img(p.id, p.cover)} alt={`${p.title} 대표 이미지`} loading="lazy" className="aspect-video w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+                      </a>
+                    )}
+                    <div className="flex flex-1 flex-col p-6">
+                      <p className="font-display text-xs font-bold tracking-[0.3em] text-accent-ink">{t('page.project-no', { no: pad2(i + 1), total: pad2(projects.length) })}</p>
+                      <h3 className="mt-2 font-serif text-2xl font-bold text-ink"><a href={gameUrl(p.id)} className="hover:text-accent-ink">{p.title}</a></h3>
+                      {p.tagline && <p className="mt-2 leading-relaxed text-body"><Rich text={p.tagline} /></p>}
+
+                      {p.meta && p.meta.length > 0 && (
+                        <dl className="mt-5 space-y-2 border-t border-line pt-4 text-sm">
+                          {p.meta.map((m) => (
+                            <div key={m.label} className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-3">
+                              <dt className="text-muted">{m.label}</dt>
+                              <dd className="text-ink">{m.value}</dd>
+                            </div>
+                          ))}
+                          <div className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-3">
+                            <dt className="text-muted">{t('name.role-short')}</dt>
+                            <dd className="text-ink">{p.team && p.team.role ? p.team.role : teamLabel(p)}</dd>
+                          </div>
+                        </dl>
+                      )}
+
+                      {hl.length > 0 && (
+                        <div className="mt-5 border-t border-line pt-4">
+                          <p className="text-xs font-bold tracking-wide text-muted">{t('page.features')}</p>
+                          <ul className="mt-2 space-y-1.5 text-sm">
+                            {hl.map((h, j) => (
+                              <li key={j} className="flex gap-2 text-ink">
+                                <span className="font-display font-bold text-accent-ink">{pad2(j + 1)}</span>
+                                <a href={`${gameUrl(p.id)}#f-${j + 1}`} className="hover:text-accent-ink"><Rich text={h.title} /></a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {p.tags && p.tags.length > 0 && (
+                        <ul className="mt-5 flex flex-wrap gap-1.5">
+                          {p.tags.map((x) => <li key={x} className="rounded-full bg-accent/10 px-2.5 py-1 text-xs font-medium text-accent-ink">{x}</li>)}
+                        </ul>
+                      )}
+
+                      <div className="mt-auto flex flex-wrap gap-2 pt-6">
+                        <Btn href={gameUrl(p.id)} primary>게임 소개</Btn>
+                        <Btn href={docUrl(p.id)}>{t('name.doc-short')}</Btn>
+                        <Btn href={deckUrl(p.id)}>{t('name.deck')}</Btn>
+                        <Btn href={links.github} external>GitHub</Btn>
+                        <Btn href={links.video} external>{t('name.video')}</Btn>
+                        {(links.extra || []).map((l) => <Btn key={l.url} href={l.url} external>{l.label}</Btn>)}
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        </section>
+      );
+    }
+
+    // ── 기술 스택 — 줄마다 (기술 | 어디에 썼는지 + 근거 프로젝트) ──
     function Stack({ skills, titles }) {
       if (!skills || !skills.length) return null;
       return (
-        <section id="stack" className="scroll-mt-16 pb-20 lg:pb-28">
-          <SectionHead en={t('en.skills')} ko={t('page.stack')} note={t('page.stack-note')} />
-          <ol className="space-y-2">
-            {skills.map((s) => (
-              <li key={s.name} className="grid gap-3 rounded-card p-4 transition-colors hover:bg-surface sm:grid-cols-[minmax(0,24fr)_minmax(0,76fr)] sm:gap-6 sm:-mx-4">
-                <h3 className="font-bold text-ink">{s.name}</h3>
-                <ul className="space-y-3">
-                  {(s.evidence || []).map((e, i) => (
-                    <li key={i} className="leading-relaxed">
-                      <span className="text-body"><Rich text={e.text} /></span>
-                      {titles[e.project] && <a href={`#p-${e.project}`} className="ml-2 whitespace-nowrap text-sm text-accent-ink hover:underline">{titles[e.project]}</a>}
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ol>
-        </section>
-      );
-    }
-
-    // ── 프로젝트 소개 — 2단 · 대표 이미지 왼쪽(36:64, 요청: 그림 칸 조금 크게) ──
-    function ProjectIntro({ p, no, total }) {
-      const links = p.links || {};
-      const teamLabel = p.team && p.team.type === 'team' ? t('name.team') : t('name.solo');
-      return (
-        <article id={`p-${p.id}`} className="scroll-mt-16">
-          <p className="font-en text-xs font-bold uppercase tracking-[0.18em] text-accent-ink">{t('page.project-no', { no: pad2(no), total: pad2(total) })}</p>
-          <div className="mt-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-            <h3 className="text-2xl font-bold text-ink">{p.title}</h3>
-            <span className="text-sm text-muted">{teamLabel}{p.team && p.team.size ? ` · ${p.team.size}` : ''}</span>
-          </div>
-          {p.tagline && <p className="mt-2 leading-relaxed text-body">{p.tagline}</p>}
-
-          <div className={`mt-6 grid gap-6 rounded-card border border-line bg-surface p-5 ${p.cover ? 'sm:grid-cols-[minmax(0,36fr)_minmax(0,64fr)]' : ''}`}>
-            {p.cover && (
-              <a href={deckUrl(p.id)} className="block self-start overflow-hidden rounded-btn border border-line">
-                <img src={img(p.id, p.cover)} alt={`${p.title} 대표 이미지`} loading="lazy" className="aspect-video w-full object-cover transition-transform duration-300 hover:scale-[1.03]" />
-              </a>
-            )}
-            <div className="min-w-0">
-              {p.meta && p.meta.length > 0 && (
-                <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm xl:grid-cols-2">
-                  {p.meta.map((m) => (
-                    <div key={m.label}>
-                      <dt className="text-xs text-muted">{m.label}</dt>
-                      <dd className="mt-0.5 text-ink">{m.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              )}
-              {p.team && p.team.role && (
-                <div className="mt-4 text-sm">
-                  <p className="text-xs text-muted">{t('name.role')}</p>
-                  <p className="mt-0.5 text-ink">{p.team.role}</p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {p.intent && p.intent.text && (
-            <div className="mt-5 border-l-2 border-accent pl-4">
-              <p className="text-xs font-semibold text-accent-ink">{t('name.intent')}</p>
-              <p className="mt-1 leading-relaxed text-body"><Rich text={p.intent.text} /></p>
-            </div>
-          )}
-          <Tags tags={p.tags} />
-          <div className="mt-5 flex flex-wrap gap-2">
-            <Btn href={deckUrl(p.id)} primary>{t('name.deck')}</Btn>
-            <Btn href={docUrl(p.id)}>{t('name.doc-short')}</Btn>
-            <Btn href={links.github} external>GitHub</Btn>
-            <Btn href={links.video} external>{t('name.video')}</Btn>
-            {(links.extra || []).map((l) => <Btn key={l.url} href={l.url} external>{l.label}</Btn>)}
-          </div>
-        </article>
-      );
-    }
-
-    // ── 기능 소개 — 줄마다 2단 · 기능 화면 왼쪽(36:64). 화면이 없는 기능은 글이 폭 전체 ──
-    function Features({ p }) {
-      const hl = p.highlights || [];
-      if (!hl.length) return null;
-      return (
-        <div id={`p-${p.id}-core`} className="mt-12 scroll-mt-16">
-          <div className="mb-5 flex items-baseline justify-between gap-4">
-            <h4 className="text-lg font-bold text-ink">{t('page.features')}</h4>
-            <a href={deckUrl(p.id)} className="text-sm text-accent-ink hover:underline">{t('page.deck-all')}</a>
-          </div>
-          <ol className="space-y-2">
-            {hl.map((h, i) => {
-              const scene = sceneFor(p, h.section);
-              const hasImg = h.image && h.image.src;
-              return (
-                <li key={i} className={`grid gap-4 rounded-card p-4 transition-colors hover:bg-surface sm:gap-6 sm:-mx-4 ${hasImg ? 'sm:grid-cols-[minmax(0,36fr)_minmax(0,64fr)]' : ''}`}>
-                  {hasImg && (
-                    <figure className="self-start">
-                      <img src={img(p.id, h.image.src)} alt={h.image.caption || h.title} loading="lazy"
-                        {...(h.image.w && h.image.h ? { width: h.image.w, height: h.image.h } : {})}
-                        className="h-auto w-full rounded-btn border border-line bg-bg" />
-                    </figure>
-                  )}
-                  <div className="min-w-0">
-                    <p className="font-en text-xs font-bold uppercase tracking-[0.18em] text-muted">{t('en.feature')} {pad2(i + 1)}</p>
-                    <h5 className="mt-1 font-bold text-ink"><Rich text={h.title} /></h5>
-                    {h.what && <p className="mt-2 text-sm leading-relaxed text-body"><Rich text={h.what} /></p>}
-                    {h.how && <p className="mt-2 text-sm leading-relaxed text-muted"><Rich text={h.how} /></p>}
-                    <a href={`${deckUrl(p.id)}${scene}`} className="mt-3 inline-block text-sm font-semibold text-accent-ink hover:underline">{t('page.see-in-deck')} →</a>
-                  </div>
+        <section id="stack" className="scroll-mt-16 border-t border-line py-24 lg:py-32">
+          <div className="mx-auto max-w-[1320px] px-5 sm:px-8">
+            <SectionHead en={t('en.skills')} ko={t('page.stack')} note={t('page.stack-note')} />
+            <ol className="divide-y divide-line border-y border-line">
+              {skills.map((s) => (
+                <li key={s.name} className="reveal grid grid-cols-[minmax(0,1fr)] gap-3 py-6 sm:grid-cols-[minmax(0,24fr)_minmax(0,76fr)] sm:gap-8">
+                  <h3 className="font-serif text-xl font-bold text-ink">{s.name}</h3>
+                  <ul className="space-y-2.5">
+                    {(s.evidence || []).map((e, i) => (
+                      <li key={i} className="leading-relaxed">
+                        <span className="text-body"><Rich text={e.text} /></span>
+                        {titles[e.project] && <a href={gameUrl(e.project)} className="ml-2 whitespace-nowrap text-sm text-accent-ink hover:underline">{titles[e.project]}</a>}
+                      </li>
+                    ))}
+                  </ul>
                 </li>
-              );
-            })}
-          </ol>
-        </div>
-      );
-    }
-
-    // ── 한눈에 보기 — 줄마다 2단 · 대표 이미지 왼쪽 · 낮은 줄 ──
-    function Glance({ projects }) {
-      return (
-        <section id="glance" className="scroll-mt-16 pb-20 lg:pb-28">
-          <SectionHead en={t('en.glance')} ko={t('page.glance')} />
-          <ul className="space-y-2">
-            {projects.map((p) => (
-              <li key={p.id} className={`grid gap-4 rounded-card p-4 transition-colors hover:bg-surface sm:gap-6 sm:-mx-4 ${p.cover ? 'sm:grid-cols-[minmax(0,28fr)_minmax(0,72fr)]' : ''}`}>
-                {p.cover && <a href={`#p-${p.id}`} className="block self-start overflow-hidden rounded-btn border border-line"><img src={img(p.id, p.cover)} alt="" loading="lazy" className="aspect-video w-full object-cover" /></a>}
-                <div className="min-w-0">
-                  <a href={`#p-${p.id}`} className="font-bold text-ink hover:text-accent-ink">{p.title}</a>
-                  {p.tagline && <p className="mt-1 text-sm leading-relaxed text-body">{p.tagline}</p>}
-                  <p className="mt-2 text-xs text-muted">
-                    {t('name.role-short')} · {p.team && p.team.role ? p.team.role : (p.team && p.team.type === 'team' ? t('name.team') : t('name.solo'))}
-                  </p>
-                  {p.tags && p.tags.length > 0 && <p className="mt-1 text-xs text-muted">{p.tags.slice(0, 4).join(' · ')}</p>}
-                </div>
-              </li>
-            ))}
-          </ul>
+              ))}
+            </ol>
+          </div>
         </section>
       );
     }
 
-    // ── 연락처 — 작은 글자 한 단 ──
+    // ── 연락처 ──
     function Contact({ profile, projects }) {
       return (
-        <footer id="contact" className="scroll-mt-16 border-t border-line pt-10 pb-16 text-sm text-muted">
-          <Eyebrow>{t('en.contact')}</Eyebrow>
-          <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
-            {profile.email && <a href={`mailto:${profile.email}`} className="text-ink hover:text-accent-ink">{profile.email}</a>}
-            {profile.github && <a href={profile.github} {...ext} className="text-ink hover:text-accent-ink">GitHub ↗</a>}
-            {(profile.links || []).map((l) => <a key={l.url} href={l.url} {...ext} className="text-ink hover:text-accent-ink">{l.label} ↗</a>)}
+        <footer id="contact" className="scroll-mt-16 border-t border-line bg-black py-16 text-sm text-muted">
+          <div className="mx-auto max-w-[1320px] px-5 sm:px-8">
+            <p className="font-display text-sm font-bold uppercase tracking-[0.3em] text-accent-ink">{t('en.contact')}</p>
+            <p className="mt-3 font-serif text-2xl font-bold text-ink">{profile.name}</p>
+            <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+              {profile.email && <a href={`mailto:${profile.email}`} className="text-ink hover:text-accent-ink">{profile.email}</a>}
+              {profile.github && <a href={profile.github} {...ext} className="text-ink hover:text-accent-ink">GitHub ↗</a>}
+              {(profile.links || []).map((l) => <a key={l.url} href={l.url} {...ext} className="text-ink hover:text-accent-ink">{l.label} ↗</a>)}
+            </div>
+            <ul className="mt-8 space-y-1.5">
+              {projects.map((p) => (
+                <li key={p.id} className="flex flex-wrap gap-x-3">
+                  <a href={gameUrl(p.id)} className="text-body hover:text-accent-ink">{p.title}</a>
+                  <a href={docUrl(p.id)} className="hover:text-accent-ink">{t('name.doc-short')}</a>
+                  <a href={deckUrl(p.id)} className="hover:text-accent-ink">{t('name.deck')}</a>
+                  {p.links && p.links.github && <a href={p.links.github} {...ext} className="hover:text-accent-ink">GitHub ↗</a>}
+                  {p.links && p.links.video && <a href={p.links.video} {...ext} className="hover:text-accent-ink">{t('name.video')} ↗</a>}
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="mt-6 space-y-1.5">
-            {projects.map((p) => (
-              <li key={p.id} className="flex flex-wrap gap-x-3">
-                <span className="text-body">{p.title}</span>
-                <a href={deckUrl(p.id)} className="hover:text-accent-ink">{t('name.deck')}</a>
-                <a href={docUrl(p.id)} className="hover:text-accent-ink">{t('name.doc-short')}</a>
-                {p.links && p.links.github && <a href={p.links.github} {...ext} className="hover:text-accent-ink">GitHub ↗</a>}
-                {p.links && p.links.video && <a href={p.links.video} {...ext} className="hover:text-accent-ink">{t('name.video')} ↗</a>}
-              </li>
-            ))}
-          </ul>
         </footer>
       );
     }
 
-    // ── 지금 보고 있는 절(왼쪽 절 이동 표시) ──
-    function useActive(ids, ready) {
-      const [active, setActive] = useState(ids[0]);
+    // ── 스크롤하면 나타나기 ──
+    function useReveal(ready) {
       useEffect(() => {
         if (!ready) return;
-        const els = ids.map((id) => document.getElementById(id)).filter(Boolean);
-        const io = new IntersectionObserver((ents) => {
-          const vis = ents.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-          if (vis[0]) setActive(vis[0].target.id);
-        }, { rootMargin: '-30% 0px -60% 0px' });
+        const els = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('in')); return; }
+        const io = new IntersectionObserver((ents) => ents.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        }), { rootMargin: '0px 0px -8% 0px' });
         els.forEach((el) => io.observe(el));
         return () => io.disconnect();
       }, [ready]);
-      return active;
     }
 
     function App() {
@@ -347,6 +374,7 @@
         (async () => {
           try {
             if (hasStr) await PFStr.load('theme/strings.tsv');
+            document.getElementById('skip').textContent = t('ui.skip');
             const res = await fetch('data/portfolio.json', { cache: 'no-cache' });
             if (!res.ok) throw new Error(`data/portfolio.json (${res.status})`);
             const pf = await res.json();
@@ -361,7 +389,10 @@
           }
         })();
       }, []);
-      const active = useActive(['intro', 'stack', 'projects', 'glance', 'contact'], state.status === 'ok');
+      useReveal(state.status === 'ok');
+      useEffect(() => { // 다른 페이지에서 #p-<id>로 들어왔을 때 그림이 그려진 뒤 그 자리로
+        if (state.status === 'ok' && location.hash) { const el = document.getElementById(location.hash.slice(1)); if (el) setTimeout(() => el.scrollIntoView(), 50); }
+      }, [state.status]);
 
       if (state.status === 'loading') return <p className="p-10 text-muted">불러오는 중…</p>;
       if (state.status === 'error') return <p className="p-10 text-muted">데이터를 읽지 못했습니다: {state.message} — 로컬 서버로 열었는지, /portfolio-build를 했는지 확인하세요.</p>;
@@ -369,28 +400,16 @@
       const { pf, projects } = state;
       const titles = Object.fromEntries(projects.map((p) => [p.id, p.title]));
       return (
-        <div className="glow min-h-screen">
-          <div className="mx-auto max-w-[1248px] px-6 sm:px-8 lg:flex lg:justify-between lg:gap-8">
-            <Header profile={pf.profile} generatedAt={pf.generatedAt} active={active} />
-            <main className="pt-12 lg:w-[52%] lg:py-24">
-              <Intro profile={pf.profile} />
-              <Stack skills={pf.skills} titles={titles} />
-              <section id="projects" className="scroll-mt-16 pb-20 lg:pb-28">
-                <SectionHead en={t('en.project')} ko={t('page.nav-projects')} />
-                <div className="space-y-24">
-                  {projects.map((p, i) => (
-                    <div key={p.id}>
-                      <ProjectIntro p={p} no={i + 1} total={projects.length} />
-                      <Features p={p} />
-                    </div>
-                  ))}
-                </div>
-              </section>
-              <Glance projects={projects} />
-              <Contact profile={pf.profile} projects={projects} />
-            </main>
-          </div>
-        </div>
+        <>
+          <TopBar profile={pf.profile} />
+          <main id="main">
+            <Cover profile={pf.profile} generatedAt={pf.generatedAt} />
+            <Games projects={projects} />
+            <Glance projects={projects} />
+            <Stack skills={pf.skills} titles={titles} />
+          </main>
+          <Contact profile={pf.profile} projects={projects} />
+        </>
       );
     }
 

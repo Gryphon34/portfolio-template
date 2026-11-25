@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>게임 소개</title>
+  <!-- 맨 위 game.html — 메인(index.html)에서 게임을 누르면 오는 페이지 -->
+  <!-- /portfolio-custom (직접 생성 모드) · 2026-11-25 — 게임 소개 페이지 (game.html?p=<프로젝트 폴더 이름>)
+       배치: 수강생 요청 — 첫 화면 전체에 대표 이미지 + 큰 제목 → Introduction(개발 의도·정보, 흐린 배경 위 반투명 글 상자)
+             → Movie(기울어진 영상 카드, 누르면 YouTube) → Features(기능 화면 크게, 좌우 번갈아) → 문제 해결 → 스크린샷 → 회고 → 링크·다른 게임
+       내용은 data/projects/<id>.json을 실행 중에 읽습니다. 더 자세한 내용은 상세 문서(doc.html)·슬라이드(project.html)로 연결합니다.
+       UI 문구는 theme/strings.tsv(문구 표)를 따릅니다. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/latin-700.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/latin-800.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        screens: { sm: '760px', lg: '1024px', xl: '1280px' },
+        extend: {
+          colors: {
+            bg: '#0A0A0C', surface: '#141417', ink: '#F2F2F0', body: '#C9CCD3', muted: '#8A8F98',
+            line: '#222227', line2: '#34343B', accent: '#7170FF', 'accent-ink': '#A3A2FF',
+          },
+          fontFamily: {
+            sans: ['Pretendard', 'system-ui', 'sans-serif'],
+            serif: ['Pretendard', 'system-ui', 'sans-serif'],
+            display: ['Inter', 'Pretendard', 'system-ui', 'sans-serif'],
+          },
+          borderRadius: { card: '10px', btn: '6px' },
+        },
+      },
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background: #0A0A0C; color: #C9CCD3; }
+    ::selection { background: rgba(113, 112, 255, .35); color: #F2F2F0; }
+    .font-display, .big-title { font-variant-numeric: lining-nums; }
+    code.inline { font-family: 'D2Coding', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .88em;
+      background: rgba(255,255,255,.08); color: #F2F2F0; padding: .1em .35em; border-radius: 4px; }
+    a:focus-visible, button:focus-visible { outline: 2px solid #A3A2FF; outline-offset: 3px; }
+
+    /* 큰 영문 절 제목 — 은빛 글자 */
+    .big-title { font-family: 'Inter', 'Pretendard', system-ui, sans-serif; font-weight: 800; line-height: .95; letter-spacing: -.03em;
+      background: linear-gradient(180deg, #FFFFFF 0%, #D9DCE2 55%, #9EA3AD 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+ }
+    /* 반투명 글 상자 — 왼쪽 위 모서리 장식 선 */
+    .glass { background: rgba(8, 8, 10, .72); backdrop-filter: blur(6px); position: relative; }
+    .glass::before { content: ''; position: absolute; left: -1px; top: -1px; width: 140px; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,.7), transparent); }
+    .glass::after { content: ''; position: absolute; left: -1px; top: -1px; width: 1px; height: 90px; background: linear-gradient(180deg, rgba(255,255,255,.7), transparent); }
+    /* 영상 카드 — 살짝 기울어짐 */
+    .tilt { transform: perspective(1400px) rotateY(-9deg) rotateZ(-1.5deg); transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+    .tilt:hover, .tilt:focus-visible { transform: perspective(1400px) rotateY(-3deg) rotateZ(-.5deg) scale(1.01); }
+    .diamond { transform: rotate(45deg); }
+    .diamond > * { transform: rotate(-45deg); }
+    /* 첫 화면 그림 천천히 다가옴 */
+    .kenburns { animation: kb 18s ease-out forwards; }
+    @keyframes kb { from { transform: scale(1.12); } to { transform: scale(1); } }
+    /* 나타나기 */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .gallery { scrollbar-width: thin; scrollbar-color: #34343B transparent; --gpad: 20px; padding-inline: var(--gpad); scroll-padding-inline: var(--gpad); }
+    @media (min-width: 760px) { .gallery { --gpad: 32px; } }
+    @media (min-width: 1024px) { .gallery { --gpad: max(32px, calc((100vw - 1400px) / 2 + 32px)); } }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .kenburns { animation: none; }
+      .tilt { transition: none; }
+    }
+    @media print { .reveal { opacity: 1 !important; transform: none !important; } header.fixed { position: static; } }
+  </style>
+</head>
+<body class="font-sans antialiased">
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
+  <script src="assets/strings.js"></script>
+
+  <script type="text/babel" data-presets="react">
+    const { useEffect, useState, useRef } = React;
+
+    const hasStr = typeof PFStr !== 'undefined';
+    const t = (k, vars) => (hasStr ? PFStr.t(k, vars) : k);
+
+    const img = (id, src) => `src/${id}/${src}`;
+    const gameUrl = (id) => `game.html?p=${encodeURIComponent(id)}`;
+    const deckUrl = (id) => `project.html?p=${encodeURIComponent(id)}`;
+    const docUrl = (id) => `doc.html?p=${encodeURIComponent(id)}`;
+    const pad2 = (n) => String(n).padStart(2, '0');
+    const ext = { target: '_blank', rel: 'noopener noreferrer' };
+    const teamLabel = (p) => (p.team && p.team.type === 'team' ? t('name.team') : t('name.solo'));
+    // YouTube 주소 → 영상 id (youtu.be/ID · watch?v=ID · embed/ID · shorts/ID)
+    function ytId(url) {
+      const m = String(url || '').match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{6,})/);
+      return m ? m[1] : '';
+    }
+    // 기능의 절 제목 → 슬라이드 장면 주소(포트폴리오 페이지의 [슬라이드 열기]와 같은 규칙)
+    const normTitle = (s) => String(s || '').replace(/[`*_~]/g, '').replace(/\s+/g, ' ').trim();
+    const keyOk = (k) => /^[a-z][a-z0-9-]{1,31}$/.test(k || '') && !/^s-\d+$/.test(k);
+    function sceneFor(p, section) {
+      const want = normTitle(section);
+      const slides = (p.deck && p.deck.slides) || [];
+      if (!want || !slides.length) return '';
+      const last = (x) => normTitle((x.sectionPath || []).slice(-1)[0]);
+      const sl = slides.find((x) => last(x) === want) || slides.find((x) => (x.sectionPath || []).some((s) => normTitle(s) === want));
+      return sl && keyOk(sl.key) ? `#s=d-${sl.key}` : '';
+    }
+    function Rich({ text }) {
+      const parts = String(text || '').split(/(`[^`]+`)/g);
+      return parts.map((s, i) => (s.startsWith('`') && s.endsWith('`') && s.length > 2
+        ? <code key={i} className="inline">{s.slice(1, -1)}</code> : <React.Fragment key={i}>{s}</React.Fragment>));
+    }
+    function Btn({ href, children, primary, external, onClick }) {
+      if (!href && !onClick) return null;
+      const base = 'group inline-flex items-center gap-1.5 rounded-btn px-4 py-2.5 text-sm font-semibold transition-colors';
+      const cls = primary ? `${base} bg-accent text-white hover:bg-[#8584FF]`
+        : `${base} border border-white/25 bg-black/30 text-ink backdrop-blur hover:border-accent-ink hover:text-accent-ink`;
+      if (onClick) return <button type="button" onClick={onClick} className={cls}>{children}</button>;
+      return <a href={href} className={cls} {...(external ? ext : {})}>{children}{external && <span aria-hidden="true">↗</span>}</a>;
+    }
+    // 큰 영문 제목 + 한글 부제
+    function BigHead({ en, ko, align = 'left' }) {
+      return (
+        <div className={`reveal ${align === 'center' ? 'text-center' : ''}`}>
+          <h2 className="big-title text-[clamp(2.75rem,11vw,8.5rem)] [overflow-wrap:anywhere]">{en}</h2>
+          {ko && <p className="mt-3 font-serif text-lg font-bold tracking-wide text-body sm:text-xl">{ko}</p>}
+        </div>
+      );
+    }
+
+    // ── 머리 막대 ──
+    function TopBar({ p, nav }) {
+      const [solid, setSolid] = useState(false);
+      useEffect(() => {
+        const on = () => setSolid(window.scrollY > 40);
+        on(); window.addEventListener('scroll', on, { passive: true });
+        return () => window.removeEventListener('scroll', on);
+      }, []);
+      return (
+        <header className={`fixed inset-x-0 top-0 z-40 transition-colors duration-300 ${solid ? 'bg-bg/85 backdrop-blur border-b border-line' : 'bg-gradient-to-b from-black/60 to-transparent'}`}>
+          <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-4 px-5 sm:px-8">
+            <div className="flex min-w-0 items-center gap-4">
+              <a href="index.html#glance" className="shrink-0 text-sm font-semibold text-body hover:text-ink">{t('ui.back')}</a>
+              <span className={`truncate font-serif text-base font-bold text-ink transition-opacity ${solid ? 'opacity-100' : 'opacity-0'}`}>{p.title}</span>
+            </div>
+            <nav aria-label={t('name.toc')} className="hidden lg:block">
+              <ul className="flex gap-6 font-display text-sm font-bold tracking-[0.12em]">
+                {nav.map(([id, label]) => <li key={id}><a href={`#${id}`} className="text-body transition-colors hover:text-ink">{label}</a></li>)}
+              </ul>
+            </nav>
+          </div>
+        </header>
+      );
+    }
+
+    // ── 첫 화면 — 대표 이미지 전체 + 큰 제목 ──
+    function Hero({ p, no, total, onPlay }) {
+      const links = p.links || {};
+      return (
+        <section id="top" className="relative flex min-h-[100svh] items-end overflow-hidden bg-black">
+          {p.cover && <img src={img(p.id, p.cover)} alt={`${p.title} 대표 이미지`} className="kenburns absolute inset-0 h-full w-full object-cover" />}
+          <div className="absolute inset-0 bg-gradient-to-t from-bg via-black/30 to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent" />
+          <div className="relative mx-auto w-full max-w-[1400px] px-5 pb-20 pt-32 sm:px-8 lg:pb-28">
+            <p className="reveal font-display text-sm font-bold tracking-[0.35em] text-body">{t('en.project')} {pad2(no)} / {pad2(total)}</p>
+            <h1 className="reveal mt-4 font-serif text-5xl font-black leading-tight text-ink drop-shadow-[0_4px_24px_rgba(0,0,0,.7)] sm:text-7xl lg:text-8xl">{p.title}</h1>
+            {p.tagline && (
+              <div className="glass reveal mt-8 max-w-3xl px-6 py-5 sm:px-8">
+                <p className="font-serif text-base font-semibold leading-8 text-ink sm:text-lg"><Rich text={p.tagline} /></p>
+              </div>
+            )}
+            <div className="reveal mt-8 flex flex-wrap gap-2">
+              {ytId(links.video) ? <Btn primary onClick={onPlay}>▶ {t('name.video')}</Btn> : <Btn primary href={links.video} external>{t('name.video')}</Btn>}
+              <Btn href={docUrl(p.id)}>{t('name.doc')}</Btn>
+              <Btn href={deckUrl(p.id)}>{t('name.deck')}</Btn>
+              <Btn href={links.github} external>GitHub</Btn>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ── Introduction — 흐린 대표 이미지 위, 개발 의도 + 정보 상자 ──
+    function Introduction({ p }) {
+      return (
+        <section id="introduction" className="relative scroll-mt-16 overflow-hidden">
+          {p.cover && <img src={img(p.id, p.cover)} alt="" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-50 blur-md" />}
+          <div className="absolute inset-0 bg-gradient-to-b from-bg via-black/55 to-bg" />
+          <div className="relative mx-auto max-w-[1400px] px-5 py-28 sm:px-8 lg:py-40">
+            <BigHead en="Introduction" ko={t('name.intent')} />
+            <div className="mt-12 grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,58fr)_minmax(0,42fr)] lg:items-start">
+              {p.intent && p.intent.text ? (
+                <div className="glass reveal px-6 py-7 sm:px-10 sm:py-9">
+                  <p className="font-serif text-lg font-semibold leading-9 text-ink sm:text-xl sm:leading-10"><Rich text={p.intent.text} /></p>
+                </div>
+              ) : <div />}
+              <div className="glass reveal px-6 py-7 sm:px-8">
+                <dl className="space-y-3 text-sm">
+                  {(p.meta || []).map((m) => (
+                    <div key={m.label} className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-3">
+                      <dt className="text-muted">{m.label}</dt><dd className="text-ink">{m.value}</dd>
+                    </div>
+                  ))}
+                  <div className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-3">
+                    <dt className="text-muted">{t('name.role')}</dt>
+                    <dd className="text-ink">{p.team && p.team.role ? p.team.role : `${teamLabel(p)}${p.team && p.team.size ? ` · ${p.team.size}` : ''}`}</dd>
+                  </div>
+                </dl>
+                {p.tags && p.tags.length > 0 && (
+                  <ul className="mt-6 flex flex-wrap gap-1.5 border-t border-white/10 pt-5">
+                    {p.tags.map((x) => <li key={x} className="rounded-full bg-accent/15 px-2.5 py-1 text-xs font-medium text-accent-ink">{x}</li>)}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ── Movie — 기울어진 영상 카드, 누르면 영상 창 ──
+    function Movie({ p, onPlay }) {
+      const url = p.links && p.links.video;
+      if (!url) return null;
+      const id = ytId(url);
+      const card = (
+        <span className="relative block overflow-hidden rounded-card border border-white/15 shadow-[0_30px_80px_rgba(0,0,0,.6)]">
+          {p.cover ? <img src={img(p.id, p.cover)} alt="" loading="lazy" className="aspect-video w-full object-cover" /> : <span className="block aspect-video w-full bg-surface" />}
+          <span className="absolute inset-0 bg-black/25" />
+          <span className="diamond absolute bottom-6 right-6 flex h-16 w-16 items-center justify-center border border-white/50 bg-black/70 sm:bottom-10 sm:right-10 sm:h-20 sm:w-20">
+            <span className="text-2xl text-accent-ink sm:text-3xl" aria-hidden="true">▶</span>
+          </span>
+        </span>
+      );
+      return (
+        <section id="movie" className="relative scroll-mt-16 overflow-hidden bg-[radial-gradient(1200px_600px_at_50%_0%,#16162A,transparent_70%)]">
+          <div className="mx-auto max-w-[1400px] px-5 py-28 sm:px-8 lg:py-36">
+            <BigHead en="Movie" ko={t('name.video')} align="center" />
+            <div className="reveal mx-auto mt-14 max-w-4xl">
+              {id
+                ? <button type="button" onClick={onPlay} className="tilt block w-full text-left" aria-label={`${p.title} ${t('name.video')} 재생`}>{card}</button>
+                : <a href={url} {...ext} className="tilt block" aria-label={`${p.title} ${t('name.video')} (새 탭)`}>{card}</a>}
+              <p className="mt-8 text-center font-serif text-lg font-bold text-ink">{p.title} — {t('name.video')}</p>
+              <p className="mt-2 text-center text-sm"><a href={url} {...ext} className="text-muted hover:text-accent-ink">YouTube에서 보기 ↗</a></p>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ── 영상 창 ──
+    function VideoModal({ id, title, onClose }) {
+      const closeRef = useRef(null);
+      useEffect(() => {
+        const prev = document.activeElement;
+        closeRef.current && closeRef.current.focus();
+        const key = (e) => { if (e.key === 'Escape') onClose(); };
+        window.addEventListener('keydown', key);
+        document.body.style.overflow = 'hidden';
+        return () => { window.removeEventListener('keydown', key); document.body.style.overflow = ''; prev && prev.focus && prev.focus(); };
+      }, []);
+      return (
+        <div role="dialog" aria-modal="true" aria-label={title} className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4" onClick={onClose}>
+          <div className="w-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-3 flex justify-end">
+              <button ref={closeRef} type="button" onClick={onClose} className="rounded-btn border border-white/25 px-3 py-1.5 text-sm text-ink hover:border-accent-ink">{t('ui.close-esc')}</button>
+            </div>
+            <div className="aspect-video w-full overflow-hidden rounded-card bg-black">
+              <iframe className="h-full w-full" src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`} title={title}
+                allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ── Features — 기능마다 띠: 흐린 화면 배경 + 선명한 화면 한쪽 + 큰 번호·제목·설명 (좌우 번갈아) ──
+    function Features({ p }) {
+      const hl = p.highlights || [];
+      if (!hl.length) return null;
+      return (
+        <section id="features" className="scroll-mt-16">
+          <div className="mx-auto max-w-[1400px] px-5 pt-28 sm:px-8 lg:pt-36">
+            <BigHead en="Features" ko={t('page.features')} />
+          </div>
+          {hl.map((h, i) => {
+            const hasImg = h.image && h.image.src;
+            const flip = i % 2 === 1;
+            return (
+              <article key={i} id={`f-${i + 1}`} className="relative scroll-mt-16 overflow-hidden">
+                {hasImg && <img src={img(p.id, h.image.src)} alt="" loading="lazy" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-25 blur-xl" />}
+                <div className="absolute inset-0 bg-gradient-to-b from-bg via-transparent to-bg" />
+                <div className={`relative mx-auto grid max-w-[1400px] grid-cols-[minmax(0,1fr)] gap-10 px-5 py-20 sm:px-8 lg:py-28 ${hasImg ? 'lg:grid-cols-[minmax(0,58fr)_minmax(0,42fr)] lg:items-center' : ''}`}>
+                  {hasImg && (
+                    <figure className={`reveal min-w-0 ${flip ? 'lg:order-2' : ''}`}>
+                      <img src={img(p.id, h.image.src)} alt={h.image.caption || h.title} loading="lazy"
+                        {...(h.image.w && h.image.h ? { width: h.image.w, height: h.image.h } : {})}
+                        className="h-auto w-full rounded-card border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,.55)]" />
+                      {h.image.caption && <figcaption className="mt-3 text-sm text-muted"><Rich text={h.image.caption} /></figcaption>}
+                    </figure>
+                  )}
+                  <div className={`reveal min-w-0 ${hasImg ? '' : 'max-w-4xl'}`}>
+                    <p className="big-title text-7xl sm:text-8xl">{pad2(i + 1)}</p>
+                    <h3 className="mt-2 font-serif text-2xl font-bold leading-snug text-ink sm:text-3xl"><Rich text={h.title} /></h3>
+                    <div className="glass mt-6 space-y-4 px-6 py-6 text-[15px] leading-7 sm:px-7">
+                      {h.what && <p><span className="mr-2 text-xs font-bold text-muted">{t('label.feature')}</span><span className="text-ink"><Rich text={h.what} /></span></p>}
+                      {h.how && <p><span className="mr-2 text-xs font-bold text-muted">{t('label.impl')}</span><span className="text-body"><Rich text={h.how} /></span></p>}
+                      {h.why && <p><span className="mr-2 text-xs font-bold text-accent-ink">{t('label.reason')}</span><span className="text-body"><Rich text={h.why} /></span></p>}
+                    </div>
+                    <a href={`${deckUrl(p.id)}${sceneFor(p, h.section)}`} className="mt-5 inline-block text-sm font-semibold text-accent-ink hover:underline">{t('page.see-in-deck')} →</a>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </section>
+      );
+    }
+
+    // ── 문제 해결 ──
+    function Trouble({ p }) {
+      const ts = p.troubleshooting || [];
+      if (!ts.length) return null;
+      const rows = [['problem', 'label.problem', 'text-muted'], ['cause', 'label.cause', 'text-muted'], ['solution', 'label.solution', 'text-accent-ink'], ['result', 'label.result', 'text-emerald-400'], ['lesson', 'label.lesson', 'text-muted']];
+      return (
+        <section id="trouble" className="scroll-mt-16 border-t border-line">
+          <div className="mx-auto max-w-[1400px] px-5 py-28 sm:px-8 lg:py-36">
+            <BigHead en="Troubleshooting" ko={t('tab.trouble')} />
+            <ol className={`mt-14 grid grid-cols-[minmax(0,1fr)] gap-6 ${ts.length >= 3 ? 'lg:grid-cols-3' : ts.length === 2 ? 'lg:grid-cols-2' : ''}`}>
+              {ts.map((x, i) => (
+                <li key={i} className="reveal flex flex-col rounded-card border border-line bg-surface p-6">
+                  <p className="big-title text-5xl">{pad2(i + 1)}</p>
+                  <h3 className="mt-3 font-serif text-lg font-bold leading-snug text-ink"><Rich text={x.title} /></h3>
+                  <dl className="mt-5 space-y-3 text-sm leading-6">
+                    {rows.filter(([k]) => x[k]).map(([k, label, color]) => (
+                      <div key={k}>
+                        <dt className={`text-xs font-bold ${color}`}>{t(label)}</dt>
+                        <dd className="mt-0.5 text-body"><Rich text={x[k]} /></dd>
+                      </div>
+                    ))}
+                  </dl>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      );
+    }
+
+    // ── 스크린샷 — 가로로 넘겨 보기 ──
+    function Gallery({ p }) {
+      const shots = p.screenshots || [];
+      const ref = useRef(null);
+      if (!shots.length) return null;
+      const go = (d) => { const el = ref.current; if (el) el.scrollBy({ left: d * el.clientWidth * 0.8, behavior: 'smooth' }); };
+      return (
+        <section id="gallery" className="scroll-mt-16 border-t border-line">
+          <div className="mx-auto max-w-[1400px] px-5 pt-28 sm:px-8 lg:pt-36">
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <BigHead en="Gallery" ko="스크린샷" />
+              <div className="reveal flex gap-2">
+                <button type="button" onClick={() => go(-1)} aria-label="이전 스크린샷" className="h-11 w-11 rounded-full border border-line2 text-ink hover:border-accent-ink">←</button>
+                <button type="button" onClick={() => go(1)} aria-label="다음 스크린샷" className="h-11 w-11 rounded-full border border-line2 text-ink hover:border-accent-ink">→</button>
+              </div>
+            </div>
+          </div>
+          <div ref={ref} className="gallery mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-8">
+            {shots.map((s, i) => (
+              <figure key={i} className="w-[85%] shrink-0 snap-start sm:w-[60%] lg:w-[44%]">
+                <a href={img(p.id, s.src)} {...ext} className="block overflow-hidden rounded-card border border-white/10 bg-black">
+                  <img src={img(p.id, s.src)} alt={s.caption || `${p.title} 스크린샷 ${i + 1}`} loading="lazy" className="aspect-video w-full object-contain transition-transform duration-500 hover:scale-[1.02]" />
+                </a>
+                {s.caption && <figcaption className="mt-3 text-sm leading-6 text-muted"><Rich text={s.caption} /></figcaption>}
+              </figure>
+            ))}
+          </div>
+        </section>
+      );
+    }
+
+    // ── 결과와 회고 ──
+    function Retro({ p }) {
+      const r = p.retro;
+      if (!r || !((r.achieved || []).length || (r.regrets || []).length || (r.plans || []).length)) return null;
+      const cols = [['achieved', 'deck.achieved', '✓', 'text-emerald-400'], ['regrets', 'deck.regrets', '△', 'text-amber-300'], ['plans', 'deck.plans', '→', 'text-accent-ink']]
+        .filter(([k]) => (r[k] || []).length);
+      return (
+        <section id="retro" className="scroll-mt-16 border-t border-line">
+          <div className="mx-auto max-w-[1400px] px-5 py-28 sm:px-8 lg:py-36">
+            <BigHead en="Retrospective" ko={t('deck.retro')} />
+            <div className={`mt-14 grid grid-cols-[minmax(0,1fr)] gap-6 ${cols.length >= 3 ? 'lg:grid-cols-3' : cols.length === 2 ? 'lg:grid-cols-2' : ''}`}>
+              {cols.map(([k, label, mark, color]) => (
+                <div key={k} className="glass reveal px-6 py-7">
+                  <h3 className={`font-serif text-lg font-bold ${color}`}>{mark} {t(label)}</h3>
+                  <ul className="mt-4 space-y-3 text-sm leading-6 text-body">
+                    {r[k].map((x, i) => <li key={i}><Rich text={x} /></li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ── 맨 아래 — 링크 + 다른 게임 ──
+    function More({ p, others }) {
+      const links = p.links || {};
+      return (
+        <footer id="more" className="scroll-mt-16 border-t border-line bg-black">
+          <div className="mx-auto max-w-[1400px] px-5 py-20 sm:px-8">
+            <p className="font-display text-sm font-bold tracking-[0.3em] text-accent-ink">MORE</p>
+            <p className="mt-2 font-serif text-2xl font-bold text-ink">더 자세히 보기</p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Btn primary href={docUrl(p.id)}>{t('name.doc')}</Btn>
+              <Btn href={deckUrl(p.id)}>{t('name.deck')}</Btn>
+              <Btn href={links.github} external>GitHub</Btn>
+              <Btn href={links.video} external>{t('name.video')}</Btn>
+              {(links.extra || []).map((l) => <Btn key={l.url} href={l.url} external>{l.label}</Btn>)}
+            </div>
+            {others.length > 0 && (
+              <>
+                <p className="mt-16 text-xs font-bold tracking-wide text-muted">다른 게임</p>
+                <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+                  {others.map((o) => (
+                    <li key={o.id}>
+                      <a href={gameUrl(o.id)} className="group relative block h-44 overflow-hidden rounded-card border border-line">
+                        {o.cover && <img src={img(o.id, o.cover)} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover grayscale brightness-50 transition duration-500 group-hover:grayscale-0 group-hover:brightness-90" />}
+                        <span className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                        <span className="absolute bottom-4 left-5 font-serif text-2xl font-black text-ink">{o.title}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+            <a href="index.html#glance" className="mt-12 inline-block text-sm font-semibold text-body hover:text-ink">{t('ui.back')}</a>
+          </div>
+        </footer>
+      );
+    }
+
+    function useReveal(ready) {
+      useEffect(() => {
+        if (!ready) return;
+        const els = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('in')); return; }
+        const io = new IntersectionObserver((ents) => ents.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        }), { rootMargin: '0px 0px -8% 0px' });
+        els.forEach((el) => io.observe(el));
+        return () => io.disconnect();
+      }, [ready]);
+    }
+
+    function App() {
+      const [state, setState] = useState({ status: 'loading' });
+      const [playing, setPlaying] = useState(false);
+      useEffect(() => {
+        (async () => {
+          try {
+            if (hasStr) await PFStr.load('theme/strings.tsv');
+            const res = await fetch('data/portfolio.json', { cache: 'no-cache' });
+            if (!res.ok) throw new Error(`data/portfolio.json (${res.status})`);
+            const pf = await res.json();
+            const ids = pf.projects || [];
+            const want = new URLSearchParams(location.search).get('p') || '';
+            if (!ids.includes(want)) { setState({ status: 'missing', want, ids }); return; }
+            const all = (await Promise.all(ids.map(async (id) => {
+              const r = await fetch(`data/projects/${encodeURIComponent(id)}.json`, { cache: 'no-cache' });
+              return r.ok ? r.json() : null;
+            }))).filter(Boolean);
+            const p = all.find((x) => x.id === want);
+            if (!p) throw new Error(`data/projects/${want}.json`);
+            document.title = `${p.title} · ${pf.profile.name}`;
+            setState({ status: 'ok', pf, p, all });
+          } catch (e) {
+            setState({ status: 'error', message: String(e && e.message || e) });
+          }
+        })();
+      }, []);
+      useReveal(state.status === 'ok');
+      useEffect(() => { // #f-2 같은 주소로 들어왔을 때 그 기능으로
+        if (state.status === 'ok' && location.hash) { const el = document.getElementById(location.hash.slice(1)); if (el) setTimeout(() => el.scrollIntoView(), 50); }
+      }, [state.status]);
+
+      if (state.status === 'loading') return <p className="p-10 text-muted">불러오는 중…</p>;
+      if (state.status === 'error') return <p className="p-10 text-muted">데이터를 읽지 못했습니다: {state.message} — 로컬 서버로 열었는지, /portfolio-build를 했는지 확인하세요.</p>;
+      if (state.status === 'missing') return (
+        <div className="p-10 text-muted">
+          <p>"{state.want}" 프로젝트를 찾지 못했습니다.</p>
+          <ul className="mt-4 space-y-1">{state.ids.map((id) => <li key={id}><a className="text-accent-ink hover:underline" href={gameUrl(id)}>{id}</a></li>)}</ul>
+          <a href="index.html" className="mt-6 inline-block text-ink hover:underline">{t('ui.back')}</a>
+        </div>
+      );
+
+      const { p, all } = state;
+      const idx = all.findIndex((x) => x.id === p.id);
+      const vid = ytId(p.links && p.links.video);
+      const nav = [
+        ['introduction', 'INTRODUCTION', true], ['movie', 'MOVIE', !!(p.links && p.links.video)], ['features', 'FEATURES', (p.highlights || []).length > 0],
+        ['trouble', 'TROUBLESHOOTING', (p.troubleshooting || []).length > 0], ['gallery', 'GALLERY', (p.screenshots || []).length > 0], ['retro', 'RETROSPECTIVE', !!p.retro],
+      ].filter((x) => x[2]);
+      return (
+        <>
+          <TopBar p={p} nav={nav} />
+          <main>
+            <Hero p={p} no={idx + 1} total={all.length} onPlay={() => setPlaying(true)} />
+            <Introduction p={p} />
+            <Movie p={p} onPlay={() => setPlaying(true)} />
+            <Features p={p} />
+            <Trouble p={p} />
+            <Gallery p={p} />
+            <Retro p={p} />
+          </main>
+          <More p={p} others={all.filter((x) => x.id !== p.id)} />
+          {playing && vid && <VideoModal id={vid} title={`${p.title} ${t('name.video')}`} onClose={() => setPlaying(false)} />}
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "pin": [
+    {
+      "key": "tradeoff",
+      "chapter": "skill",
+      "layout": "full",
+      "tab": "선택",
+      "title": {"text": "4.5 감수한 대가와 남은 흔적", "verbatim": true},
+      "lead": null,
+      "sectionPath": ["4. 장비 스킬 ★", "4.5 감수한 대가와 남은 흔적"],
+      "points": [],
+      "visuals": [{"kind": "table", "n": 1, "fp": "항목|내용"}],
+      "from": {
+        "key": "tradeoff",
+        "sectionPath": ["4. 장비 스킬 ★", "4.5 감수한 대가와 남은 흔적"],
+        "sig": ["4.5 감수한 대가와 남은 흔적|table|1|항목|내용"]
+      },
+      "group": "split-tradeoff-strategy"
+    },
+    {
+      "key": "tradeoff-strategy",
+      "chapter": "skill",
+      "layout": "full",
+      "tab": "선택",
+      "title": {"text": "4.5 감수한 대가와 남은 흔적", "verbatim": true},
+      "lead": null,
+      "sectionPath": ["4. 장비 스킬 ★", "4.5 감수한 대가와 남은 흔적"],
+      "points": [],
+      "visuals": [{"kind": "mermaid", "n": 1, "fp": "classDiagram"}],
+      "after": "tradeoff",
+      "group": "split-tradeoff-strategy"
+    }
+  ],
+  "hide": []
+}
