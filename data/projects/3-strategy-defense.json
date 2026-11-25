@@ -50,7 +50,7 @@
     {
       "title": "커맨드 입력 소환",
       "what": "유닛 버튼을 고르면 유닛이 강할수록 긴(5 → 12개) 무작위 방향키 커맨드가 뜨고, 오타 없이 모두 입력한 뒤 소환 구역을 클릭해야 유닛이 투하됩니다.",
-      "how": "`CommandSystem`이 `Idle` → `Commanding` → `Spawning` 세 상태를 오가며, 방향키마다 그 칸의 정답과 비교해 맞으면 화살표를 녹색으로 바꾸고 틀리면 입력 기록만 초기화(정답 유지)합니다.",
+      "how": "`CommandSystem`이 `Idle` → `Commanding` → `Spawning` 세 상태를 오가며, 방향키마다 그 순서의 정답과 비교해 맞으면 화살표를 녹색으로 바꾸고 틀리면 입력 기록만 초기화(정답 유지)합니다.",
       "why": "입력 완료 후 일괄 검증(대안 A)은 중간에 틀려도 끝까지 친 뒤에야 알게 되어 피드백이 늦습니다. 빠른 판단이 중요한 게임이라 키마다 즉시 검증(대안 B)하고, 실패의 대가는 같은 커맨드를 처음부터 치는 \"시간 손실\"로만 한정했습니다.",
       "section": "3.1 버튼 클릭에서 투하까지 세 상태",
       "image": {
@@ -65,7 +65,7 @@
       "what": "투하된 아군은 제자리에서, 적은 베이스를 향해 전진하며 자동으로 싸웁니다. 세모 > 동그라미 > 네모 > 세모 순환 상성에 따라 유리하면 2배, 불리하면 0.5배 피해를 줍니다.",
       "how": "`PlayerUnit`·`EnemyUnit` 부모 클래스가 값을 보관하고, 자식 클래스가 타겟 고르기(`GetClosestEnemy`·`GetLowHealthEnemy`)와 상성 피해(`TakeDamage`)를 각자 맡습니다. 상태 하나를 코루틴 하나로 만들고, 다음 상태를 `nextStateCoroutine`에 넣으면 바깥 루프가 이어서 실행합니다.",
       "why": "\"0.5초 대기 후 전환\" 같은 시간 흐름을 `WaitForSeconds`로 그대로 쓸 수 있어 `Update`에 `switch`를 두는 방식보다 자연스럽고, 죽으면 `StopAllCoroutines()` 한 번으로 어떤 상태든 끊을 수 있어서입니다.",
-      "section": "4.3 아군 유닛: 코루틴 상태 머신 · 타겟 고르기 · 상성 피해",
+      "section": "4.4 아군: 타겟 고르기와 상성 피해",
       "image": {
         "src": "images/05_symbol_counter.gif",
         "w": 960,
@@ -78,7 +78,7 @@
       "what": "자원·인구수·유닛별 쿨타임 세 제한을 `PlayerManager` 한 곳에서 관리해, 지금 어떤 상성의 유닛이 필요한지 우선순위를 정하고 쿨타임을 계산해 배치하는 판단을 만듭니다.",
       "how": "싱글톤 `PlayerManager`가 확인(`CanAfford`)과 차감·쿨타임 시작(`UseCost`)을 나눠 제공하고, 유닛별 쿨타임은 `UnitType`을 Key로 하는 잠금용 `IsCooldownDic`과 진행률용 `UnitCooldownDic` 두 Dictionary로 관리합니다.",
       "why": "유닛마다 변수를 두면(대안 A) 유닛이 늘 때마다 변수와 분기를 함께 늘려야 하고, 버튼이 타이머를 가지면(대안 B) 소환 가능 판단이 `PlayerManager`와 버튼 두 곳으로 나뉩니다. 소환 조건 검사를 `PlayerManager` 한 곳에 모으는 것이 목표라 `UnitType` Key Dictionary(대안 C)를 골랐습니다.",
-      "section": "5.4 유닛별 쿨타임을 어디에 둘까",
+      "section": "6.3 유닛별 쿨타임을 어디에 둘까",
       "image": {
         "src": "images/04_cooldown_panel.png",
         "w": 1240,
@@ -95,16 +95,7 @@
       "solution": "공격 판정도 `Collider2D.ClosestPoint`로 외곽까지 거리를 재도록 기준을 외곽선으로 통일하고(대안 B), 아군 탐색은 `targetLayer`로 적 레이어만 수집했습니다. 사거리 기즈모를 항상 그리도록(`OnDrawGizmos`) 바꿔 씬 뷰에서 확인했습니다.",
       "result": "탐지 범위에 들어온 적을 바로 공격합니다.",
       "lesson": "",
-      "section": "4.5 거리 계산과 탐지 영역의 기준 불일치 문제 해결"
-    },
-    {
-      "title": "AI 결과 검증으로 찾은 문서·코드 불일치",
-      "problem": "포트폴리오용으로 문서를 다시 정리하며 코드를 한 줄씩 대조하니, 문서에는 맞게 적혀 있지만 코드는 다르게 동작하는 곳이 있었습니다.",
-      "cause": "`CheckCommand`는 오입력 시 정답 리스트까지 비워 인덱스 범위 초과 예외가 났고, `CanAfford`는 지원 폭격의 자원 검사까지 건너뛰었으며, 네모의 상성 배율이 반대로 들어가 있었고, `RangeUnit`만 중심점 거리를 쓰고 있었습니다.",
-      "solution": "정답은 유지하고 입력 기록·화살표 색만 초기화, 지원 폭격도 자원 검사, 상성을 세모 > 동그라미 > 네모 > 세모로 통일, `RangeUnit`도 `ClosestPoint` 기준으로 고쳤습니다.",
-      "result": "",
-      "lesson": "AI가 만든 문서와 코드는 그럴듯하게 읽히는 것과 실제로 맞는 것이 다를 수 있다는 점을 배웠고, 앞으로는 AI 결과물을 코드와 대조하는 검수 단계를 작업 순서에 넣기로 했습니다.",
-      "section": "6.4 AI 결과를 검증하며 찾은 문제"
+      "section": "5. 탐지됐는데 공격하지 않는 문제"
     }
   ],
   "screenshots": [
@@ -147,7 +138,7 @@
   ],
   "retro": {
     "achieved": [
-      "커맨드 입력(3장) · 기호 상성 자동 전투(4장) · 자원·인구수·쿨타임 제한(5장)을 묶어 코어 루프를 완성했고, '전술적 판단과 조작의 긴장감'이라는 처음 기획 의도를 시스템으로 구현했습니다.",
+      "커맨드 입력 · 기호 상성 자동 전투 · 자원·인구수·쿨타임 제한을 묶어 코어 루프를 완성했고, '전술적 판단과 조작의 긴장감'이라는 처음 기획 의도를 시스템으로 구현했습니다.",
       "빌드를 직접 플레이해 보니 적이 등장해 아군 유닛과 싸우는 핵심 루프가 동작했고, 커맨드를 치는 동안에도 적이 다가오므로 비싼 유닛(커맨드 9~12개)과 싼 유닛(커맨드 5개) 사이에서 고르는 긴장감이 생겼습니다.",
       "구현 규모: C# 스크립트 18개(약 1,800줄), 아군 유닛 4종, 적 유닛 3종, 한 판 180초 생존"
     ],
@@ -155,7 +146,7 @@
       "아군·적 유닛 종류가 적어 상성이나 전략을 고민할 여지가 부족합니다.",
       "사운드가 없고 전투·소환 이펙트가 약해 조작 피드백이 부족합니다.",
       "전장이 작아 플레이가 단조롭습니다.",
-      "상성 배율이 네 클래스에 `if`로 나뉘어 한쪽만 틀려도 알아채기 어렵고, 6.4의 상성 오류가 실제로 여기서 생겼습니다."
+      "상성 배율이 네 클래스에 `if`로 나뉘어 한쪽만 틀려도 알아채기 어렵고, 코드 대조에서 찾은 상성 오류가 실제로 여기서 생겼습니다."
     ],
     "plans": [
       "스테이지 클리어 보상 유닛을 바꿔 끼우는 유닛 덱 설정 단계",
@@ -163,7 +154,7 @@
       "튜토리얼, 스테이지 확장, 신규 적(해킹·은신 유닛)",
       "`CombatManager`가 3×3 배율 표 하나로 계산"
     ],
-    "section": "7. 결과 · 회고"
+    "section": "8. 결과 · 회고"
   },
   "deck": {
     "chapters": [
@@ -176,9 +167,9 @@
       },
       {
         "key": "plan",
-        "title": "기획",
+        "title": "기획: 기획서에서 코드까지",
         "sectionPath": [
-          "2. 기획"
+          "2. 기획: 기획서에서 코드까지"
         ]
       },
       {
@@ -196,17 +187,24 @@
         ]
       },
       {
+        "key": "rangefix",
+        "title": "탐지됐는데 공격하지 않는 문제",
+        "sectionPath": [
+          "5. 탐지됐는데 공격하지 않는 문제"
+        ]
+      },
+      {
         "key": "resource",
         "title": "자원·인구수·쿨타임 시스템",
         "sectionPath": [
-          "5. 자원·인구수·쿨타임 시스템"
+          "6. 자원·인구수·쿨타임 시스템"
         ]
       },
       {
         "key": "ai",
         "title": "AI 활용 방식",
         "sectionPath": [
-          "6. AI 활용 방식"
+          "7. AI 활용 방식"
         ]
       }
     ],
@@ -217,28 +215,39 @@
         "layout": "overview",
         "tab": "개요",
         "title": {
-          "text": "1. 프로젝트 개요",
+          "text": "1.1 만들고 싶었던 것",
           "verbatim": true
         },
         "lead": {
-          "text": "노린 재미는 두 가지이고, 각각을 아래 장치로 만들었습니다.",
+          "text": "노린 재미는 두 가지입니다.",
           "verbatim": true
         },
         "sectionPath": [
-          "1. 프로젝트 개요"
+          "1. 프로젝트 개요",
+          "1.1 만들고 싶었던 것"
         ],
         "points": [
           {
             "label": "",
             "text": "헬다이버즈 2의 스트라타젬(방향키 커맨드) 시스템을 인상 깊게 플레이했고, 워해머 스타일의 끝없이 밀려오는 외계인 앞에서 느끼는 막막함을 표현해 보고 싶어 기획했습니다.",
             "verbatim": true
+          },
+          {
+            "label": "피지컬",
+            "text": "그래서 클릭 즉시 소환하는 대신, 방향키 커맨드를 오타 없이 입력해야 병력이 투하되게 했습니다.",
+            "verbatim": true
+          },
+          {
+            "label": "전략",
+            "text": "그래서 세 기호가 서로 물고 물리는 상성 순환을 두고, 투하된 아군은 그 자리에 고정되게 했습니다.",
+            "verbatim": true
           }
         ],
         "visuals": [
           {
             "kind": "table",
-            "n": 2,
-            "fp": "노린 재미|만든 장치|본문"
+            "n": 1,
+            "fp": "항목|헬다이버즈 2|Geometry Commander|생기는 판단"
           }
         ]
       },
@@ -256,7 +265,7 @@
           "verbatim": true
         },
         "sectionPath": [
-          "2. 기획",
+          "2. 기획: 기획서에서 코드까지",
           "2.2 기획을 코드로 옮긴 과정"
         ],
         "points": [],
@@ -287,7 +296,7 @@
           "verbatim": true
         },
         "sectionPath": [
-          "2. 기획",
+          "2. 기획: 기획서에서 코드까지",
           "2.3 상성과 수치 설계"
         ],
         "points": [
@@ -329,7 +338,7 @@
           "verbatim": true
         },
         "sectionPath": [
-          "2. 기획",
+          "2. 기획: 기획서에서 코드까지",
           "2.3 상성과 수치 설계"
         ],
         "points": [
@@ -358,7 +367,7 @@
         "layout": "full",
         "tab": "선택",
         "title": {
-          "text": "2.4 기획 대비 조정한 규칙",
+          "text": "2.4 기획과 달라진 규칙",
           "verbatim": true
         },
         "lead": {
@@ -366,8 +375,8 @@
           "verbatim": true
         },
         "sectionPath": [
-          "2. 기획",
-          "2.4 기획 대비 조정한 규칙"
+          "2. 기획: 기획서에서 코드까지",
+          "2.4 기획과 달라진 규칙"
         ],
         "points": [],
         "visuals": [
@@ -415,49 +424,12 @@
         ]
       },
       {
-        "key": "cmd-state",
-        "chapter": "command",
-        "layout": "visual",
-        "tab": "흐름",
-        "title": {
-          "text": "3.2 소환 한 번에 오가는 확인과 요청",
-          "verbatim": true
-        },
-        "lead": {
-          "text": "CommandSystem(입력·상태)과 PlayerManager(자원·인구수·쿨타임)가 주고받는 순서입니다.",
-          "verbatim": true
-        },
-        "sectionPath": [
-          "3. 커맨드 입력 소환",
-          "3.2 소환 한 번에 오가는 확인과 요청"
-        ],
-        "points": [
-          {
-            "label": "",
-            "text": "자원은 버튼을 누를 때 확인만 하고, 투하할 때 차감합니다(2.4).",
-            "verbatim": true
-          },
-          {
-            "label": "",
-            "text": "커맨드 입력 중 다른 유닛으로 바꿔도 환불 처리가 필요 없습니다.",
-            "verbatim": true
-          }
-        ],
-        "visuals": [
-          {
-            "kind": "mermaid",
-            "n": 1,
-            "fp": "sequenceDiagram"
-          }
-        ]
-      },
-      {
         "key": "cmd-check",
         "chapter": "command",
         "layout": "code",
         "tab": "구현",
         "title": {
-          "text": "3.3 유닛 등급이 곧 커맨드 길이",
+          "text": "3.2 유닛 등급이 곧 커맨드 길이",
           "verbatim": true
         },
         "lead": {
@@ -466,17 +438,17 @@
         },
         "sectionPath": [
           "3. 커맨드 입력 소환",
-          "3.3 유닛 등급이 곧 커맨드 길이"
+          "3.2 유닛 등급이 곧 커맨드 길이"
         ],
         "points": [
           {
             "label": "커맨드 생성",
-            "text": "UnitType의 값(5·7·9·12)을 그대로 반복 횟수로 사용합니다.",
+            "text": "`UnitType`의 값(5·7·9·12)을 그대로 반복 횟수로 사용합니다.",
             "verbatim": true
           },
           {
             "label": "입력 확인",
-            "text": "방향키 하나가 들어올 때마다 CheckCommand가 그 칸의 정답과 비교합니다.",
+            "text": "방향키 하나가 들어올 때마다 `CheckCommand`가 그 순서의 정답과 비교합니다.",
             "verbatim": true
           },
           {
@@ -503,7 +475,7 @@
         "layout": "full",
         "tab": "선택",
         "title": {
-          "text": "3.4 커맨드를 언제 확인하고, 틀리면 무엇을 잃게 할까",
+          "text": "3.3 커맨드를 언제 확인하고, 틀리면 무엇을 잃게 할까",
           "verbatim": true
         },
         "lead": {
@@ -512,7 +484,7 @@
         },
         "sectionPath": [
           "3. 커맨드 입력 소환",
-          "3.4 커맨드를 언제 확인하고, 틀리면 무엇을 잃게 할까"
+          "3.3 커맨드를 언제 확인하고, 틀리면 무엇을 잃게 할까"
         ],
         "points": [
           {
@@ -535,6 +507,43 @@
         ]
       },
       {
+        "key": "cmd-state",
+        "chapter": "command",
+        "layout": "visual",
+        "tab": "흐름",
+        "title": {
+          "text": "3.4 자원은 투하할 때 차감한다",
+          "verbatim": true
+        },
+        "lead": {
+          "text": "CommandSystem(입력·상태)과 PlayerManager(자원·인구수·쿨타임)가 소환 한 번에 주고받는 순서는 아래와 같습니다.",
+          "verbatim": true
+        },
+        "sectionPath": [
+          "3. 커맨드 입력 소환",
+          "3.4 자원은 투하할 때 차감한다"
+        ],
+        "points": [
+          {
+            "label": "",
+            "text": "그래서 자원은 버튼을 누를 때 확인만 하고, 투하할 때 차감하도록 바꿨습니다.",
+            "verbatim": true
+          },
+          {
+            "label": "",
+            "text": "커맨드 입력 중 다른 유닛으로 바꿔도 환불 처리가 필요 없습니다.",
+            "verbatim": true
+          }
+        ],
+        "visuals": [
+          {
+            "kind": "mermaid",
+            "n": 1,
+            "fp": "sequenceDiagram"
+          }
+        ]
+      },
+      {
         "key": "unit-classes",
         "chapter": "combat",
         "layout": "visual",
@@ -543,25 +552,23 @@
           "text": "4.2 부모 클래스는 값, 자식 클래스는 타겟과 상성",
           "verbatim": true
         },
-        "lead": null,
+        "lead": {
+          "text": "공통 값을 가진 부모 클래스(`PlayerUnit` · `EnemyUnit`) 아래에서, 자식 클래스가 타겟 고르기와 상성 계산을 각자 맡습니다.",
+          "verbatim": true
+        },
         "sectionPath": [
           "4. 기호 상성 자동 전투",
           "4.2 부모 클래스는 값, 자식 클래스는 타겟과 상성"
         ],
         "points": [
           {
-            "label": "MeleeUnit",
-            "text": "GetClosestEnemy로 타겟 선정, 상성 배율로 체력·사기를 깎는 TakeDamage",
-            "verbatim": true
-          },
-          {
-            "label": "RangeUnit",
-            "text": "GetLowHealthEnemy로 체력이 가장 낮은 적을 죽을 때까지 점사, 상성 배율 TakeDamage",
+            "label": "MeleeUnit · RangeUnit",
+            "text": "`MeleeUnit`은 `GetClosestEnemy`로, `RangeUnit`은 `GetLowHealthEnemy`로 타겟을 고르고(원거리는 체력이 가장 낮은 적을 죽을 때까지 점사), 둘 다 상성 배율로 피해를 받는 `TakeDamage`를 각자 가집니다.",
             "verbatim": true
           },
           {
             "label": "SupportUnit",
-            "text": "탐색 없이 duration 동안 범위 피해. HashSet으로 이미 맞은 적을 기록해 중복 피해 방지, 시간이 끝나면 스스로 DeadState",
+            "text": "`SupportUnit`은 탐색 없이 `duration` 동안 범위 피해를 주고, `HashSet`으로 이미 맞은 적을 기록해 중복 피해를 막으며, 시간이 끝나면 스스로 `DeadState`에 들어갑니다.",
             "verbatim": true
           }
         ],
@@ -579,29 +586,31 @@
         "layout": "visual",
         "tab": "흐름",
         "title": {
-          "text": "아군 유닛의 상태 흐름",
+          "text": "4.3 상태 하나를 코루틴 하나로",
           "verbatim": true
         },
-        "lead": null,
+        "lead": {
+          "text": "상태 하나를 코루틴 하나로 만들었고, 같은 구조를 아군·적 유닛 모두에 썼습니다.",
+          "verbatim": true
+        },
         "sectionPath": [
           "4. 기호 상성 자동 전투",
-          "4.2 부모 클래스는 값, 자식 클래스는 타겟과 상성",
-          "아군 유닛의 상태 흐름"
+          "4.3 상태 하나를 코루틴 하나로"
         ],
         "points": [
           {
             "label": "Spawn",
-            "text": "0.5초는 포드 낙하 연출 시간. 끝나면 포드 이미지를 끄고 유닛 렌더러를 켬",
+            "text": "Spawn의 0.5초는 포드 낙하 연출 시간이고, 끝나면 포드 이미지를 끄고 유닛 렌더러를 켭니다.",
             "verbatim": true
           },
           {
             "label": "Scan",
-            "text": "OverlapCircleAll로 사거리 안의 적만 모음(4.5). 타겟 기준은 4.1 표",
+            "text": "Scan은 `OverlapCircleAll`로 사거리 안의 적만 모읍니다.",
             "verbatim": true
           },
           {
             "label": "Dead",
-            "text": "StopAllCoroutines()로 어떤 상태든 끊고 들어옴. 0.3초 뒤 반경 2 안의 아군 사기 -5, PlayerManager.Dead로 인구수 반환 후 파괴",
+            "text": "Dead는 `StopAllCoroutines()`로 어떤 상태든 끊고 들어오며, 0.3초 뒤 반경 2 안의 아군 사기를 -5 깎고 `PlayerManager.Dead`로 인구수를 돌려준 뒤 파괴됩니다.",
             "verbatim": true
           }
         ],
@@ -619,23 +628,18 @@
         "layout": "code",
         "tab": "구현",
         "title": {
-          "text": "4.3 아군 유닛: 코루틴 상태 머신 · 타겟 고르기 · 상성 피해",
+          "text": "4.4 아군: 타겟 고르기와 상성 피해",
           "verbatim": true
         },
         "lead": {
-          "text": "아군 유닛은 소환되는 즉시 스스로 탐색하고 싸웁니다.",
+          "text": "근거리와 원거리는 같은 탐색 주기(`ScanCoroutine`)를 쓰고, 타겟을 고르는 기준만 자식 클래스가 각자 정합니다.",
           "verbatim": true
         },
         "sectionPath": [
           "4. 기호 상성 자동 전투",
-          "4.3 아군 유닛: 코루틴 상태 머신 · 타겟 고르기 · 상성 피해"
+          "4.4 아군: 타겟 고르기와 상성 피해"
         ],
         "points": [
-          {
-            "label": "타겟 고르기",
-            "text": "근거리와 원거리는 같은 탐색 주기(ScanCoroutine)를 쓰고, 타겟을 고르는 기준(4.1)만 자식 클래스가 각자 정합니다.",
-            "verbatim": true
-          },
           {
             "label": "",
             "text": "핵심 설계: 중심점이 아닌, 유닛의 가장 외곽(Edge)을 기준으로 거리를 측정",
@@ -645,7 +649,7 @@
         "visuals": [
           {
             "kind": "code",
-            "n": 2,
+            "n": 1,
             "lines": [
               7,
               25
@@ -656,45 +660,40 @@
       },
       {
         "key": "range-fix",
-        "chapter": "combat",
+        "chapter": "rangefix",
         "layout": "problem",
         "tab": "문제 해결",
         "title": {
-          "text": "4.5 거리 계산과 탐지 영역의 기준 불일치 문제 해결",
+          "text": "5.3 결과",
           "verbatim": true
         },
         "lead": null,
         "sectionPath": [
-          "4. 기호 상성 자동 전투",
-          "4.5 거리 계산과 탐지 영역의 기준 불일치 문제 해결"
+          "5. 탐지됐는데 공격하지 않는 문제",
+          "5.3 결과"
         ],
         "points": [
           {
             "label": "문제",
             "text": "크기가 큰 적이 탐지 원 안에 들어왔는데도, 아군이 공격하지 않고 가만히 서 있었습니다.",
-            "verbatim": true
+            "verbatim": false
           },
           {
             "label": "원인",
-            "text": "탐지와 공격 판정이 서로 다른 기준으로 거리를 쟀습니다.",
-            "verbatim": true
+            "text": "원인은 탐지와 공격 판정이 서로 다른 기준으로 거리를 잰 것이었습니다.",
+            "verbatim": false
           },
           {
             "label": "해결",
-            "text": "OverlapCircleAll이 이미 외곽 기준이므로, 공격 판정을 같은 기준으로 맞추면 탐지된 적은 언제나 공격 범위 안에 있게 됩니다.",
-            "verbatim": true
+            "text": "`OverlapCircleAll`이 이미 외곽 기준이므로, 공격 판정을 같은 기준으로 맞추면 탐지된 적은 언제나 공격 범위 안에 있게 됩니다.",
+            "verbatim": false
           }
         ],
         "visuals": [
           {
             "kind": "table",
             "n": 1,
-            "fp": "|수정 전|수정 후",
-            "sectionPath": [
-              "4. 기호 상성 자동 전투",
-              "4.5 거리 계산과 탐지 영역의 기준 불일치 문제 해결",
-              "[결과]"
-            ]
+            "fp": "|수정 전|수정 후"
           }
         ]
       },
@@ -704,7 +703,7 @@
         "layout": "visual",
         "tab": "구조",
         "title": {
-          "text": "5.1 소환을 막는 세 가지 제한",
+          "text": "6.1 소환을 막는 세 가지 제한",
           "verbatim": true
         },
         "lead": {
@@ -712,8 +711,8 @@
           "verbatim": true
         },
         "sectionPath": [
-          "5. 자원·인구수·쿨타임 시스템",
-          "5.1 소환을 막는 세 가지 제한"
+          "6. 자원·인구수·쿨타임 시스템",
+          "6.1 소환을 막는 세 가지 제한"
         ],
         "points": [],
         "visuals": [
@@ -740,7 +739,7 @@
         "layout": "visual",
         "tab": "구조",
         "title": {
-          "text": "5.2 다른 클래스는 묻기만 하고 값을 바꾸지 못한다",
+          "text": "6.2 다른 클래스는 묻기만 하고 값을 바꾸지 못한다",
           "verbatim": true
         },
         "lead": {
@@ -748,8 +747,8 @@
           "verbatim": true
         },
         "sectionPath": [
-          "5. 자원·인구수·쿨타임 시스템",
-          "5.2 다른 클래스는 묻기만 하고 값을 바꾸지 못한다"
+          "6. 자원·인구수·쿨타임 시스템",
+          "6.2 다른 클래스는 묻기만 하고 값을 바꾸지 못한다"
         ],
         "points": [],
         "visuals": [
@@ -760,7 +759,7 @@
           },
           {
             "kind": "table",
-            "n": 2,
+            "n": 1,
             "fp": "순서|검사|통과 조건"
           }
         ]
@@ -771,16 +770,16 @@
         "layout": "code",
         "tab": "구현",
         "title": {
-          "text": "5.3 버튼을 누를 때 확인하고, 투하할 때 한 번 더 확인한다",
+          "text": "6.2 다른 클래스는 묻기만 하고 값을 바꾸지 못한다",
           "verbatim": true
         },
         "lead": {
-          "text": "자원이 충분한지 묻는 함수(CanAfford)와 실제로 깎는 함수(UseCost)를 나눴습니다.",
+          "text": "자원이 충분한지 묻는 함수(`CanAfford`)와 실제로 깎는 함수(`UseCost`)를 나눴습니다.",
           "verbatim": true
         },
         "sectionPath": [
-          "5. 자원·인구수·쿨타임 시스템",
-          "5.3 버튼을 누를 때 확인하고, 투하할 때 한 번 더 확인한다"
+          "6. 자원·인구수·쿨타임 시스템",
+          "6.2 다른 클래스는 묻기만 하고 값을 바꾸지 못한다"
         ],
         "points": [
           {
@@ -808,13 +807,13 @@
         "layout": "full",
         "tab": "선택",
         "title": {
-          "text": "5.4 유닛별 쿨타임을 어디에 둘까",
+          "text": "6.3 유닛별 쿨타임을 어디에 둘까",
           "verbatim": true
         },
         "lead": null,
         "sectionPath": [
-          "5. 자원·인구수·쿨타임 시스템",
-          "5.4 유닛별 쿨타임을 어디에 둘까"
+          "6. 자원·인구수·쿨타임 시스템",
+          "6.3 유닛별 쿨타임을 어디에 둘까"
         ],
         "points": [
           {
@@ -842,7 +841,7 @@
         "layout": "full",
         "tab": "",
         "title": {
-          "text": "6.1 원칙",
+          "text": "7.1 원칙",
           "verbatim": true
         },
         "lead": {
@@ -850,8 +849,8 @@
           "verbatim": true
         },
         "sectionPath": [
-          "6. AI 활용 방식",
-          "6.1 원칙"
+          "7. AI 활용 방식",
+          "7.1 원칙"
         ],
         "points": [],
         "visuals": [
@@ -868,21 +867,21 @@
         "layout": "full",
         "tab": "문제 해결",
         "title": {
-          "text": "6.4 AI 결과를 검증하며 찾은 문제",
+          "text": "7.4 코드와 한 줄씩 대조해 찾은 버그 4건",
           "verbatim": true
         },
         "lead": {
-          "text": "그 결과 문서에는 맞게 적혀 있지만 코드는 다르게 동작하는 곳을 찾아 수정했습니다.",
+          "text": "그 결과 의도와 다르게 동작하던 곳 네 군데를 찾아 고쳤습니다.",
           "verbatim": true
         },
         "sectionPath": [
-          "6. AI 활용 방식",
-          "6.4 AI 결과를 검증하며 찾은 문제"
+          "7. AI 활용 방식",
+          "7.4 코드와 한 줄씩 대조해 찾은 버그 4건"
         ],
         "points": [
           {
             "label": "배운 점",
-            "text": "AI가 만든 문서와 코드는 그럴듯하게 읽히는 것과 실제로 맞는 것이 다를 수 있다는 점을 배웠고, 앞으로는 AI 결과물을 코드와 대조하는 검수 단계를 작업 순서에 넣기로 했습니다.",
+            "text": "그럴듯하게 읽히는 것과 실제로 맞는 것이 다를 수 있다는 점을 배웠고, 앞으로는 AI 결과물을 코드와 대조하는 검수 단계를 작업 순서에 넣기로 했습니다.",
             "verbatim": true
           }
         ],
@@ -890,7 +889,7 @@
           {
             "kind": "table",
             "n": 1,
-            "fp": "위치|문서에 적힌 동작|실제 코드|수정"
+            "fp": "위치|의도한 동작|실제 코드|수정"
           }
         ]
       }
