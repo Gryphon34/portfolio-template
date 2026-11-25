@@ -178,26 +178,35 @@
     }
 
     // ── 게임 띠 — 넓은 화면: 비스듬한 판이 나란히 / 좁은 화면: 세로로 쌓인 카드 ──
-    function Games({ projects }) {
+    function Games({ projects, analyses }) {
+      // 게임 판 뒤에 기획 분석 판을 이어 붙임. 기획 분석은 라벨·테두리·버튼 문구를 달리해 직접 만든 게임과 구분하고, 상세 문서로 바로 감
+      const panels = [
+        ...projects.map((p, i) => ({ p, href: gameUrl(p.id), label: `${t('en.project')} ${pad2(i + 1)}`, sub: metaOf(p, '장르'), info: `${teamLabel(p)}${p.team && p.team.size ? ` · ${p.team.size}` : ''}`, cta: 'VIEW →', analysis: false })),
+        ...(analyses || []).map((p) => ({ p, href: docUrl(p.id), label: 'GAME ANALYSIS', sub: '기획 분석', info: metaOf(p, '대상 게임'), cta: 'READ →', analysis: true })),
+      ];
+      const n = panels.length;
       return (
         <section id="projects" className="scroll-mt-16" aria-label={t('page.nav-projects')}>
           {/* 넓은 화면 */}
           <div className="relative hidden h-[100svh] min-h-[560px] overflow-hidden bg-black sm:block">
             {/* 비스듬한 판의 바깥 모서리가 화면 밖으로 나가도록 좌우로 tan(13°) × 화면 높이 절반만큼 넓힘 */}
             <div className="fs-row absolute inset-y-0 flex gap-[3px]" style={{ left: 'calc(-12svh - 12px)', right: 'calc(-12svh - 12px)' }}>
-              {projects.map((p, i) => (
-                <a key={p.id} href={gameUrl(p.id)} className="fs-panel group relative block overflow-hidden bg-black">
+              {panels.map(({ p, href, label, sub, info, cta, analysis }, i) => (
+                <a key={p.id} href={href} className="fs-panel group relative block overflow-hidden bg-black">
                   <div className="fs-unskew absolute inset-y-0 -left-[40%] -right-[40%]">
-                    {p.cover && <img src={img(p.id, p.cover)} alt="" className="fs-img h-full w-full object-cover" />}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/40" />
+                    {p.cover && <img src={img(p.id, p.cover)} alt="" className={`fs-img h-full w-full object-cover ${analysis ? 'opacity-40' : ''}`} />}
+                    <div className={`absolute inset-0 ${analysis ? 'bg-gradient-to-t from-black/90 via-[#0b1020]/70 to-black/60' : 'bg-gradient-to-t from-black/80 via-black/10 to-black/40'}`} />
                   </div>
-                  <div className={`fs-unskew absolute inset-0 flex flex-col items-center justify-center text-center ${projects.length > 1 && i === 0 ? 'pl-[30%] pr-[10%]' : projects.length > 1 && i === projects.length - 1 ? 'pl-[10%] pr-[30%]' : 'px-[16%]'}`}>
-                    <p className="font-display text-xs font-bold tracking-[0.35em] text-body/80">{t('en.project')} {pad2(i + 1)}</p>
+                  {analysis && <div className="pointer-events-none absolute inset-0 border-x-2 border-accent/70" aria-hidden="true" />}
+                  <div className={`fs-unskew absolute inset-0 flex flex-col items-center justify-center text-center ${n > 1 && i === 0 ? 'pl-[30%] pr-[10%]' : n > 1 && i === n - 1 ? 'pl-[10%] pr-[30%]' : 'px-[16%]'}`}>
+                    {analysis
+                      ? <p className="rounded-full border border-accent-ink/70 px-3 py-1 font-display text-[11px] font-bold tracking-[0.3em] text-accent-ink">{label}</p>
+                      : <p className="font-display text-xs font-bold tracking-[0.35em] text-body/80">{label}</p>}
                     <h3 className="fs-title mt-3 font-serif text-[clamp(1.6rem,2.8vw,3rem)] font-black leading-tight text-ink [word-break:keep-all]">{p.title}</h3>
                     <div className="fs-meta mt-4 text-sm text-ink/90">
-                      {metaOf(p, '장르') && <p>{metaOf(p, '장르')}</p>}
-                      <p className="mt-1 text-body/80">{teamLabel(p)}{p.team && p.team.size ? ` · ${p.team.size}` : ''}</p>
-                      <p className="mt-5 inline-block border border-ink/60 px-4 py-1.5 font-display text-xs font-bold tracking-[0.3em]">VIEW →</p>
+                      {sub && <p className={analysis ? 'font-semibold text-accent-ink' : ''}>{sub}</p>}
+                      {info && <p className="mt-1 text-body/80">{info}</p>}
+                      <p className={`mt-5 inline-block border px-4 py-1.5 font-display text-xs font-bold tracking-[0.3em] ${analysis ? 'border-accent-ink/80 text-accent-ink' : 'border-ink/60'}`}>{cta}</p>
                     </div>
                   </div>
                 </a>
@@ -208,14 +217,16 @@
 
           {/* 좁은 화면 */}
           <div className="space-y-[3px] bg-black sm:hidden">
-            {projects.map((p, i) => (
-              <a key={p.id} href={gameUrl(p.id)} className="relative block h-[46svh] min-h-[260px] overflow-hidden">
-                {p.cover && <img src={img(p.id, p.cover)} alt="" className="h-full w-full object-cover" loading="lazy" />}
+            {panels.map(({ p, href, label, sub, analysis }) => (
+              <a key={p.id} href={href} className={`relative block h-[46svh] min-h-[260px] overflow-hidden ${analysis ? 'border-y-2 border-accent/70' : ''}`}>
+                {p.cover && <img src={img(p.id, p.cover)} alt="" className={`h-full w-full object-cover ${analysis ? 'opacity-40' : ''}`} loading="lazy" />}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-5">
-                  <p className="font-display text-xs font-bold tracking-[0.3em] text-body/80">{t('en.project')} {pad2(i + 1)}</p>
+                  {analysis
+                    ? <p className="inline-block rounded-full border border-accent-ink/70 px-3 py-0.5 font-display text-[11px] font-bold tracking-[0.3em] text-accent-ink">{label}</p>
+                    : <p className="font-display text-xs font-bold tracking-[0.3em] text-body/80">{label}</p>}
                   <h3 className="mt-1 font-serif text-3xl font-black text-ink">{p.title}</h3>
-                  {metaOf(p, '장르') && <p className="mt-1 text-sm text-body">{metaOf(p, '장르')}</p>}
+                  {sub && <p className={`mt-1 text-sm ${analysis ? 'font-semibold text-accent-ink' : 'text-body'}`}>{sub}</p>}
                 </div>
               </a>
             ))}
@@ -447,7 +458,7 @@
           <TopBar profile={pf.profile} />
           <main id="main">
             <Cover profile={pf.profile} generatedAt={pf.generatedAt} />
-            <Games projects={projects} />
+            <Games projects={projects} analyses={analyses} />
             <Glance projects={projects} />
             <Analysis items={analyses} />
             <Stack skills={pf.skills} titles={titles} />
